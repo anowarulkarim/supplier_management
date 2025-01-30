@@ -170,6 +170,9 @@ class SupplierRegistration(models.TransientModel):
         self.env.ref('vendor_portal.vendor_registration_confirmation').send_mail(new_supplier.id)
         self.state = 'approved'
 
+
+
+
     def action_reject(self):
         self.state = 'rejected'
 
