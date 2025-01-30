@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_otp" model="mail.template">
+            <field name="name">OTP Verification Email</field>
+            <field name="email_from">${object.company_id.email or 'no-reply@yourcompany.com'}</field>
+            <field name="subject">Your OTP Code</field>
+            <field name="email_to">${object.email}</field>
+            <field name="body_html"><![CDATA[
+                <p>Hello,</p>
+                <p>Your OTP for registration is: <b>${object.otp}</b></p>
+                <p>It is valid for 5 minutes.</p>
+            ]]></field>
+        </record>
+    </data>
+</odoo>
