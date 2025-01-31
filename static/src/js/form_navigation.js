@@ -40,3 +40,24 @@ document.getElementById("prev-5").onclick = function() {
     document.getElementById("step-5").style.display = "none";
     document.getElementById("step-4").style.display = "block";
 };
+
+//document.addEventListener('DOMContentLoaded', function () {
+//    document.getElementById('tax_identification_number').addEventListener('change', function () {
+//        console.log('TIN Changed!');
+//    });
+//});
+
+//document.addEventListener("DOMContentLoaded", function () {
+//    let tinField = document.getElementById("tax_identification_number");
+//    let errorMsg = document.getElementById("tin_error_msg");
+//
+//    tinField.addEventListener("keyup", function () {
+//        let tin = tinField.value.trim();
+//
+//        if (tin.length !== 10) {
+//            errorMsg.style.display = "block";  // Show the error message
+//        } else {
+//            errorMsg.style.display = "none";   // Hide the error message
+//        }
+//    });
+//});

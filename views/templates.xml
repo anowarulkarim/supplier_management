@@ -222,6 +222,7 @@
                                             <input type="text" class="form-control" id="tax_identification_number"
                                                    name="tax_identification_number" placeholder="Enter TIN"
                                                    style="background-color: #ccffcc;"/>
+                                            <small id="tin_error_msg" style="color: red; display: none;">TIN must be exactly 10 digits.</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="commencement_date">Commencement Date</label>
