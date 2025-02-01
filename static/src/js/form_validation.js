@@ -52,6 +52,21 @@ document.getElementById("trade_license_number").addEventListener("keyup", functi
     }
 });
 
+document.getElementById("commencement_date").addEventListener("change", function (event) {
+    let commencementDateField = document.getElementById("commencement_date");
+    let errorMsg = document.getElementById("commencement_date_error_msg");
+    console.log("her");
+    let commencementDate = new Date(commencementDateField.value);
+    print(commencementDate);
+    let today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to the start of today
+
+    if (commencementDate >= today) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
 
 
 

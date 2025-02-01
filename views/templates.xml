@@ -122,7 +122,7 @@
                 </div>
             </t>
         </template>
-        <template id="user_registration_form" name="User Registration Form">
+        <!-- <template id="user_registration_form" name="User Registration Form">
             <t t-call="website.layout">
                 <div class="container mt-5">
                     <h2 class="text-center mb-4">Enter Your Email</h2>
@@ -131,7 +131,7 @@
                     </form>
                 </div>
             </t>
-        </template>
+        </template> -->
         <template id="new_supplier_registration_form_view_portal">
             <t t-call="portal.portal_layout">
                 <div class="container" id="new_supplier_registration" style="max-width: 800px; margin-top: 20px;">
@@ -234,6 +234,7 @@
                                             <input type="date" class="form-control" id="commencement_date"
                                                    name="commencement_date" style="background-color: #ccffcc;"
                                             />
+                                            <small id="commencement_date_error_msg" style="color: red; display: none;">The commencement date should be before today.</small>
                                         </div>
                                         <div class="form-group">
                                             <label for="expiry_date">Expiry Date</label>
