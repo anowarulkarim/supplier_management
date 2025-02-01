@@ -60,7 +60,7 @@ class SupplierManagement(http.Controller):
                 'company_name', 'email', 'phone', 'company_registered_address', 'company_alternate_address',
                 'company_type_category', 'company_type', 'trade_license_number',
                 'tax_identification_number', 'commencement_date', 'expiry_date',
-                'contact_person_title', 'contact_email', 'contact_phone',
+                'contact_person_title', 'contact_email', 'contact_phone', 'contact_address',
                 'finance_contact_title', 'finance_contact_email', 'finance_contact_phone',
                 'authorized_person_name', 'authorized_person_email', 'authorized_person_phone',
                 'bank_name', 'bank_address', 'bank_swift_code', 'account_name',

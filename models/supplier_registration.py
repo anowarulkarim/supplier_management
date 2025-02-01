@@ -28,12 +28,15 @@ class SupplierRegistration(models.TransientModel):
     contact_person_title = fields.Char(string='Contact Person Title')
     contact_email = fields.Char(string='Contact Email')
     contact_phone = fields.Char(string='Contact Phone')
+    contact_address = fields.Char(string='Contact Person Address') # address of contact person
     finance_contact_title = fields.Char(string='Finance Contact Title')
     finance_contact_email = fields.Char(string='Finance Contact Email')
     finance_contact_phone = fields.Char(string='Finance Contact Phone')
+    finance_contact_address = fields.Char(string='Finance Contact Address') # address of finance contact
     authorized_person_name = fields.Char(string='Authorized Person Name')
     authorized_person_email = fields.Char(string='Authorized Person Email')
     authorized_person_phone = fields.Char(string='Authorized Person Phone')
+    authorized_person_address = fields.Char(string='Authorized Person Address') # address of authorized person
     bank_name = fields.Char(string='Bank Name')
     bank_address = fields.Char(string='Bank Address')
     bank_swift_code = fields.Char(string='Bank Swift Code')
