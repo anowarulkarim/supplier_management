@@ -399,6 +399,8 @@
                                         <label for="client_1_name">Client Name</label>
                                         <input type="text" class="form-control" id="client_1_name" name="client_1_name"
                                                placeholder="Enter client name" style="background-color: #ccffcc;"/>
+
+                                        <small id="client_1_error_msg" style="color: red; display: none;">If you input any of the field of phone or address or email then Client 1 Name is mandatory</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="client_1_address">Client Address</label>
@@ -425,6 +427,8 @@
                                         <label for="client_2_name">Client Name</label>
                                         <input type="text" class="form-control" id="client_2_name" name="client_2_name"
                                                placeholder="Enter client name" style="background-color: #ccffcc;"/>
+                                        <small id="client_2_error_msg" style="color: red; display: none;">If you input any of the field of phone or address or 
+                                        email then Client 2 Name is mandatory</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="client_2_address">Client Address</label>
@@ -451,6 +455,8 @@
                                         <label for="client_3_name">Client Name</label>
                                         <input type="text" class="form-control" id="client_3_name" name="client_3_name"
                                                placeholder="Enter client name" style="background-color: #ccffcc;"/>
+                                        <small id="client_3_error_msg" style="color: red; display: none;">If you input any of the field of phone or address or 
+                                        email then Client 3 Name is mandatory</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="client_3_address">Client Address</label>
@@ -478,6 +484,7 @@
                                         <label for="client_4_name">Client Name</label>
                                         <input type="text" class="form-control" id="client_4_name" name="client_4_name"
                                                placeholder="Enter client name" style="background-color: #ccffcc;"/>
+                                        <small id="client_4_error_msg" style="color: red; display: none;">If you input any of the field of phone or address or email then Client 4 Name is mandatory</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="client_4_address">Client Address</label>
@@ -504,6 +511,7 @@
                                         <label for="client_5_name">Client Name</label>
                                         <input type="text" class="form-control" id="client_5_name" name="client_5_name"
                                                placeholder="Enter client name" style="background-color: #ccffcc;"/>
+                                        <small id="client_5_error_msg" style="color: red; display: none;">If you input any of the field of phone or address or email then Client 5 Name is mandatory</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="client_5_address">Client Address</label>
@@ -571,10 +579,11 @@
                             <button type="button" class="btn btn-primary" id="next-4">Next</button>
                         </div>
 
+                            <!-- Document Checklist -->
+                        
                         <div class="form-step" id="step-5" style="display:none;">
                             <h3>Section 5: Document Submission</h3>
 
-                            <!-- Document Checklist -->
                             <h4>Checklist</h4>
                             <div class="form-group">
                                 <label for="trade_license_business_registration">Trade License / Business Registration
@@ -672,6 +681,8 @@
                 </div>
                 <script src="/supplier_management/static/src/js/form_navigation.js">Navigation Script</script>
                 <script src="/supplier_management/static/src/js/form_validation.js">Validation Script</script>
+                <script src="/supplier_management/static/src/js/form_validation_client.js">Submission Script</script>
+                <script src="/supplier_management/static/src/js/form_validation_files.js">Files Script</script>
             </t>
 
         </template>

@@ -69,7 +69,12 @@ class SupplierManagement(http.Controller):
                 'client_1_contact_phone', 'client_2_name',
                 'client_2_contact_email', 'client_2_contact_phone', 'client_3_name',
                 'client_3_address', 'client_3_contact_email',
-                'client_3_contact_phone', 'certification', 'certificate_number',
+                'client_3_contact_phone', 'client_4_name',
+                'client_4_address', 'client_4_contact_email',
+                'client_4_contact_phone', 'client_5_name',
+                'client_5_address', 'client_5_contact_email',
+                'client_5_contact_phone', 
+                'certification', 'certificate_number',
                 'certifying_body', 'award_date', 'certificate_expiry_date'
             ]
             for key in keys:
@@ -97,8 +102,26 @@ class SupplierManagement(http.Controller):
                 error_list.append("Bank Address is mandatory")
             if not kw.get('accoutn_number'):
                 error_list.append("Account Number is mandatory")
+            if kw.get('client_1_contact_email') or kw.get('client_1_address') or kw.get('client_1_contact_phone'):
+                if not kw.get('client_1_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 1 Name is mandatory")
+                
+            if kw.get('client_2_contact_email') or kw.get('client_2_address') or kw.get('client_2_contact_phone'):
+                if not kw.get('client_2_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 2 Name is mandatory")
 
-            
+            if kw.get('client_3_contact_email') or kw.get('client_3_address') or kw.get('client_3_contact_phone'):
+                if not kw.get('client_3_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 3 Name is mandatory")
+
+            if kw.get('client_4_contact_email') or kw.get('client_4_address') or kw.get('client_4_contact_phone'):          
+                if not kw.get('client_4_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 4 Name is mandatory")
+
+            if kw.get('client_5_contact_email') or kw.get('client_5_address') or kw.get('client_5_contact_phone'):
+                if not kw.get('client_5_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 5 Name is mandatory")
+
 
             file_fields = [
                 'trade_license_business_registration', 'certificate_of_incorporation', 'certificate_of_good_standing',
@@ -106,6 +129,10 @@ class SupplierManagement(http.Controller):
                 'identification_document_for_authorized_person', 'bank_letter_indicating_bank_account',
                 'past_2_years_audited_financial_statements', 'other_certifications'
             ]
+            max_file_size = 1 * 1024 * 1024  # 1 MB in bytes
+            for field in file_fields:
+                if kw.get(field) and kw.get(field).content_length > max_file_size:
+                    error_list.append(f"{field.replace('_', ' ').title()} file size should not exceed 1 MB")
 
             file_vals = {}
             for field in file_fields:
