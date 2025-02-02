@@ -13,6 +13,8 @@
                                 invisible="state not in ('submitted')"/>
                         <button name="action_reject" string="Reject" type="object" class="oe_highlight"
                                 invisible="state not in ('submitted')"/>
+                        <button name="action_blacklist" string="Block" type="object" class="oe_highlight" groups="supplier_management.group_supplier_management_approver"
+                                />
                         <field name="state" widget="statusbar"/>
                     </header>
                     <group>
