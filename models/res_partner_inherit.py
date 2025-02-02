@@ -2,6 +2,7 @@ from odoo import api, fields, models
 
 
 class MySupplier(models.Model):
+    # _name = 'res.partner.inherit'
     _inherit = 'res.partner'
     _description = 'Supplier Registration'
 

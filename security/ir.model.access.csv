@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_supplier_management_supplier_management,supplier_management.supplier.registration,model_supplier_management_supplier_registration,base.group_user,1,1,1,1
+access_supplier_management_supplier_management,access.supplier_management.supplier_registration,model_supplier_registration,base.group_user,1,1,1,1

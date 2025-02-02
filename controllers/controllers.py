@@ -91,6 +91,15 @@ class SupplierManagement(http.Controller):
                 already_exists = request.env['res.partner'].sudo().search([('email', '=', kw.get('email'))])
                 if already_exists:
                     error_list.append("Company Email Already Exists In the system. Try with another email")
+            if not kw.get('bank_name'):
+                error_list.append("Bank Name is mandatory")
+            if not kw.get('bank_address'):
+                error_list.append("Bank Address is mandatory")
+            if not kw.get('accoutn_number'):
+                error_list.append("Account Number is mandatory")
+
+            
+
             file_fields = [
                 'trade_license_business_registration', 'certificate_of_incorporation', 'certificate_of_good_standing',
                 'establishment_card', 'vat_tax_certificate', 'memorandum_of_association',

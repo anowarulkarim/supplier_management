@@ -68,6 +68,20 @@ document.getElementById("commencement_date").addEventListener("change", function
     }
 });
 
+document.getElementById("expiry_date").addEventListener("change", function (event) {
+    let expiryDateField = document.getElementById("expiry_date");
+    let errorMsg = document.getElementById("expiry_date_error_msg");
+
+    let expiryDate = new Date(expiryDateField.value);
+    let today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to the start of today
+
+    if (expiryDate <= today) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
 
 
 // document.getElementById("file_input").addEventListener("change", function (event) {

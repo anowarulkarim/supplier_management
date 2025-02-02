@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="supplier_management_menu" model="ir.ui.menu">
+            <field name="name">Supplier Management</field>
+            <field name="sequence" eval="10"/>
+            <field name="action" ref="supplier_management_action"/>
+        </record>
+        <record id="supplier_management_action" model="ir.actions.act_window">
+            <field name="name">Supplier Management</field>
+            <field name="res_model">supplier.management</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
