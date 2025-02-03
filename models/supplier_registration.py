@@ -80,7 +80,7 @@ class SupplierRegistration(models.TransientModel):
     past_2_years_audited_financial_statements = fields.Binary(string='Past 2 Years Audited Financial Statements')
     other_certifications = fields.Binary(string='Other Certifications')
     state = fields.Selection(
-        [('draft', 'Draft'), ('submitted', 'Submitted'), ('approved', 'Approved'),('approved_final','Final Approve'), ('rejected', 'Rejected')],
+        [('draft', 'Draft'), ('submitted', 'Submitted'),('recommanded','Recommanded'), ('approved', 'Approved'),('rejected', 'Rejected')],
         string='State', default='draft')
 
     def action_approve(self):
@@ -192,3 +192,6 @@ class SupplierRegistration(models.TransientModel):
 
     def action_submit(self):
         self.state = 'submitted'
+
+    def action_recommend(self):
+        self.state = 'recommanded'

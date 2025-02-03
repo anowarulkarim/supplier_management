@@ -9,12 +9,16 @@
                     <header>
                         <button name="action_submit" string="Submit" type="object" class="oe_highlight"
                                 invisible="state not in ('draft')"/>
+                        <button name="action_recommend" string="Recommend" type="object" class="oe_highlight"
+                            invisible="state not in ('submitted')" groups="supplier_management.group_supplier_management_reviewer"/>
+
                         <button name="action_approve" string="Approve" type="object" class="oe_highlight"
-                                invisible="state not in ('submitted')"/>
+                                invisible="state in ('submitted')" groups="supplier_management.group_supplier_management_approver"/>
+
                         <button name="action_reject" string="Reject" type="object" class="oe_highlight"
                                 invisible="state not in ('submitted')"/>
-                        <button name="action_blacklist" string="Block" type="object" class="oe_highlight" groups="supplier_management.group_supplier_management_approver"
-                                />
+                        
+                        <button name="action_blacklist" string="Blacklist" type="object" class="oe_highlight"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <group>
@@ -23,6 +27,8 @@
                             <field name="company_type_category"/>
                             <field name="trade_license_number"/>
                             <field name="tax_identification_number"/>
+                            <field name="state"/>
+
                         </group>
                         <group>
                             <field name="company_registered_address"/>
@@ -148,6 +154,7 @@
                 <field name="contact_person_title"/>
                 <field name="contact_email"/>
                 <field name="contact_phone"/>
+                
             </tree>
         </field>
     </record>
@@ -167,7 +174,10 @@
                     <filter string="Approval Status" name="approval_status"
                             context="{'group_by':'state'}"/>
                 </group>
-                <filter string="Waiting for approval" name="submitted" domain="[('state','=','submitted')]"/>
+                <!-- <filter string="Waiting for approval" name="submitted" domain="[('state','=','submitted')]"/> -->
+                <!-- <filter string="Waiting for Review" name="waiting_for_review" domain="[('state','=','submitted')]" groups="supplier_management.group_supplier_management_reviewer"/>
+                <filter string="Waiting for Approval" name="waiting_for_approval" domain="[('state','=','recommended')]" groups="supplier_management.group_supplier_management_approver"/> -->
+
             </search>
         </field>
     </record>
@@ -180,8 +190,30 @@
 
     </record>
 
-    <menuitem id="menu_procurement_management_supplier_registration" name="Vendor Registration"
+    <record id="action_supplier_registration_reviewer" model="ir.actions.act_window">
+    <field name="name">Supplier Registration (Reviewer)</field>
+    <field name="res_model">supplier.registration</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[('state', '=', 'submitted')]</field>
+    <!-- <field name="groups_id" eval="[(4, ref('group_supplier_management_reviewer'))]"/> -->
+</record>
+
+<record id="action_supplier_registration_approver" model="ir.actions.act_window">
+    <field name="name">Supplier Registration (Approver)</field>
+    <field name="res_model">supplier.registration</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[('state', '=', 'recommanded')]</field>
+    <!-- <field name="groups_id" eval="[(4, ref('group_supplier_management_approver'))]"/> -->
+</record>
+
+    <menuitem id="menu_procurement_management_supplier_registration_reviewer" name="Vendor Registration Reviewer"
               parent="purchase.menu_procurement_management"
-              action="action_supplier_registration" sequence="15"/>
+              action="action_supplier_registration_reviewer" sequence="15"
+              groups="supplier_management.group_supplier_management_reviewer"/>
+
+    <menuitem id="menu_procurement_management_supplier_registration_approver" name="Vendor Registration Approver"
+              parent="purchase.menu_procurement_management"
+              action="action_supplier_registration_approver" sequence="20"
+              groups="supplier_management.group_supplier_management_approver"/>
 
 </odoo>
