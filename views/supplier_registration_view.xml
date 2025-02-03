@@ -24,11 +24,11 @@
                     <group>
                         <group>
                             <field name="company_name"/>
+                            <field name="email"/>
                             <field name="company_type_category"/>
                             <field name="trade_license_number"/>
                             <field name="tax_identification_number"/>
                             <field name="state"/>
-
                         </group>
                         <group>
                             <field name="company_registered_address"/>
@@ -36,7 +36,6 @@
                             <field name="commencement_date"/>
                             <field name="expiry_date"/>
                         </group>
-
                     </group>
                     <notebook>
                         <page name="contact_info" string="Contact Information">
@@ -174,18 +173,38 @@
                     <filter string="Approval Status" name="approval_status"
                             context="{'group_by':'state'}"/>
                 </group>
-                <!-- <filter string="Waiting for approval" name="submitted" domain="[('state','=','submitted')]"/> -->
-                <!-- <filter string="Waiting for Review" name="waiting_for_review" domain="[('state','=','submitted')]" groups="supplier_management.group_supplier_management_reviewer"/>
-                <filter string="Waiting for Approval" name="waiting_for_approval" domain="[('state','=','recommended')]" groups="supplier_management.group_supplier_management_approver"/> -->
-
+                
             </search>
+        </field>
+    </record>
+
+    <record id="supplier_registration_kanban_view" model="ir.ui.view">
+        <field name="name">supplier.registration.kanban</field>
+        <field name="model">supplier.registration</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="company_name"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <strong>
+                                <field name="company_name"/>
+                            </strong>
+                            <div>
+                                <field name="state"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 
     <record id="action_supplier_registration" model="ir.actions.act_window">
         <field name="name">Supplier Registration</field>
         <field name="res_model">supplier.registration</field>
-        <field name="view_mode">tree,form,search</field>
+        <field name="view_mode">tree,form,search,kanban</field>
         <field name="context">{'search_default_submitted':True}</field>
 
     </record>
@@ -193,7 +212,7 @@
     <record id="action_supplier_registration_reviewer" model="ir.actions.act_window">
     <field name="name">Supplier Registration (Reviewer)</field>
     <field name="res_model">supplier.registration</field>
-    <field name="view_mode">tree,form</field>
+    <field name="view_mode">tree,form,search,kanban</field>
     <field name="domain">[('state', '=', 'submitted')]</field>
     <!-- <field name="groups_id" eval="[(4, ref('group_supplier_management_reviewer'))]"/> -->
 </record>
@@ -201,7 +220,7 @@
 <record id="action_supplier_registration_approver" model="ir.actions.act_window">
     <field name="name">Supplier Registration (Approver)</field>
     <field name="res_model">supplier.registration</field>
-    <field name="view_mode">tree,form</field>
+    <field name="view_mode">tree,form,search,kanban</field>
     <field name="domain">[('state', '=', 'recommanded')]</field>
     <!-- <field name="groups_id" eval="[(4, ref('group_supplier_management_approver'))]"/> -->
 </record>

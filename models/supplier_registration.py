@@ -188,7 +188,9 @@ class SupplierRegistration(models.TransientModel):
         self.state = 'rejected'
 
     def action_blacklist(self):
-        pass
+        self.env['mail.blacklist'].create({
+            'email': self.email,
+        })
 
     def action_submit(self):
         self.state = 'submitted'
