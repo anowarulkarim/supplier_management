@@ -178,8 +178,8 @@ class SupplierRegistration(models.TransientModel):
             'company_id': self.env.company.id,
             'groups_id': [(6, 0, self.env.ref('base.group_portal').ids)]
         })
-        print(new_supplier.email)
-        # self.env.ref('supplier_management.vendor_registration_confirmation').send_mail(new_supplier.id)
+        # print(new_supplier.email)
+        self.env.ref('supplier_management.vendor_registration_confirmation').send_mail(new_supplier.id)
         self.state = 'approved'
 
 
