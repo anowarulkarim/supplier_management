@@ -21,6 +21,16 @@ class SupplierManagement(http.Controller):
         # Remove previous OTPs
         request.env['otp.verification'].sudo().search([('email', '=', email)]).unlink()
 
+        # Check if email is blacklisted
+        blacklisted_email = request.env['mail.blacklist'].sudo().search([('email', '=', email)], limit=1)
+        if blacklisted_email:
+            return http.Response('{"status": "error", "message": "Email is blacklisted"}', content_type='application/json')
+
+        # Check if email is already used
+        existing_email = request.env['res.partner'].sudo().search([('email', '=', email)], limit=1)
+        if existing_email:
+            return http.Response('{"status": "error", "message": "Email is already used"}', content_type='application/json')
+
         # Store OTP in database
         request.env['otp.verification'].sudo().create({
             'email': email,
