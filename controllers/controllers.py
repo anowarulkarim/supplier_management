@@ -158,7 +158,25 @@ class SupplierManagement(http.Controller):
         # self.env.ref('supplier_management.vendor_submission_confirmation').send_mail(new_supplier.id)
                 # print("new_supplier", new_supplier.email)
                 template = request.env.ref('supplier_management.vendor_submission_confirmation')
-                template.sudo().send_mail(new_supplier.id, force_send=True)
+                print("template", template)
+                if template:
+                    try:
+                        print("Attempting to send mail...")
+
+                        # Add context with force_send to ensure immediate email sending
+                        ctx = {
+                            'default_model': 'supplier.registration',
+                            'default_res_id': new_supplier.id,
+                            'default_email_to': new_supplier.email,  # Ensure the email field exists
+                            'default_template_id': template.id,
+                            'force_send': True,
+                        }
+
+                        s = template.with_context(ctx).send_mail(new_supplier.id, force_send=True)
+                        print("Email Sent, ID:", s)
+                    except Exception as e:
+                        print("Error in send_mail:", str(e))
+
         return request.render("supplier_management.new_supplier_registration_form_view_portal",
                               {'page_name': 'supplier_registration',
                                'error_list': error_list,

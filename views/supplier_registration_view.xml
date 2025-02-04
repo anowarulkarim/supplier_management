@@ -163,27 +163,35 @@
         <field name="name">supplier.registration.search</field>
         <field name="model">supplier.registration</field>
         <field name="arch" type="xml">
-            <search string="Supplier Registration">
+            <search>
+                <!-- Searchable Fields -->
                 <field name="company_name"/>
                 <field name="email"/>
                 <field name="phone"/>
-                <field name="trade_license_number"/>
-                <field name="tax_identification_number"/>
-                <field name="expiry_date"/>
-                <group expand="1" string="Group By">
-                    <filter string="Approval Status" name="approval_status"
-                            context="{'group_by':'state'}"/>
-                </group>
+                <field name="state"/>
+
+                <!-- Filters -->
+                <filter name="state_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="state_submitted" string="Submitted" domain="[('state', '=', 'submitted')]"/>
+                <filter name="state_recommended" string="Recommended" domain="[('state', '=', 'recommanded')]"/>
+                <filter name="state_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <filter name="state_rejected" string="Rejected" domain="[('state', '=', 'rejected')]"/>
                 
+                <!-- Grouping -->
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="State" domain="[]" context="{'group_by': 'state'}"/>
+                    <filter name="group_create_date" string="Date" domain="[]" context="{'group_by': 'create_date'}"/>
+                </group>
             </search>
         </field>
     </record>
+
 
     <record id="supplier_registration_kanban_view" model="ir.ui.view">
         <field name="name">supplier.registration.kanban</field>
         <field name="model">supplier.registration</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="state">
+            <kanban default_group_by="state" group_create="false" quick_create="false">
                 <field name="company_name"/>
                 <field name="state"/>
                 <field name="email"/>
