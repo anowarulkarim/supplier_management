@@ -83,6 +83,8 @@ class SupplierRegistration(models.TransientModel):
         [('draft', 'Draft'), ('submitted', 'Submitted'),('recommanded','Recommanded'), ('approved', 'Approved'),('rejected', 'Rejected')],
         string='State', default='draft')
 
+    reject_reason = fields.Text(string="Rejection Reason")
+
     def action_approve(self):
         vals = {
             'name': self.company_name or 'N/A',
@@ -184,16 +186,29 @@ class SupplierRegistration(models.TransientModel):
 
 
 
-    def action_reject(self):
-        self.state = 'rejected'
+    # def action_reject(self):
+    #     self.state = 'rejected'
 
     def action_blacklist(self):
         self.env['mail.blacklist'].create({
             'email': self.email,
         })
+        self.state = 'rejected'
 
     def action_submit(self):
         self.state = 'submitted'
 
     def action_recommend(self):
         self.state = 'recommanded'
+
+    def action_open_reject_wizard(self):
+    # """Opens the rejection wizard"""
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Reject Reason',
+            'res_model': 'reject.reason.wizard',
+            'view_mode': 'form',
+            'view_id': self.env.ref('supplier_management.view_reject_reason_wizard_form').id,
+            'target': 'new',
+            'context': {'active_id': self.id},
+        }

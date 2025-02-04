@@ -155,6 +155,10 @@ class SupplierManagement(http.Controller):
                     success_list.append("Supplier Registered Successfully")
                 if file_vals:
                     new_supplier.write(file_vals)
+        # self.env.ref('supplier_management.vendor_submission_confirmation').send_mail(new_supplier.id)
+                # print("new_supplier", new_supplier.email)
+                template = request.env.ref('supplier_management.vendor_submission_confirmation')
+                template.sudo().send_mail(new_supplier.id, force_send=True)
         return request.render("supplier_management.new_supplier_registration_form_view_portal",
                               {'page_name': 'supplier_registration',
                                'error_list': error_list,

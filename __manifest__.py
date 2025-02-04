@@ -29,6 +29,7 @@ Long description of module's purpose
         'views/supplier_registration_view.xml',
         'views/templates.xml',
         'data/otp_email_template.xml',
+        'wizard/reject_reason_wizard.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

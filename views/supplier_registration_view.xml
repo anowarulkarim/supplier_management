@@ -9,14 +9,15 @@
                     <header>
                         <button name="action_submit" string="Submit" type="object" class="oe_highlight"
                                 invisible="state not in ('draft')"/>
+
                         <button name="action_recommend" string="Recommend" type="object" class="oe_highlight"
                             invisible="state not in ('submitted')" groups="supplier_management.group_supplier_management_reviewer"/>
 
                         <button name="action_approve" string="Approve" type="object" class="oe_highlight"
                                 invisible="state in ('submitted')" groups="supplier_management.group_supplier_management_approver"/>
 
-                        <button name="action_reject" string="Reject" type="object" class="oe_highlight"
-                                invisible="state not in ('submitted')"/>
+                        <button name="action_open_reject_wizard" string="Reject" type="object" class="oe_highlight"
+                            invisible="state not in ('submitted')"/>
                         
                         <button name="action_blacklist" string="Blacklist" type="object" class="oe_highlight"/>
                         <field name="state" widget="statusbar"/>
@@ -185,14 +186,27 @@
             <kanban default_group_by="state">
                 <field name="company_name"/>
                 <field name="state"/>
+                <field name="email"/>
+                <field name="phone"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_card">
-                            <strong>
-                                <field name="company_name"/>
-                            </strong>
-                            <div>
-                                <field name="state"/>
+                        <div t-att-data-id="record.id" class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <span class="fa fa-building fa-2x text-primary"/>
+                            </div>
+                            <div class="o_kanban_details">
+                                <strong class="text-dark">
+                                    <field name="company_name"/>
+                                </strong>
+                                <div>
+                                    <span class="fa fa-envelope text-muted"/> <field name="email"/>
+                                </div>
+                                <div>
+                                    <span class="fa fa-phone text-muted"/> <field name="phone"/>
+                                </div>
+                                <div class="badge" t-att-class="'badge-' + record.state.raw_value">
+                                    <field name="state"/>
+                                </div>
                             </div>
                         </div>
                     </t>
@@ -200,6 +214,8 @@
             </kanban>
         </field>
     </record>
+
+
 
     <record id="action_supplier_registration" model="ir.actions.act_window">
         <field name="name">Supplier Registration</field>
@@ -213,7 +229,7 @@
     <field name="name">Supplier Registration (Reviewer)</field>
     <field name="res_model">supplier.registration</field>
     <field name="view_mode">tree,form,search,kanban</field>
-    <field name="domain">[('state', '=', 'submitted')]</field>
+    <field name="domain">[('state', 'not in', ('recommanded',))]</field>
     <!-- <field name="groups_id" eval="[(4, ref('group_supplier_management_reviewer'))]"/> -->
 </record>
 
@@ -221,7 +237,7 @@
     <field name="name">Supplier Registration (Approver)</field>
     <field name="res_model">supplier.registration</field>
     <field name="view_mode">tree,form,search,kanban</field>
-    <field name="domain">[('state', '=', 'recommanded')]</field>
+    <field name="domain">[('state', 'not in', ('submitted',))]</field>
     <!-- <field name="groups_id" eval="[(4, ref('group_supplier_management_approver'))]"/> -->
 </record>
 
