@@ -31,6 +31,7 @@
         <field name="name">Vendor Submission Success</field>
         <field name="model_id" ref="model_res_partner"/>
         <field name="subject">Vendor Submission Successful</field>
+
         <field name="email_from">anowarul.karim@bjitacademy.com</field>
         <field name="email_to">{{object.email}}</field>
         <field name="body_html" type="html">
@@ -42,4 +43,19 @@
             <p>Thank you for your interest in partnering with us!</p>
         </field>
     </record>
+    <record id="reviewer_notification_email" model="mail.template">
+        <field name="name">Vendor Submission Success</field>
+        <field name="model_id" ref="model_res_partner"/> <!-- Use a generic model -->
+        <field name="subject">Vendor Submission Successful</field>
+        <field name="email_from">anowarul.karim@bjitacademy.com</field>
+        <field name="email_to">{{ctx.get('email_to')}}</field>  <!-- Get email from context -->
+        <field name="body_html" type="html">
+            <h3>Dear ${ctx.get('user_name')}</h3>
+            <p>We are pleased to inform you that your vendor submission has been successfully received.</p>
+            <p>Our team will review your submission and get back to you shortly.</p>
+            <p>Thank you for your interest in partnering with us!</p>
+        </field>
+    </record>
+
+
 </odoo>

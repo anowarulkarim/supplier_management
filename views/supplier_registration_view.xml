@@ -14,12 +14,13 @@
                             invisible="state not in ('submitted')" groups="supplier_management.group_supplier_management_reviewer"/>
 
                         <button name="action_approve" string="Approve" type="object" class="oe_highlight"
-                                invisible="state in ('submitted')" groups="supplier_management.group_supplier_management_approver"/>
+                                invisible="state in ('submitted','rejected')" groups="supplier_management.group_supplier_management_approver"/>
 
                         <button name="action_open_reject_wizard" string="Reject" type="object" class="oe_highlight"
                             invisible="state not in ('submitted')"/>
                         
-                        <button name="action_blacklist" string="Blacklist" type="object" class="oe_highlight"/>
+                        <button name="action_blacklist" string="Blacklist" type="object" class="oe_highlight"
+                            invisible="state not in ('approved','rejected')"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <group>
@@ -135,6 +136,12 @@
 
 
                 </sheet>
+                <div class="oe_chatter">
+                <!-- Chatter will be displayed here -->
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
@@ -191,7 +198,7 @@
         <field name="name">supplier.registration.kanban</field>
         <field name="model">supplier.registration</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="state" group_create="false" quick_create="false">
+            <kanban default_group_by="state" group_create="false" quick_create="false" records_draggable="false">
                 <field name="company_name"/>
                 <field name="state"/>
                 <field name="email"/>

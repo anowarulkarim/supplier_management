@@ -150,32 +150,50 @@ class SupplierManagement(http.Controller):
                     file_vals[field] = kw.get(field).read()
             vals['state'] = 'submitted'
             if not error_list:
-                new_supplier = request.env['supplier.registration'].sudo().create(vals)
-                if new_supplier:
-                    success_list.append("Supplier Registered Successfully")
-                if file_vals:
-                    new_supplier.write(file_vals)
-        # self.env.ref('supplier_management.vendor_submission_confirmation').send_mail(new_supplier.id)
-                # print("new_supplier", new_supplier.email)
-                template = request.env.ref('supplier_management.vendor_submission_confirmation')
-                print("template", template)
-                if template:
-                    try:
-                        print("Attempting to send mail...")
+                # new_supplier = request.env['supplier.registration'].sudo().create(vals)
+                # if new_supplier:
+                #     success_list.append("Supplier Registered Successfully")
+                # if file_vals:
+                #     new_supplier.write(file_vals)
 
-                        # Add context with force_send to ensure immediate email sending
-                        ctx = {
-                            'default_model': 'supplier.registration',
-                            'default_res_id': new_supplier.id,
-                            'default_email_to': new_supplier.email,  # Ensure the email field exists
-                            'default_template_id': template.id,
-                            'force_send': True,
-                        }
+                template = request.env.ref('supplier_management.reviewer_notification_email')
 
-                        s = template.with_context(ctx).send_mail(new_supplier.id, force_send=True)
-                        print("Email Sent, ID:", s)
-                    except Exception as e:
-                        print("Error in send_mail:", str(e))
+                if not template:
+                    return {"error": "Email template not found!"}
+                reviewer = request.env['res.groups'].search([('name', '=', 'Reviewer')])
+                reviewer_user = reviewer.users
+                for user in reviewer_user:
+                    # template.with_context(user=user).send_mail(user.id, force_send=True)
+                    print(user.email)
+                    template.with_context(email_to=user.email).send_mail(user.id, force_send=True)
+                    # raise RuntimeError("Intentional error raised!")
+
+
+
+
+
+
+
+                    # user.partner_id.notify_info(message="New Supplier Registration Request has been submitted")
+                # template = request.env.ref('supplier_management.vendor_submission_confirmation')
+                # print("template", template)
+                # if template:
+                #     try:
+                #         print("Attempting to send mail...")
+
+                #         # Add context with force_send to ensure immediate email sending
+                #         ctx = {
+                #             'default_model': 'supplier.registration',
+                #             'default_res_id': new_supplier.id,
+                #             'default_email_to': new_supplier.email,  # Ensure the email field exists
+                #             'default_template_id': template.id,
+                #             'force_send': True,
+                #         }
+
+                #         s = template.with_context(**ctx).send_mail(new_supplier.id, force_send=True)
+                #         print("Email Sent, ID:", s)
+                #     except Exception as e:
+                #         print("Error in send_mail:", str(e))
 
         return request.render("supplier_management.new_supplier_registration_form_view_portal",
                               {'page_name': 'supplier_registration',

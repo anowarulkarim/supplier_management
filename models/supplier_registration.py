@@ -8,8 +8,9 @@ class SupplierRegistration(models.TransientModel):
     _description = 'Supplier Registration'
     _rec_name = 'company_name'
     _order = 'create_date desc'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    company_name = fields.Char(string='Company Name')
+    company_name = fields.Char(string='Company Name', tracking=True)
     email = fields.Char(string='Company Email')
     phone = fields.Char(string='Company Phone')
     company_registered_address = fields.Char(string='Company Registered Address')
@@ -81,7 +82,7 @@ class SupplierRegistration(models.TransientModel):
     other_certifications = fields.Binary(string='Other Certifications')
     state = fields.Selection(
         [('draft', 'Draft'), ('submitted', 'Submitted'),('recommanded','Recommanded'), ('approved', 'Approved'),('rejected', 'Rejected')],
-        string='State', default='draft')
+        string='State', default='draft', tracking=True)
 
     reject_reason = fields.Text(string="Rejection Reason")
 
