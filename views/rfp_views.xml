@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_rfp_tree" model="ir.ui.view">
+        <field name="name">rfp.request.tree</field>
+        <field name="model">rfp.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="rfp_number"/>
+                <field name="status"/>
+                <field name="required_date"/>
+                <field name="total_amount"/>
+                <field name="approved_supplier_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_rfp_request" model="ir.actions.act_window">
+        <field name="name">Requests for Purchase</field>
+        <field name="res_model">rfp.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_rfp_tree"/>
+    </record>
+    <menuitem id="menu_rfp_request" name="Request for Purchase" 
+              parent="purchase.menu_procurement_management"
+              action="action_rfp_request" sequence="25"/>
+              <!-- groups="supplier_management.group_supplier_management_reviewer"/> -->
+
+    <!-- <menuitem id="submenu_rfp_request" name="Request for Purchase" parent="rfp_request_menu" action="action_rfp_request"/> -->
+</odoo>
+
+    

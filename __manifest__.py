@@ -26,6 +26,7 @@ Long description of module's purpose
         'security/ir.model.access.csv',
         'views/email_template.xml',
         'views/views.xml',
+        'views/rfp_views.xml',
         'views/supplier_registration_view.xml',
         'views/templates.xml',
         'data/otp_email_template.xml',

@@ -5,7 +5,7 @@ class ProductLine(models.Model):
     _name = 'rfp.product.line'
     _description = 'RFP Product Line'
 
-    rfp_id = fields.Many2one('rfp.request', string='RFP')
+    rfp_id = fields.Many2one('rfp.request', string='RFP')  # Corrected field name
     product_id = fields.Many2one('product.product', string='Product', required=True)
     description = fields.Text(string='Description')
     quantity = fields.Integer(string='Quantity', required=True, default=1)

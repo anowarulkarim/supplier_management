@@ -2,7 +2,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 class RFQ(models.Model):
-    _inherit = 'perchase.order'
+    _inherit = 'purchase.order'
     _description = 'Request for Quotation'
 
     # supplier = partner_id 
@@ -11,9 +11,9 @@ class RFQ(models.Model):
     # total proce = amount_total
     # currency_id = currency_id
     warranty_period = fields.Integer(string='Warranty Period (months)', required=True)
-    rfp_id = fields.Many2one('rfp.request', string='RFP')
+    rfp_id = fields.Many2one('rfp.request', string='RFP')  # Corrected field name
     score = fields.Integer(string='Score')
-    product_lines = fields.One2many('rfq.product.line', 'rfq_id', string='Product Lines')
+    product_line_ids = fields.One2many('rfp.product.line', 'rfp_id', string='Product Lines')
     recommended = fields.Boolean(string='Recommended', default=False)
 
     @api.constrains('recommended')

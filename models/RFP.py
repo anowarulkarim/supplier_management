@@ -18,17 +18,17 @@ class RFP(models.Model):
         ('accepted', 'Accepted')
     ], string='Status', default='draft', tracking=True)
     required_date = fields.Date(string='Required Date', default=lambda self: fields.Date.today() + timedelta(days=7))
-    total_amount = fields.Monetary(string='Total Amount', compute='_compute_total_amount', store=True,currency_field='currency_id')
+    total_amount = fields.Monetary(string='Total Amount', compute='_compute_total_amount', store=True, currency_field='currency_id')
     approved_supplier_id = fields.Many2one('res.partner', string='Approved Supplier')
     currency_id = fields.Many2one('res.currency', default=lambda self: self.env.company.currency_id)
     product_line_ids = fields.One2many('rfp.product.line', 'rfp_id', string='Product Lines')
-    rfq_lines = fields.One2many('perchase.order', 'rfp_id', string='RFQ Lines')
+    rfq_lines = fields.One2many('purchase.order', 'rfp_id', string='RFQ Lines')
 
     @api.model
     def create(self, vals):
         if vals.get('rfp_number', _('New')) == _('New'):
             vals['rfp_number'] = self.env['ir.sequence'].next_by_code('rfp.request') or _('New')
-        return super(RFP,self).create(vals)
+        return super(RFP, self).create(vals)
 
     @api.depends('rfq_lines.amount_total')
     def _compute_total_amount(self):
@@ -70,6 +70,3 @@ class RFP(models.Model):
             raise UserError(_('Only Recommended RFPs can be accepted.'))
         self.status = 'accepted'
         self.message_post(body=_('RFP has been accepted.'))
-
-
-
