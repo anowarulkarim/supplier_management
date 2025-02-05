@@ -7,7 +7,7 @@ class RFP(models.Model):
     _description = 'Request for Purchase'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string='RFP Number', required=True, copy=False, readonly=True, index=True, default=lambda self: _('New'))
+    rfp_number = fields.Char(string='RFP Number', required=True, copy=False, readonly=True, index=True, default=lambda self: _('New'))
     status = fields.Selection([
         ('draft', 'Draft'),
         ('submitted', 'Submitted'),
@@ -22,13 +22,13 @@ class RFP(models.Model):
     approved_supplier_id = fields.Many2one('res.partner', string='Approved Supplier')
     currency_id = fields.Many2one('res.currency', default=lambda self: self.env.company.currency_id)
     product_line_ids = fields.One2many('rfp.product.line', 'rfp_id', string='Product Lines')
-    rfq_lines = fields.One2many('purchase.order', 'rfp_id', string='RFQ Lines')
+    rfq_lines = fields.One2many('perchase.order', 'rfp_id', string='RFQ Lines')
 
     @api.model
     def create(self, vals):
-        if vals.get('name', _('New')) == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code('rfp.request') or _('New')
-        return super().create(vals)
+        if vals.get('rfp_number', _('New')) == _('New'):
+            vals['rfp_number'] = self.env['ir.sequence'].next_by_code('rfp.request') or _('New')
+        return super(RFP,self).create(vals)
 
     @api.depends('rfq_lines.amount_total')
     def _compute_total_amount(self):
