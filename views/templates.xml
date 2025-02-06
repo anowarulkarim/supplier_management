@@ -673,6 +673,11 @@
                                 />
                             </div>
                             <div class="form-group">
+                                <label for="image_1920">Add Company logo</label>
+                                <input type="file" class="form-control" id="image_1920" name="image_1920" />
+                                <small class="form-text text-muted">Please upload an image with a maximum resolution of 1920x1920 pixels.</small>
+                            </div>
+                            <div class="form-group">
                                 <label for="company_stamp_and_date">Company Stamp &amp; Date (Image Upload)</label>
                                 <input type="file" class="form-control" id="company_stamp_and_date"
                                        name="company_stamp_and_date"

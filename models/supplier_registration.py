@@ -80,6 +80,7 @@ class SupplierRegistration(models.TransientModel):
     bank_letter_indicating_bank_account = fields.Binary(string='Bank Letter indicating Bank Account')
     past_2_years_audited_financial_statements = fields.Binary(string='Past 2 Years Audited Financial Statements')
     other_certifications = fields.Binary(string='Other Certifications')
+    image_1920 = fields.Binary(string='Image')
     state = fields.Selection(
         [('draft', 'Draft'), ('submitted', 'Submitted'),('recommanded','Recommanded'), ('approved', 'Approved'),('rejected', 'Rejected')],
         string='State', default='draft', tracking=True)
@@ -169,12 +170,14 @@ class SupplierRegistration(models.TransientModel):
             'bank_letter_indicating_bank_account',
             'past_2_years_audited_financial_statements',
             'other_certifications',
+            'image_1920',
         ]
         for field in file_fields:
             if getattr(self, field):
                 vals[field] = getattr(self, field)
         new_supplier = self.env['res.partner'].create(vals)
         new_user = self.env['res.users'].create({
+            'image_1920': self.image_1920,
             'login': self.email,
             'password': self.email,
             'partner_id': new_supplier.id,

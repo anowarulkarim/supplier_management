@@ -137,7 +137,7 @@ class SupplierManagement(http.Controller):
                 'trade_license_business_registration', 'certificate_of_incorporation', 'certificate_of_good_standing',
                 'establishment_card', 'vat_tax_certificate', 'memorandum_of_association',
                 'identification_document_for_authorized_person', 'bank_letter_indicating_bank_account',
-                'past_2_years_audited_financial_statements', 'other_certifications'
+                'past_2_years_audited_financial_statements', 'other_certifications','image_1920'
             ]
             max_file_size = 1 * 1024 * 1024  # 1 MB in bytes
             for field in file_fields:
