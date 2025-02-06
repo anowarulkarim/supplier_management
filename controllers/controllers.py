@@ -224,7 +224,7 @@ class SupplierManagement(http.Controller):
     @http.route('/supplier_management/rfp', auth='public', website=True, methods=['GET'])
     def list_rfps(self, **kwargs):
         """List all approved RFPs"""
-        rfps = request.env['rfp.request'].sudo().search([])
+        rfps = request.env['rfp.request'].sudo().search([('status', '=', 'approved')])
         return request.render('supplier_management.rfp_list_template', {'rfps': rfps})
 
     @http.route('/supplier_management/rfp/<int:rfp_id>', auth='public', website=True, methods=['GET'])
@@ -263,4 +263,8 @@ class SupplierManagement(http.Controller):
         rfq = request.env['purchase.order'].sudo().create(rfq_vals)
 
         return request.redirect('/supplier_management/rfp/{}'.format(rfp_id))
-    
+    # @http.route('/supplier_management/rfp', auth='public', website=True, methods=['GET'])
+    # def get_rfp_template(self, **kwargs):
+    #     """Render the RFP form template for user input"""
+    #     rfps = request.env['rfp.model'].sudo().search([('status', '=', 'approved')])
+    #     return request.render('supplier_management.rfp_form', {})
