@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <record id="view_rfp_form" model="ir.ui.view">
+        <field name="name">rfp.request.form</field>
+        <field name="model">rfp.request</field>
+        <field name="arch" type="xml">
+            <form string="Request for Purchase">
+                <header>
+                    <button name="action_submit_rfp" type="object" string="Submit" class="oe_highlight"/>
+                    <button name="action_return_to_draft_rfp" type="object" string="Return to Draft" class="oe_highlight"/>
+                    <button name="action_approve_rfp" type="object" string="Approve" class="oe_highlight"/>
+                    <button name="action_reject_rfp" type="object" string="Reject" class="oe_highlight"/>
+                    <button name="action_close_rfp" type="object" string="Close" class="oe_highlight"/>
+                    <button name="action_accept_rfp" type="object" string="Accept" class="oe_highlight"/>
+                    <field name='status' widget='statusbar'/> 
+                </header>
+                <sheet>
+                    <group>
+                        <group name="rfp_details">
+                            <field name="create_uid" string="Created By" readonly="1"/>
+                            <field name="rfp_number"/>
+                            <field name="status"/>
+                            <field name="required_date"/>
+                        
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Product Lines">
+                            <field name="product_line_ids" readonly="status not in ('draft',)">
+                                <tree editable="bottom">
+                                    
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="RFQ Lines">
+                            <field name="rfq_lines">
+                                <tree editable="bottom">
+                                   
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="partner_id"/>
+                                    <field name="amount_total"/>
+                                    <field name= "notes"/>
+                                    
+                                    <field name="date_order"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
     <record id="view_rfp_tree" model="ir.ui.view">
         <field name="name">rfp.request.tree</field>
         <field name="model">rfp.request</field>

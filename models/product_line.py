@@ -4,7 +4,7 @@ from odoo.exceptions import UserError
 class ProductLine(models.Model):
     _name = 'rfp.product.line'
     _description = 'RFP Product Line'
-
+    
     rfp_id = fields.Many2one('rfp.request', string='RFP')  # Corrected field name
     product_id = fields.Many2one('product.product', string='Product', required=True)
     description = fields.Text(string='Description')

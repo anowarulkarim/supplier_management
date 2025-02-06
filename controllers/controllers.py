@@ -150,11 +150,11 @@ class SupplierManagement(http.Controller):
                     file_vals[field] = kw.get(field).read()
             vals['state'] = 'submitted'
             if not error_list:
-                # new_supplier = request.env['supplier.registration'].sudo().create(vals)
-                # if new_supplier:
-                #     success_list.append("Supplier Registered Successfully")
-                # if file_vals:
-                #     new_supplier.write(file_vals)
+                new_supplier = request.env['supplier.registration'].sudo().create(vals)
+                if new_supplier:
+                    success_list.append("Supplier Registered Successfully")
+                if file_vals:
+                    new_supplier.write(file_vals)
 
                 template = request.env.ref('supplier_management.reviewer_notification_email')
 
@@ -220,3 +220,8 @@ class SupplierManagement(http.Controller):
         # return request.render('supplier_management.user_registration_form',{})
 
         return http.Response('{"status": "success", "message": "OTP verified successfully"}', content_type='application/json')
+
+    # @http.route('/supplier_management/rfp', auth='public', website=True, methods=['GET'])
+    # def get_rfp_template(self, **kwargs):
+    #     """Render the RFP form template for user input"""
+    #     return request.render('supplier_management.rfp_form', {})
