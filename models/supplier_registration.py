@@ -168,7 +168,7 @@ class SupplierRegistration(models.TransientModel):
             'identification_document_for_authorized_person',
             'bank_letter_indicating_bank_account',
             'past_2_years_audited_financial_statements',
-            'other_certifications'
+            'other_certifications',
         ]
         for field in file_fields:
             if getattr(self, field):

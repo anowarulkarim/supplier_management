@@ -221,7 +221,46 @@ class SupplierManagement(http.Controller):
 
         return http.Response('{"status": "success", "message": "OTP verified successfully"}', content_type='application/json')
 
-    # @http.route('/supplier_management/rfp', auth='public', website=True, methods=['GET'])
-    # def get_rfp_template(self, **kwargs):
-    #     """Render the RFP form template for user input"""
-    #     return request.render('supplier_management.rfp_form', {})
+    @http.route('/supplier_management/rfp', auth='public', website=True, methods=['GET'])
+    def list_rfps(self, **kwargs):
+        """List all approved RFPs"""
+        rfps = request.env['rfp.request'].sudo().search([])
+        return request.render('supplier_management.rfp_list_template', {'rfps': rfps})
+
+    @http.route('/supplier_management/rfp/<int:rfp_id>', auth='public', website=True, methods=['GET'])
+    def view_rfp_details(self, rfp_id, **kwargs):
+        """Show details of a specific RFP and allow RFQ creation"""
+        rfp = request.env['rfp.request'].sudo().browse(rfp_id)
+        if not rfp.exists():
+            return request.not_found()
+
+        return request.render('supplier_management.rfp_detail_template', {'rfp': rfp})
+
+    @http.route('/supplier_management/rfp/<int:rfp_id>/create_rfq', auth='public', website=True, methods=['POST'])
+    def create_rfq(self, rfp_id, **kwargs):
+        """Create an RFQ for a given RFP"""
+        rfp = request.env['rfp.request'].sudo().browse(rfp_id)
+        if not rfp.exists():
+            return request.not_found()
+
+        # Get supplier info from the request
+        supplier_id = int(kwargs.get('supplier_id', 0))
+        warranty_period = int(kwargs.get('warranty_period', 0))
+
+        if not supplier_id:
+            return request.render('supplier_management.rfp_detail_template', {
+                'rfp': rfp,
+                'error': 'Supplier is required to create an RFQ.'
+            })
+
+        rfq_vals = {
+            'partner_id': supplier_id,
+            'rfp_id': rfp.id,
+            'date_order': fields.Date.today(),
+            'currency_id': rfp.currency_id.id,
+            'warranty_period': warranty_period,
+        }
+        rfq = request.env['purchase.order'].sudo().create(rfq_vals)
+
+        return request.redirect('/supplier_management/rfp/{}'.format(rfp_id))
+    

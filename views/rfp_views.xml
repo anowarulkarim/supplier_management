@@ -37,7 +37,7 @@
                             </field>
                         </page>
                         <page string="RFQ Lines">
-                            <field name="rfq_lines">
+                            <field name="rfq_lines" readonly="1">
                                 <tree editable="bottom">
                                    
                                     <field name="company_id" invisible="1"/>
