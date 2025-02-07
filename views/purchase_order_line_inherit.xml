@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Locate the field 'price_total' and add the new field after it -->
+            <xpath expr="//page[@name='products']//tree" position="inside">
+            <!-- Add the new field inside the tree view -->
+                <field name="delivery_charge" string="Custom Field" optional="show"/>
+            </xpath>
+            <!-- <xpath expr="//field[@name='price_total']" position="after">
+                <field name="delivery_charge" string="Delivary Charge"/>
+            </xpath> -->
+        </field>
+    </record>
+</odoo>

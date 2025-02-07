@@ -224,7 +224,7 @@ class SupplierManagement(http.Controller):
     @http.route('/supplier_management/rfp', auth='public', website=True, methods=['GET'])
     def list_rfps(self, **kwargs):
         """List all approved RFPs"""
-        rfps = request.env['rfp.request'].sudo().search([('status', '=', 'approved')])
+        rfps = request.env['rfp.request'].sudo().search([])   #('status', '=', 'approved')
         return request.render('supplier_management.rfp_list_template', {'rfps': rfps})
 
     @http.route('/supplier_management/rfp/<int:rfp_id>', auth='public', website=True, methods=['GET'])
@@ -236,35 +236,85 @@ class SupplierManagement(http.Controller):
 
         return request.render('supplier_management.rfp_detail_template', {'rfp': rfp})
 
-    @http.route('/supplier_management/rfp/<int:rfp_id>/create_rfq', auth='public', website=True, methods=['POST'])
+    # @http.route('/supplier_management/rfp/<int:rfp_id>/create_rfq', auth='public', website=True, methods=['POST','GET'])
+    # def create_rfq(self, rfp_id, **kwargs):
+    #     """Create an RFQ for a given RFP"""
+    #     rfp = request.env['rfp.request'].sudo().browse(rfp_id)
+    #     if not rfp.exists():
+    #         return request.not_found()
+
+    #     # Get supplier info from the request
+    #     supplier_id = int(kwargs.get('supplier_id', 0))
+    #     warranty_period = int(kwargs.get('warranty_period', 0))
+
+    #     if not supplier_id:
+    #         return request.render('supplier_management.rfp_detail_template', {
+    #             'rfp': rfp,
+    #             'error': 'Supplier is required to create an RFQ.'
+    #         })
+
+    #     rfq_vals = {
+    #         'partner_id': supplier_id,
+    #         'rfp_id': rfp.id,
+    #         'date_order': fields.Date.today(),
+    #         'currency_id': rfp.currency_id.id,
+    #         'warranty_period': warranty_period,
+    #     }
+    #     rfq = request.env['purchase.order'].sudo().create(rfq_vals)
+
+    #     return request.redirect('/supplier_management/rfp/{}'.format(rfp_id))
+    @http.route('/supplier_management/rfp/<int:rfp_id>/create_rfq', auth='user', website=True, methods=['GET', 'POST'])
     def create_rfq(self, rfp_id, **kwargs):
-        """Create an RFQ for a given RFP"""
+        """Handles both GET (display form) and POST (submit RFQ)."""
         rfp = request.env['rfp.request'].sudo().browse(rfp_id)
+
         if not rfp.exists():
-            return request.not_found()
+            return request.redirect('/supplier_management/rfp')  # Redirect if RFP doesn't exist
 
-        # Get supplier info from the request
-        supplier_id = int(kwargs.get('supplier_id', 0))
-        warranty_period = int(kwargs.get('warranty_period', 0))
+        if http.request.httprequest.method == 'POST':
+            # Extract form data
+            warranty_period = int(kwargs.get('warranty_period', 0))
+            date_planned = kwargs.get('date_planned')
+            notes = kwargs.get('notes')
 
-        if not supplier_id:
-            return request.render('supplier_management.rfp_detail_template', {
-                'rfp': rfp,
-                'error': 'Supplier is required to create an RFQ.'
+            # Get the current supplier (partner)
+            partner_id = request.env.user.partner_id.id
+
+            # Create RFQ (purchase order)
+            purchase_order = request.env['purchase.order'].sudo().create({
+                'partner_id': partner_id,
+                'date_planned': date_planned,
+                'notes': notes,
+                'rfp_id': rfp_id,
+                'warranty_period': warranty_period,
+                'currency_id': rfp.currency_id.id,
             })
 
-        rfq_vals = {
-            'partner_id': supplier_id,
-            'rfp_id': rfp.id,
-            'date_order': fields.Date.today(),
-            'currency_id': rfp.currency_id.id,
-            'warranty_period': warranty_period,
-        }
-        rfq = request.env['purchase.order'].sudo().create(rfq_vals)
+            # Add the product lines to purchase.order.line
+            for line in rfp.product_line_ids:
+                # Capture form data for each product line using dynamic field names
+                product_qty = int(kwargs.get(f'quantity_{line.id}', 0))
+                unit_price = float(kwargs.get(f'unit_price_{line.id}', 0))
+                delivery_charges = float(kwargs.get(f'delivery_charges_{line.id}', 0))
+                print("asdfjkljasdlfjl     ",delivery_charges,"asdf")
+                if kwargs[f'delivery_charges_{line.id}'] == '':
+                    delivery_charges = 0
 
-        return request.redirect('/supplier_management/rfp/{}'.format(rfp_id))
-    # @http.route('/supplier_management/rfp', auth='public', website=True, methods=['GET'])
-    # def get_rfp_template(self, **kwargs):
-    #     """Render the RFP form template for user input"""
-    #     rfps = request.env['rfp.model'].sudo().search([('status', '=', 'approved')])
-    #     return request.render('supplier_management.rfp_form', {})
+                # Create purchase order line
+                request.env['purchase.order.line'].sudo().create({
+                    'order_id': purchase_order.id,  # Link the line to the purchase order
+                    'product_id': line.product_id.id,
+                    'product_qty': product_qty,
+                    'price_unit': unit_price,
+                    'delivery_charge': delivery_charges,
+                    'taxes_id': [(6, 0, [tax.id for tax in line.product_id.supplier_taxes_id])],  # Link taxes
+                    'name': "asdfhjk",  # Add description from product line
+                })
+
+            # Redirect to success page after RFQ creation
+            return request.redirect('/supplier_management/rfq/success')
+
+        # If GET request, render form
+        return request.render('supplier_management.rfq_form', {'rfp': rfp})
+
+
