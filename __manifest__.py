@@ -24,6 +24,7 @@ Long description of module's purpose
     'data': [
         'security/supplier_management_security.xml',
         'security/ir.model.access.csv',
+        # 'views/purchase_order_line_inherit.xml',
         'views/portal_rfp_templates.xml',
         'views/email_template.xml',
         'views/ir_sequence.xml',

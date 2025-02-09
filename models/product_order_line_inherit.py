@@ -28,10 +28,10 @@ class ProductOrderLine(models.Model):
             amount_untaxed = totals['amount_untaxed']
             if line.delivery_charge:
                 amount_untaxed = amount_untaxed + line.delivery_charge
-            amount_tax = totals['amount_tax']
+            amount_tax = totals['amount_tax']+line.delivery_charge
 
             line.update({
                 'price_subtotal': amount_untaxed,
                 'price_tax': amount_tax,
-                'price_total': amount_untaxed + amount_tax + line.delivery_charge,
+                'price_total': amount_untaxed + amount_tax,
             })

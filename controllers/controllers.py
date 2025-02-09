@@ -38,6 +38,7 @@ class SupplierManagement(http.Controller):
             'expiry_time': expiry_time,
             'verified': False
         })
+        print("OTP Code:", otp_code)
 
         # Send OTP via email
         mail_values = {
@@ -52,6 +53,8 @@ class SupplierManagement(http.Controller):
             """
         }
         request.env['mail.mail'].sudo().create(mail_values).send()
+        # Store email in session
+        request.session['otp_email'] = email
 
         return http.Response('{"status": "success", "message": "OTP has been sent"}', content_type='application/json')
 
@@ -64,6 +67,9 @@ class SupplierManagement(http.Controller):
     def get_user_info(self, **kw):
         error_list = []
         success_list = []
+        # Check if OTP email is in session
+        if 'otp_email' not in request.session:
+            return request.redirect('/supplier_management/create')
         if request.httprequest.method == 'POST':
             vals = {}
             keys = [

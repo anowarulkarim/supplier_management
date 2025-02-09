@@ -108,7 +108,7 @@
                         });
                     </script>
 
-                    <!-- ✅ Error and Success Messages -->
+                    <!-- ✅ Error and      Success Messages -->
                     <t t-if="error">
                         <div class="alert alert-danger mt-3">
                             <t t-esc="error"/>
