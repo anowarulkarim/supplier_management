@@ -68,6 +68,7 @@ document.getElementById("tax_identification_number").addEventListener("keyup", f
 
     let tin = tinField.value.trim();
     console.log("tin");
+    console.log("asjhkdfsdhfasjkdhfkasdjhfsdjkhfksdjhfkasdjhfksdjhfsdhfkjhdfkjd,xmzcvn,mxcvn");
 
     if (tin.length !== 10) {
         errorMsg.style.display = "block";  // Show the error message

@@ -38,8 +38,7 @@
                         </page>
                         <page string="RFQ Lines">
                             <field name="rfq_lines" readonly="1">
-                                <tree editable="bottom">
-                                   
+                                <tree >
                                     <field name="company_id" invisible="1"/>
                                     <field name="partner_id"/>
                                     <field name="amount_total"/>
@@ -51,6 +50,12 @@
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                <!-- Chatter will be displayed here -->
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
