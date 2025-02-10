@@ -77,9 +77,7 @@
     <menuitem id="menu_rfp_request" name="Request for Purchase" 
               parent="purchase.menu_procurement_management"
               action="action_rfp_request" sequence="25"/>
-              <!-- groups="supplier_management.group_supplier_management_reviewer"/> -->
-
-    <!-- <menuitem id="submenu_rfp_request" name="Request for Purchase" parent="rfp_request_menu" action="action_rfp_request"/> -->
+              
 </odoo>
 
     

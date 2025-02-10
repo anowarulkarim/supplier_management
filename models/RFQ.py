@@ -5,7 +5,7 @@ class RFQ(models.Model):
     _inherit = 'purchase.order'
     _description = 'Request for Quotation'
 
-    # supplier = partner_id 
+    # supplier = partner_id
     # Expected delivery date = date_planned
     # Terms and Conditions = notes
     # total proce = amount_total
