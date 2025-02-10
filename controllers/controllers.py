@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 import random
 import datetime
-from odoo import http, fields
+from odoo import http, fields, _
+from odoo.addons.portal.controllers.portal import pager as portal_pager
 from odoo.http import request
+from math import ceil
+from itertools import groupby as groupbyelem
 
 
 class SupplierManagement(http.Controller):
@@ -228,10 +231,91 @@ class SupplierManagement(http.Controller):
         return http.Response('{"status": "success", "message": "OTP verified successfully"}', content_type='application/json')
 
     @http.route('/supplier_management/rfp', auth='public', website=True, methods=['GET'])
-    def list_rfps(self, **kwargs):
-        """List all approved RFPs"""
-        rfps = request.env['rfp.request'].sudo().search([])   #('status', '=', 'approved')
-        return request.render('supplier_management.rfp_list_template', {'rfps': rfps})
+    def portal_rfp_list(self, page=1, sortby=None, search=None, search_in=None, groupby='required_date', **kw):
+        limit = 7
+
+        # Define sorting options
+        searchbar_sortings = {
+            'rfp_number': {'label': _('RFP Number'), 'order': 'rfp_number'},
+            'required_date': {'label': _('Required Date'), 'order': 'required_date'},
+        }
+
+        # Define grouping options (status grouping removed since all RFPs are approved)
+        groupby_list = {
+            'required_date': {'input': 'required_date', 'label': _('Required Date')},
+        }
+        group_by_rfp = groupby_list.get(groupby, {})
+
+        # Default search field is 'name'
+        if not search_in:
+            search_in = 'rfp_number'
+
+        # Get the sort order
+        order = searchbar_sortings[sortby]['order'] if sortby else 'rfp_number'
+        if not sortby:
+            sortby = 'rfp_number'
+
+        # Define search filters (removed the status option)
+        search_list = {
+            'all': {'label': _('All'), 'input': 'all', 'domain': []},
+            'rfp_number': {'label': _('RFP Number'), 'input': 'rfp_number', 'domain': [('rfp_number', 'ilike', search)]},
+            'required_date': {'label': _('Required Date'), 'input': 'required_date',
+                              'domain': [('required_date', '=', search)]},
+        }
+
+        # Build the search domain based on the provided search term
+        search_domain = []
+        if search:
+            search_domain += search_list[search_in]['domain']
+
+        # Filter records to show only approved RFPs
+        search_domain.append(('status', '=', 'submitted'))
+
+        # Count the number of RFP records matching the domain
+        rfp_count = request.env['rfp.request'].sudo().search_count(search_domain)
+
+        # Setup pagination
+        pager = portal_pager(
+            url='/my/rfps',
+            url_args={'sortby': sortby, 'search_in': search_in, 'search': search},
+            total=rfp_count,
+            page=page,
+            step=limit,
+        )
+
+        # Search for RFP records based on the domain, pagination, and order
+        rfps = request.env['rfp.request'].sudo().search(
+            search_domain, limit=limit, offset=pager['offset'], order=order
+        )
+
+        # Group the RFPs according to the selected grouping option (only required_date remains)
+        if groupby_list.get(groupby) and groupby_list[groupby]['input']:
+            rfp_group_list = [
+                {
+                    'group_name': key.rfp_number if hasattr(key, 'rfp_number') else key,
+                    'rfps': list(group)
+                }
+                for key, group in groupbyelem(rfps, key=lambda r: getattr(r, group_by_rfp['input']))
+            ]
+        else:
+            rfp_group_list = [{'group_name': _('All RFPs'), 'rfps': rfps}]
+        print(rfp_group_list[0]['rfps'])
+
+        # Render the portal view template with the prepared values
+        return request.render('supplier_management.rfp_list_template', {
+            'page_name': 'rfp_list',
+            'pager': pager,
+            'sortby': sortby,
+            'searchbar_sortings': searchbar_sortings,
+            'searchbar_inputs': search_list,
+            'search_in': search_in,
+            'search': search,
+            'rfp_groups': rfp_group_list,
+            'default_url': 'supplier_management/rfp',
+            'groupby': groupby,
+            'searchbar_groupby': groupby_list,
+        })
+
 
     @http.route('/supplier_management/rfp/<int:rfp_id>', auth='public', website=True, methods=['GET'])
     def view_rfp_details(self, rfp_id, **kwargs):
@@ -322,5 +406,10 @@ class SupplierManagement(http.Controller):
 
         # If GET request, render form
         return request.render('supplier_management.rfq_form', {'rfp': rfp})
+
+    @http.route('/supplier_management/rfq/success', type='http', auth="public", website=True)
+    def rfq_success(self):
+        
+        return request.render('supplier_management.rfq_success_template', {})
 
 

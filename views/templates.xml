@@ -133,451 +133,418 @@
             </t>
         </template> -->
         <template id="new_supplier_registration_form_view_portal">
-            <t t-call="portal.portal_layout">
-                <div class="container" id="new_supplier_registration" style="max-width: 800px; margin-top: 20px;">
-                    <t t-foreach="error_list" t-as="error">
-                        <div class="alert alert-danger" role="alert">
-                            <h4 class="alert-heading">Error!</h4>
-                            <t t-out="error"/>
-                        </div>
+    <t t-call="portal.portal_layout">
+        <div class="container mt-5" id="new_supplier_registration" style="max-width: 1200px;">
+            <!-- Error Messages -->
+            <t t-foreach="error_list" t-as="error">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Error!</strong> <t t-out="error"/>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </t>
+
+            <!-- Success Messages -->
+            <t t-if="success_list">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Success!</strong>
+                    <t t-foreach="success_list" t-as="success">
+                        <t t-out="success"/>
                     </t>
-                    <t t-if="success_list">
-                        <div class="alert alert-success" role="alert">
-                            <h4 class="alert-heading">Success!</h4>
-                            <t t-foreach="success_list" t-as="success">
-                                <t t-out="success"/>
-                            </t>
-                        </div>
-                    </t>
-                    <form id="multi-step-form" method="POST" action="/supplier_management/create/user" enctype="multipart/form-data">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </t>
+
+            <!-- Multi-Step Form -->
+            <form id="multi-step-form" method="POST" action="/supplier_management/create/user" enctype="multipart/form-data">
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <!-- <form id="multi-step-form" method="POST" action="/supplier_management/create/user" enctype="multipart/form-data" class="bg-white p-4 rounded shadow-sm">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/> -->
 
-                        <!-- Step 1: Company Information -->
-                        <div class="form-step" id="step-1">
-                            <h3 style="text-align: center;">Section 1: Company Information</h3>
-                            <div>
-                                <div class="row col-md-12">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="company_name">Company Name</label>
-                                            <!-- <label for="company_name_error_msg">You Must enter the company name</label> -->
-                                            <input type="text" class="form-control" id="company_name"
-                                                   name="company_name"
-                                                   placeholder="Enter company name"
-                                                   style="background-color: #ccffcc;"/>
-                                            <small id="company_name_error_msg" style="color: red; display: none;">You Must Input Company Name</small>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="email">Company Email</label>
-                                            <input type="text" class="form-control" id="email"
-                                                   name="email"
-                                                   placeholder="Enter company email"
-                                                   style="background-color: #ccffcc;"/>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="company_type_category">Company Type (LLC, Corporation, etc.)
-                                            </label>
-                                            <select class="form-control" id="company_type_category"
-                                                    name="company_type_category" required="true"
-                                                    style="background-color: #ccffcc;">
-                                                <option value="LLC">LLC</option>
-                                                <option value="corporate">Corporation</option>
-                                                <option value="sole_proprietorship">Sole Proprietorship</option>
-                                                <option value="partnership">Partnership</option>
-                                                <option value="cooperative">Cooperative</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="company_registered_address">Company Registered Address</label>
-                                            <input type="text" class="form-control" id="company_registered_address"
-                                                   name="company_registered_address"
-                                                   placeholder="Enter registered address" style="background-color: #ccffcc;"
-                                            />
-                                            <small id="company_registered_address_error_msg" style="color: red; display: none;">You Must Input Company Registered Address</small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="company_alternate_address">Company Alternate Address</label>
-                                            <input type="text" class="form-control" id="company_alternate_address"
-                                                   name="company_alternate_address"
-                                                   placeholder="Enter alternate address" style="background-color: #ccffcc;"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="phone">Company Phone</label>
-                                            <input type="text" class="form-control" id="phone"
-                                                   name="phone"
-                                                   placeholder="Enter company phone"
-                                                   style="background-color: #ccffcc;"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="trade_license_number">Trade License Number</label>
-                                            <input type="text" class="form-control" id="trade_license_number"
-                                                   name="trade_license_number" placeholder="Enter trade license number"
-                                                   style="background-color: #ccffcc;"
-                                            />
-                                            <small id="trade_license_error_msg" style="color: red; display: none;">It should be alphanumeric and 8-20 characters long.</small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="tax_identification_number">Tax Identification Number (TIN)
-                                            </label>
-                                            
-                                            <input type="text" class="form-control" id="tax_identification_number"
-                                                   name="tax_identification_number" placeholder="Enter TIN"
-                                                   style="background-color: #ccffcc;"/>
-                                            <small id="tin_error_msg" style="color: red; display: none;">TIN must be exactly 16 digits Numaric Number.</small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="commencement_date">Commencement Date</label>
-                                            <input type="date" class="form-control" id="commencement_date"
-                                                   name="commencement_date" style="background-color: #ccffcc;"
-                                            />
-                                            <small id="commencement_date_error_msg" style="color: red; display: none;">The commencement date should be before today.</small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="expiry_date">Expiry Date</label>
-                                            <input type="date" class="form-control" id="expiry_date" name="expiry_date"
-                                             style="background-color: #ccffcc;"/>
-                                            <smell id="expiry_date_error_msg" style="color: red; display: none;">The expiry date should be after today.</smell>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row col-md-12">
-                                    <div class="col-md-4">
-                                        <!-- Contact Person Information -->
-                                        <p></p>
-                                        <h4>Contact Person Information</h4>
-                                        <div class="form-group">
-                                            <label for="contact_person_title">Contact Person’s Title</label>
-                                            <input type="text" class="form-control" id="contact_person_title"
-                                                   name="contact_person_title"
-                                                   placeholder="Enter contact person's title" style="background-color: #ccffcc;"
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="contact_email">Contact Email</label>
-                                            <input type="email" class="form-control" id="contact_email"
-                                                   name="contact_email"
-                                                   placeholder="Enter contact email" style="background-color: #ccffcc;"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="contact_phone">Contact Phone</label>
-                                            <input type="tel" class="form-control" id="contact_phone"
-                                                   name="contact_phone"
-                                                   placeholder="Enter contact phone number" style="background-color: #ccffcc;"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="contact_address">Contact Person Address</label>
-                                            <input type="text" class="form-control" id="contact_address" name="contact_address"
-                                                   placeholder="Enter contact person address" style="background-color: #ccffcc;"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <!-- Finance Department Information -->
-                                        <p></p>
-                                        <h4>Finance Department Information</h4>
-                                        <div class="form-group">
-                                            <label for="finance_contact_title">Contact Person’s Title</label>
-                                            <input type="text" class="form-control" id="finance_contact_title"
-                                                   name="finance_contact_title"
-                                                   placeholder="Enter finance contact person's title" style="background-color: #ccffcc;"
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="finance_contact_email">Contact Email</label>
-                                            <input type="email" class="form-control" id="finance_contact_email"
-                                                   name="finance_contact_email"
-                                                   placeholder="Enter finance contact email" style="background-color: #ccffcc;"
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="finance_contact_phone">Contact Phone</label>
-                                            <input type="tel" class="form-control" id="finance_contact_phone"
-                                                   name="finance_contact_phone"
-                                                   placeholder="Enter finance contact phone number" style="background-color: #ccffcc;"
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="finance_contact_address">Finance Contact Address</label>
-                                            <input type="text" class="form-control" id="finance_contact_address" name="finance_contact_address"
-                                                   placeholder="Enter finance contact address" style="background-color: #ccffcc;"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <!-- Authorized Person Information -->
-                                        <p></p>
-                                        <h4>Authorized Person Information</h4>
-                                        <div class="form-group">
-                                            <label for="authorized_person_name">Name of Authorized Person</label>
-                                            <input type="text" class="form-control" id="authorized_person_name"
-                                                   name="authorized_person_name"
-                                                   placeholder="Enter authorized person name" style="background-color: #ccffcc;"
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="authorized_person_email">Contact Email</label>
-                                            <input type="email" class="form-control" id="authorized_person_email"
-                                                   name="authorized_person_email"
-                                                   placeholder="Enter authorized person’s email" style="background-color: #ccffcc;"
-                                            />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="authorized_person_phone">Contact Phone</label>
-                                            <input type="tel" class="form-control" id="authorized_person_phone"
-                                                   name="authorized_person_phone"
-                                                   placeholder="Enter authorized person’s phone number" style="background-color: #ccffcc;"/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="authorized_person_address">Authorized Person Address</label>
-                                            <input type="text" class="form-control" id="authorized_person_address" name="authorized_person_address"
-                                                   placeholder="Enter authorized person address" style="background-color: #ccffcc;"/>
-                                        </div>
-                                    </div>
-                                </div>
+                <!-- Step 1: Company Information -->
+                <div class="form-step" id="step-1">
+                    <h3 class="text-center mb-4">Section 1: Company Information</h3>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Enter company name"/>
+                                <label for="company_name">Company Name</label>
+                                <small id="company_name_error_msg" style="color: red; display: none;">You Must Input Company Name</small>
                             </div>
-
-                            <button type="button" class="btn btn-primary" id="next-1">Next</button>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter company email"/>
+                                <label for="email">Company Email</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select class="form-select" id="company_type_category" name="company_type_category" required="required">
+                                    <option value="LLC">LLC</option>
+                                    <option value="corporate">Corporation</option>
+                                    <option value="sole_proprietorship">Sole Proprietorship</option>
+                                    <option value="partnership">Partnership</option>
+                                    <option value="cooperative">Cooperative</option>
+                                </select>
+                                <label for="company_type_category">Company Type</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="company_registered_address" name="company_registered_address" placeholder="Enter registered address"/>
+                                <label for="company_registered_address">Company Registered Address</label>
+                                <small id="company_registered_address_error_msg" style="color: red; display: none;">You Must Input Company Registered Address</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="company_alternate_address" name="company_alternate_address" placeholder="Enter alternate address"/>
+                                <label for="company_alternate_address">Company Alternate Address</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter company phone"/>
+                                <label for="phone">Company Phone</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="trade_license_number" name="trade_license_number" placeholder="Enter trade license number"/>
+                                <label for="trade_license_number">Trade License Number</label>
+                                <small id="trade_license_error_msg" style="color: red; display: none;">It should be alphanumeric and 8-20 characters long.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="tax_identification_number" name="tax_identification_number" placeholder="Enter TIN"/>
+                                <label for="tax_identification_number">Tax Identification Number (TIN)</label>
+                                <small id="tin_error_msg" style="color: red; display: none;">TIN must be exactly 16 digits Numaric Number.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="commencement_date" name="commencement_date"/>
+                                <label for="commencement_date">Commencement Date</label>
+                                <small id="commencement_date_error_msg" style="color: red; display: none;">The commencement date should be before today.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="expiry_date" name="expiry_date"/>
+                                <label for="expiry_date">Expiry Date</label>
+                                <small id="expiry_date_error_msg" style="color: red; display: none;">The expiry date should be after today.</small>
+                            </div>
+                        </div>
+                        
+                    </div>
 
-                        <!-- Step 2: Financial Information -->
-                        <div class="form-step" id="step-2" style="display:none;">
-                            <h3>Section 2: Financial Information</h3>
-                            <!-- Financial Information Fields (as already defined) -->
-                            <h4>Bank Account Information</h4>
-                            <div class="form-group">
+                    <!-- Contact Person Information -->
+                    <h4 class="mt-4">Contact Person Information</h4>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="contact_person_title" name="contact_person_title" placeholder="Enter contact person's title"/>
+                                <label for="contact_person_title">Contact Person’s Title</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="contact_email" name="contact_email" placeholder="Enter contact email"/>
+                                <label for="contact_email">Contact Email</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="tel" class="form-control" id="contact_phone" name="contact_phone" placeholder="Enter contact phone number"/>
+                                <label for="contact_phone">Contact Phone</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="contact_address" name="contact_address" placeholder="Enter contact person address"/>
+                                <label for="contact_address">Contact Person Address</label>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="mt-4">Finance Department Information</h4>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="finance_contact_title" name="finance_contact_title" placeholder="Enter contact person's title"/>
+                                <label for="finance_contact_title">Contact Person’s Title</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="finance_contact_email" name="finance_contact_email" placeholder="Enter contact email"/>
+                                <label for="finance_contact_email">Contact Email</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="tel" class="form-control" id="finance_contact_phone" name="finance_contact_phone" placeholder="Enter contact phone number"/>
+                                <label for="finance_contact_phone">Contact Phone</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="finance_contact_address" name="finance_contact_address" placeholder="Enter contact person address"/>
+                                <label for="finance_contact_address">Finance Person Address</label>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="mt-4">Name of Authorized Person</h4>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="authorized_person_name" name="authorized_person_name" placeholder="Enter contact person's title"/>
+                                <label for="authorized_person_name">Contact Person’s Title</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="authorized_person_email" name="authorized_person_email" placeholder="Enter contact email"/>
+                                <label for="authorized_person_email">Contact Email</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="tel" class="form-control" id="authorized_person_phone" name="authorized_person_phone" placeholder="Enter contact phone number"/>
+                                <label for="authorized_person_phone">Contact Phone</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="authorized_person_address" name="authorized_person_address" placeholder="Enter contact person address"/>
+                                <label for="authorized_person_address">Authorized Person Address</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-primary" id="next-1">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Financial Information -->
+                <div class="form-step" id="step-2" style="display:none;">
+                    <h3 class="text-center mb-4">Section 2: Financial Information</h3>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="bank_name" name="bank_name" placeholder="Enter bank name"/>
                                 <label for="bank_name">Bank Name</label>
-                                <input type="text" class="form-control" id="bank_name" name="bank_name"
-                                       placeholder="Enter bank name" style="background-color: #ccffcc;"/>
                             </div>
-                            <div class="form-group">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="bank_address" name="bank_address" placeholder="Enter bank address"/>
                                 <label for="bank_address">Bank Address</label>
-                                <input type="text" class="form-control" id="bank_address" name="bank_address"
-                                       placeholder="Enter bank address" style="background-color: #ccffcc;"/>
                             </div>
-                            <div class="form-group">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="bank_swift_code" name="bank_swift_code" placeholder="Enter SWIFT code"/>
                                 <label for="bank_swift_code">Bank SWIFT Code</label>
-                                <input type="text" class="form-control" id="bank_swift_code" name="bank_swift_code"
-                                       placeholder="Enter SWIFT code" style="background-color: #ccffcc;"/>
                             </div>
-                            <div class="form-group">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="account_name" name="account_name" placeholder="Enter account name"/>
                                 <label for="account_name">Account Name</label>
-                                <input type="text" class="form-control" id="account_name" name="account_name"
-                                       placeholder="Enter account name" style="background-color: #ccffcc;"/>
                             </div>
-                            <div class="form-group">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="account_number" name="account_number" placeholder="Enter account number"/>
                                 <label for="account_number">Account Number</label>
-                                <input type="text" class="form-control" id="account_number" name="account_number"
-                                       placeholder="Enter account number" style="background-color: #ccffcc;"/>
                             </div>
-                            <div class="form-group">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="iban" name="iban" placeholder="Enter IBAN"/>
                                 <label for="iban">IBAN</label>
-                                <input type="text" class="form-control" id="iban" name="iban" placeholder="Enter IBAN" style="background-color: #ccffcc;"
-                                />
                             </div>
-                            <div class="form-group">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="company_address_as_per_bank" name="company_address_as_per_bank" placeholder="Enter bank-recorded company address"/>
                                 <label for="company_address_as_per_bank">Company Address as per bank records</label>
-                                <input type="text" class="form-control" id="company_address_as_per_bank"
-                                       name="company_address_as_per_bank"
-                                       placeholder="Enter bank-recorded company address" style="background-color: #ccffcc;"/>
                             </div>
+                        </div>
+                    </div>
 
-                            <button type="button" class="btn btn-secondary" id="prev-2">Previous</button>
-                            <button type="button" class="btn btn-primary" id="next-2">Next</button>
+                    <!-- Navigation Buttons -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="button" class="btn btn-secondary" id="prev-2">Previous</button>
+                        <button type="button" class="btn btn-primary" id="next-2">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Client References -->
+                <div class="form-step" id="step-3" style="display:none;">
+                    <h3 class="text-center mb-4">Section 3: Previous Client References</h3>
+                    <div class="row g-3">
+                        <!-- Client 1 -->
+                        <div class="col-md-4">
+                            <h4>Client 1</h4>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="client_1_name" name="client_1_name" placeholder="Enter client name"/>
+                                <label for="client_1_name">Client Name</label>
+                                <small id="client_1_error_msg" style="color: red; display: none;">Client 1 Name is mandatory if other fields are filled.</small>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="text" class="form-control" id="client_1_address" name="client_1_address" placeholder="Enter client address"/>
+                                <label for="client_1_address">Client Address</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="email" class="form-control" id="client_1_contact_email" name="client_1_contact_email" placeholder="Enter contact email"/>
+                                <label for="client_1_contact_email">Client Contact Email</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="tel" class="form-control" id="client_1_contact_phone" name="client_1_contact_phone" placeholder="Enter contact phone"/>
+                                <label for="client_1_contact_phone">Client Contact Phone</label>
+                            </div>
                         </div>
 
-                        <!-- Step 3: Client References -->
-                        <div class="form-step" id="step-3" style="display:none;">
-
-                            <h3>Section 3: Previous Client References</h3>
-                            <div class="row col-md-12">
-                                <div class="col-md-4" id="client-1">
-                                    <!-- Client 1 Fields -->
-                                    <h4>Client 1</h4>
-                                    <div class="form-group">
-                                        <label for="client_1_name">Client Name</label>
-                                        <input type="text" class="form-control" id="client_1_name" name="client_1_name"
-                                               placeholder="Enter client name" style="background-color: #ccffcc;"/>
-
-                                        <small id="client_1_error_msg" style="color: red; display: none;">If you input any of the field of phone or address or email then Client 1 Name is mandatory</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="client_1_address">Client Address</label>
-                                        <input type="text" class="form-control" id="client_1_address"
-                                               name="client_1_address"
-                                               placeholder="Enter client address" style="background-color: #ccffcc;"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="client_1_contact_email">Client Contact Email</label>
-                                        <input type="email" class="form-control" id="client_1_contact_email"
-                                               name="client_1_contact_email" placeholder="Enter contact email" style="background-color: #ccffcc;"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="client_1_contact_phone">Client Contact Phone</label>
-                                        <input type="tel" class="form-control" id="client_1_contact_phone"
-                                               name="client_1_contact_phone" placeholder="Enter contact phone" style="background-color: #ccffcc;"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" id="client-2">
-                                    <!-- Client 2 Fields -->
-                                    <h4>Client 2</h4>
-                                    <div class="form-group">
-                                        <label for="client_2_name">Client Name</label>
-                                        <input type="text" class="form-control" id="client_2_name" name="client_2_name"
-                                               placeholder="Enter client name" style="background-color: #ccffcc;"/>
-                                        <small id="client_2_error_msg" style="color: red; display: none;">If you input any of the field of phone or address or 
-                                        email then Client 2 Name is mandatory</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="client_2_address">Client Address</label>
-                                        <input type="text" class="form-control" id="client_2_address"
-                                               name="client_2_address"
-                                               placeholder="Enter client address" style="background-color: #ccffcc;"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="client_2_contact_email">Client Contact Email</label>
-                                        <input type="email" class="form-control" id="client_2_contact_email"
-                                               name="client_2_contact_email" placeholder="Enter contact email" style="background-color: #ccffcc;"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="client_2_contact_phone">Client Contact Phone</label>
-                                        <input type="tel" class="form-control" id="client_2_contact_phone"
-                                               name="client_2_contact_phone" placeholder="Enter contact phone" style="background-color: #ccffcc;"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" id="client-3">
-                                    <!-- Client 3 Fields -->
-                                    <h4>Client 3</h4>
-                                    <div class="form-group">
-                                        <label for="client_3_name">Client Name</label>
-                                        <input type="text" class="form-control" id="client_3_name" name="client_3_name"
-                                               placeholder="Enter client name" style="background-color: #ccffcc;"/>
-                                        <small id="client_3_error_msg" style="color: red; display: none;">If you input any of the field of phone or address or 
-                                        email then Client 3 Name is mandatory</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="client_3_address">Client Address</label>
-                                        <input type="text" class="form-control" id="client_3_address"
-                                               name="client_3_address"
-                                               placeholder="Enter client address" style="background-color: #ccffcc;"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="client_3_contact_email">Client Contact Email</label>
-                                        <input type="email" class="form-control" id="client_3_contact_email"
-                                               name="client_3_contact_email" placeholder="Enter contact email" style="background-color: #ccffcc;"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="client_3_contact_phone">Client Contact Phone</label>
-                                        <input type="tel" class="form-control" id="client_3_contact_phone"
-                                               name="client_3_contact_phone" placeholder="Enter contact phone" style="background-color: #ccffcc;"/>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-4" id="client-4">
-                                    <!-- Client 4 Fields -->
-                                    <h4>Client 4</h4>
-                                    <div class="form-group">
-                                        <label for="client_4_name">Client Name</label>
-                                        <input type="text" class="form-control" id="client_4_name" name="client_4_name"
-                                               placeholder="Enter client name" style="background-color: #ccffcc;"/>
-                                        <small id="client_4_error_msg" style="color: red; display: none;">If you input any of the field of phone or address or email then Client 4 Name is mandatory</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="client_4_address">Client Address</label>
-                                        <input type="text" class="form-control" id="client_4_address"
-                                               name="client_4_address"
-                                               placeholder="Enter client address" style="background-color: #ccffcc;"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="client_4_contact_email">Client Contact Email</label>
-                                        <input type="email" class="form-control" id="client_4_contact_email"
-                                               name="client_4_contact_email" placeholder="Enter contact email" style="background-color: #ccffcc;"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="client_4_contact_phone">Client Contact Phone</label>
-                                        <input type="tel" class="form-control" id="client_4_contact_phone"
-                                               name="client_4_contact_phone" placeholder="Enter contact phone" style="background-color: #ccffcc;"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" id="client-5">
-                                    <!-- Client 5 Fields -->
-                                    <h4>Client 5</h4>
-                                    <div class="form-group">
-                                        <label for="client_5_name">Client Name</label>
-                                        <input type="text" class="form-control" id="client_5_name" name="client_5_name"
-                                               placeholder="Enter client name" style="background-color: #ccffcc;"/>
-                                        <small id="client_5_error_msg" style="color: red; display: none;">If you input any of the field of phone or address or email then Client 5 Name is mandatory</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="client_5_address">Client Address</label>
-                                        <input type="text" class="form-control" id="client_5_address"
-                                               name="client_5_address"
-                                               placeholder="Enter client address" style="background-color: #ccffcc;"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="client_5_contact_email">Client Contact Email</label>
-                                        <input type="email" class="form-control" id="client_5_contact_email"
-                                               name="client_5_contact_email" placeholder="Enter contact email" style="background-color: #ccffcc;"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="client_5_contact_phone">Client Contact Phone</label>
-                                        <input type="tel" class="form-control" id="client_5_contact_phone"
-                                               name="client_5_contact_phone" placeholder="Enter contact phone" style="background-color: #ccffcc;"/>
-                                    </div>
-                                </div>
+                        <!-- Client 2 -->
+                        <div class="col-md-4">
+                            <h4>Client 2</h4>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="client_2_name" name="client_2_name" placeholder="Enter client name"/>
+                                <label for="client_2_name">Client Name</label>
+                                <small id="client_2_error_msg" style="color: red; display: none;">Client 2 Name is mandatory if other fields are filled.</small>
                             </div>
-
-                            <!-- Navigation buttons -->
-                            <button type="button" class="btn btn-secondary" id="prev-3">Previous</button>
-                            <button type="button" class="btn btn-primary" id="next-3">Next</button>
+                            <div class="form-floating mt-3">
+                                <input type="text" class="form-control" id="client_2_address" name="client_2_address" placeholder="Enter client address"/>
+                                <label for="client_2_address">Client Address</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="email" class="form-control" id="client_2_contact_email" name="client_2_contact_email" placeholder="Enter contact email"/>
+                                <label for="client_2_contact_email">Client Contact Email</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="tel" class="form-control" id="client_2_contact_phone" name="client_2_contact_phone" placeholder="Enter contact phone"/>
+                                <label for="client_2_contact_phone">Client Contact Phone</label>
+                            </div>
                         </div>
 
+                        <!-- Client 3 -->
+                        <div class="col-md-4">
+                            <h4>Client 3</h4>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="client_3_name" name="client_3_name" placeholder="Enter client name"/>
+                                <label for="client_3_name">Client Name</label>
+                                <small id="client_3_error_msg" style="color: red; display: none;">Client 3 Name is mandatory if other fields are filled.</small>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="text" class="form-control" id="client_3_address" name="client_3_address" placeholder="Enter client address"/>
+                                <label for="client_3_address">Client Address</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="email" class="form-control" id="client_3_contact_email" name="client_3_contact_email" placeholder="Enter contact email"/>
+                                <label for="client_3_contact_email">Client Contact Email</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="tel" class="form-control" id="client_3_contact_phone" name="client_3_contact_phone" placeholder="Enter contact phone"/>
+                                <label for="client_3_contact_phone">Client Contact Phone</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>Client 4</h4>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="client_4_name" name="client_4_name" placeholder="Enter client name"/>
+                                <label for="client_4_name">Client Name</label>
+                                <small id="client_4_error_msg" style="color: red; display: none;">Client 4 Name is mandatory if other fields are filled.</small>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="text" class="form-control" id="client_4_address" name="client_4_address" placeholder="Enter client address"/>
+                                <label for="client_4_address">Client Address</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="email" class="form-control" id="client_4_contact_email" name="client_4_contact_email" placeholder="Enter contact email"/>
+                                <label for="client_4_contact_email">Client Contact Email</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="tel" class="form-control" id="client_4_contact_phone" name="client_4_contact_phone" placeholder="Enter contact phone"/>
+                                <label for="client_4_contact_phone">Client Contact Phone</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>Client 5</h4>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="client_5_name" name="client_5_name" placeholder="Enter client name"/>
+                                <label for="client_5_name">Client Name</label>
+                                <small id="client_5_error_msg" style="color: red; display: none;">Client 5 Name is mandatory if other fields are filled.</small>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="text" class="form-control" id="client_5_address" name="client_5_address" placeholder="Enter client address"/>
+                                <label for="client_5_address">Client Address</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="email" class="form-control" id="client_5_contact_email" name="client_5_contact_email" placeholder="Enter contact email"/>
+                                <label for="client_5_contact_email">Client Contact Email</label>
+                            </div>
+                            <div class="form-floating mt-3">
+                                <input type="tel" class="form-control" id="client_5_contact_phone" name="client_5_contact_phone" placeholder="Enter contact phone"/>
+                                <label for="client_5_contact_phone">Client Contact Phone</label>
+                            </div>
+                        </div>
 
-                        <!-- Step 4: Certifications or Accreditations -->
-                        <div class="form-step" id="step-4" style="display:none;">
-                            <h3>Section 4: Certifications or Accreditations</h3>
+                    </div>
 
-                            <!-- Certification Fields -->
-                            <h4>Certification</h4>
+                    <!-- Navigation Buttons -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="button" class="btn btn-secondary" id="prev-3">Previous</button>
+                        <button type="button" class="btn btn-primary" id="next-3">Next</button>
+                    </div>
+                </div>
 
-                            <div class="form-group">
+                <!-- Step 4: Certifications or Accreditations -->
+                <div class="form-step" id="step-4" style="display:none;">
+                    <h3 class="text-center mb-4">Section 4: Certifications or Accreditations</h3>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="certification" name="certification" placeholder="Enter certification name"/>
                                 <label for="certification">Certification</label>
-                                <input type="text" class="form-control" id="certification" name="certification"
-                                       placeholder="Enter certification name" style="background-color: #ccffcc;"/>
                             </div>
-                            <div class="form-group">
-                                <label for="certificate_number">Certificate Number</label>
-                                <input type="text" class="form-control" id="certificate_number"
-                                       name="certificate_number" placeholder="Enter certificate number" style="background-color: #ccffcc;"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label for="certifying_body">Certifying Body</label>
-                                <input type="text" class="form-control" id="certifying_body" name="certifying_body"
-                                       placeholder="Enter certifying body" style="background-color: #ccffcc;"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="award_date">Award Date</label>
-                                <input type="date" class="form-control" id="award_date" name="award_date"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label for="certificate_expiry_date">Expiry Date</label>
-                                <input type="date" class="form-control" id="certificate_expiry_date"
-                                       name="certificate_expiry_date" style="background-color: #ccffcc;"
-                                />
-                            </div>
-
-                            <!-- Navigation buttons -->
-                            <button type="button" class="btn btn-secondary" id="prev-4">Previous</button>
-                            <button type="button" class="btn btn-primary" id="next-4">Next</button>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="certificate_number" name="certificate_number" placeholder="Enter certificate number"/>
+                                <label for="certificate_number">Certificate Number</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="certifying_body" name="certifying_body" placeholder="Enter certifying body"/>
+                                <label for="certifying_body">Certifying Body</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="award_date" name="award_date"/>
+                                <label for="award_date">Award Date</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="certificate_expiry_date" name="certificate_expiry_date"/>
+                                <label for="certificate_expiry_date">Expiry Date</label>
+                            </div>
+                        </div>
+                    </div>
+                
+
+                    <!-- Navigation Buttons -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="button" class="btn btn-secondary" id="prev-4">Previous</button>
+                        <button type="button" class="btn btn-primary" id="next-4">Next</button>
+                    </div>
+                    </div>
 
                             <!-- Document Checklist -->
                         
@@ -675,22 +642,23 @@
                             <div class="form-group">
                                 <label for="image_1920">Add Company logo</label>
                                 <input type="file" class="form-control" id="image_1920" name="image_1920" />
-                                <small class="form-text text-muted">Please upload an image with a maximum resolution of 1920x1920 pixels.</small>
+                                <small class="form-text text-muted" style="color: red; display: none;">Please upload an image with a maximum resolution of 1920x1920 pixels.</small>
                             </div>
                             <div class="form-group">
                                 <label for="company_stamp_and_date">Company Stamp &amp; Date (Image Upload)</label>
                                 <input type="file" class="form-control" id="company_stamp_and_date"
                                        name="company_stamp_and_date"
                                        accept="image/*"/>
-                                <small class="form-text text-muted">Please upload an image of the company stamp with the
+                                <small class="form-text text-muted" style="color: red; display: none;">Please upload an image of the company stamp with the
                                     date.
                                 </small>
                             </div>
 
-                            
-                            <!-- Navigation buttons -->
-                            <button type="button" class="btn btn-secondary" id="prev-5">Previous</button>
-                            <button type="submit" class="btn btn-primary" id="submit-form">Submit</button>
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="button" class="btn btn-secondary" id="prev-5">Previous</button>
+                                <button type="submit" class="btn btn-primary" id="submit-form">Submit</button>
+                            </div>
+
                         </div>
 
                     </form>
@@ -701,6 +669,24 @@
                 <script src="/supplier_management/static/src/js/form_validation_files.js">Files Script</script>
             </t>
 
+        </template>
+        <template id="rfq_success_template" name="RFQ Success Template">
+            <t t-call="website.layout">
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 text-center">
+                            <div class="alert alert-success">
+                                <h4 class="alert-heading">RFQ Submitted Successfully!</h4>
+                                <p>Your Request for Quotation (RFQ) has been successfully submitted. Our team will review your request and get back to you shortly.</p>
+                                <!-- <hr> -->
+                                <p class="mb-0">
+                                    <a href="/" class="btn btn-primary">Return to Home</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
         </template>
     </data>
 </odoo>
