@@ -54,7 +54,7 @@ class SupplierManagement(http.Controller):
         }
         request.env['mail.mail'].sudo().create(mail_values).send()
         # Store email in session
-        request.session['otp_email'] = email
+
 
         return http.Response('{"status": "success", "message": "OTP has been sent"}', content_type='application/json')
 
@@ -222,7 +222,7 @@ class SupplierManagement(http.Controller):
 
         # Mark OTP as verified
         otp_record.sudo().write({'verified': True})
-
+        request.session['otp_email'] = email
         # return request.render('supplier_management.user_registration_form',{})
 
         return http.Response('{"status": "success", "message": "OTP verified successfully"}', content_type='application/json')
