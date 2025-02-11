@@ -20,7 +20,7 @@
                     
                     <button name="action_reject_rfp" type="object" string="Reject" 
                         class="oe_highlight" group="supplier_management.group_supplier_management_approver"
-                        invisible="status != 'submitted' or status != 'approved'"/>
+                        invisible="status != 'submitted' and status != 'approved'"/>
                         <!-- /> -->
                     <button name="action_close_rfp" type="object" string="Close" class="oe_highlight"
                          invisible="status != 'approved'"/>

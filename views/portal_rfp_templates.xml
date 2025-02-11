@@ -22,8 +22,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-if="rfp_groups[0]['rfps']">
-                        <t t-foreach="rfp_groups[0]['rfps']" t-as="rfp">
+                
+                    <t t-if="rfps">
+                        <t t-foreach="rfps" t-as="rfp">
                             <tr>
                                 <td t-esc="rfp.rfp_number"/>
                                 <td t-esc="rfp.required_date"/>

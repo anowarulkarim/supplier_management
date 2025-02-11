@@ -269,7 +269,7 @@ class SupplierManagement(http.Controller):
             search_domain += search_list[search_in]['domain']
 
         # Filter records to show only approved RFPs
-        # search_domain.append(('status', '=', 'draft'))
+        search_domain.append(('status', '=', 'approved'))
 
         # Count the number of RFP records matching the domain
         rfp_count = request.env['rfp.request'].sudo().search_count(search_domain)
@@ -299,7 +299,7 @@ class SupplierManagement(http.Controller):
             ]
         else:
             rfp_group_list = [{'group_name': _('All RFPs'), 'rfps': rfps}]
-        print(rfp_group_list[0]['rfps'])
+        # print(rfp_group_list[0]['rfps'])
 
         # Render the portal view template with the prepared values
         return request.render('supplier_management.rfp_list_template', {
@@ -314,6 +314,7 @@ class SupplierManagement(http.Controller):
             'default_url': 'supplier_management/rfp',
             'groupby': groupby,
             'searchbar_groupby': groupby_list,
+            'rfps' : rfps,
         })
 
 
