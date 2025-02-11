@@ -1,15 +1,18 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data>
-        <record id="supplier_management_menu" model="ir.ui.menu">
-            <field name="name">Supplier Management</field>
-            <field name="sequence" eval="10"/>
-            <field name="action" ref="supplier_management_action"/>
-        </record>
-        <record id="supplier_management_action" model="ir.actions.act_window">
-            <field name="name">Supplier Management</field>
-            <field name="res_model">supplier.management</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-    </data>
-</odoo> -->
+    <menuitem id="menu_supplier_management_root" name="Supplier Management" sequence="100"/>
+
+    <menuitem id="menu_procurement_management_supplier_registration_reviewer" name="Vendor Registration Reviewer"
+              parent="supplier_management.menu_supplier_management_root"
+              action="action_supplier_registration_reviewer" sequence="15"
+              groups="supplier_management.group_supplier_management_reviewer"/>
+
+    <menuitem id="menu_procurement_management_supplier_registration_approver" name="Vendor Registration Approver"
+              parent="supplier_management.menu_supplier_management_root"
+              action="action_supplier_registration_approver" sequence="20"
+              groups="supplier_management.group_supplier_management_approver"/>
+
+    <menuitem id="menu_rfp_request" name="Request for Purchase" 
+              parent="supplier_management.menu_supplier_management_root"
+              action="action_rfp_request" sequence="25"/>
+</odoo>

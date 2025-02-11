@@ -118,9 +118,7 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_rfp_tree"/>
     </record>
-    <menuitem id="menu_rfp_request" name="Request for Purchase" 
-              parent="purchase.menu_procurement_management"
-              action="action_rfp_request" sequence="25"/>
+    
               
 </odoo>
 

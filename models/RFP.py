@@ -23,7 +23,14 @@ class RFP(models.Model):
     approved_supplier_id = fields.Many2one('res.partner', string='Approved Supplier')
     currency_id = fields.Many2one('res.currency', default=lambda self: self.env.company.currency_id)
     product_line_ids = fields.One2many('rfp.product.line', 'rfp_id', string='Product Lines')
-    rfq_lines = fields.One2many('purchase.order', 'rfp_id', string='RFQ Lines', tracking=True)
+    rfq_lines = fields.One2many('purchase.order', 'rfp_id', string='RFQ Lines', tracking=True,domain=lambda self : self._get_rfq())
+
+    @api.model
+    def _get_rfq(self):
+        if self.env.user.has_group('supplier_management.group_supplier_management_approver'):
+            return [('recommended', '=', True)]
+        else:
+            return []
 
     @api.model
     def create(self, vals):

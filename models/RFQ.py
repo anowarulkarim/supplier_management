@@ -13,8 +13,9 @@ class RFQ(models.Model):
     warranty_period = fields.Integer(string='Warranty Period (months)', required=True)
     rfp_id = fields.Many2one('rfp.request', string='RFP')  # Corrected field name
     score = fields.Integer(string='Score')
-    product_line_ids = fields.One2many('rfp.product.line', 'rfp_id', string='Product Lines')
+    product_line_ids = fields.One2many('rfp.product.line', 'rfp_id', string='Product Lines' )
     recommended = fields.Boolean(string='Recommended', default=False)
+
 
     @api.constrains('recommended')
     def _check_unique_recommended(self):

@@ -32,6 +32,7 @@ Long description of module's purpose
         'views/rfp_views.xml',
         'views/supplier_registration_view.xml',
         'views/templates.xml',
+        'views/menus.xml',
         'data/otp_email_template.xml',
         'wizard/reject_reason_wizard.xml',
     ],
