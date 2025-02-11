@@ -230,9 +230,9 @@ class SupplierManagement(http.Controller):
 
         return http.Response('{"status": "success", "message": "OTP verified successfully"}', content_type='application/json')
 
-    @http.route('/supplier_management/rfp', auth='public', website=True, methods=['GET'])
+    @http.route(['/supplier_management/rfp', '/supplier_management/rfp/page/<int:page>'], auth='public', website=True)
     def portal_rfp_list(self, page=1, sortby=None, search=None, search_in=None, groupby='required_date', **kw):
-        limit = 7
+        limit = 4
 
         # Define sorting options
         searchbar_sortings = {
@@ -269,14 +269,14 @@ class SupplierManagement(http.Controller):
             search_domain += search_list[search_in]['domain']
 
         # Filter records to show only approved RFPs
-        search_domain.append(('status', '=', 'submitted'))
+        # search_domain.append(('status', '=', 'draft'))
 
         # Count the number of RFP records matching the domain
         rfp_count = request.env['rfp.request'].sudo().search_count(search_domain)
 
         # Setup pagination
         pager = portal_pager(
-            url='/my/rfps',
+            url='/supplier_management/rfp',
             url_args={'sortby': sortby, 'search_in': search_in, 'search': search},
             total=rfp_count,
             page=page,

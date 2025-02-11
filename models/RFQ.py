@@ -27,7 +27,7 @@ class RFQ(models.Model):
                 ])
                 if existing_recommended:
                     raise UserError(_('A supplier cannot have more than one recommended RFQ line.'))
-
+    
     @api.depends('quantity', 'unit_price')
     def _compute_subtotal(self):
         for line in self:

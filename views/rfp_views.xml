@@ -6,12 +6,26 @@
         <field name="arch" type="xml">
             <form string="Request for Purchase">
                 <header>
-                    <button name="action_submit_rfp" type="object" string="Submit" class="oe_highlight"/>
-                    <button name="action_return_to_draft_rfp" type="object" string="Return to Draft" class="oe_highlight"/>
-                    <button name="action_approve_rfp" type="object" string="Approve" class="oe_highlight"/>
-                    <button name="action_reject_rfp" type="object" string="Reject" class="oe_highlight"/>
-                    <button name="action_close_rfp" type="object" string="Close" class="oe_highlight"/>
-                    <button name="action_accept_rfp" type="object" string="Accept" class="oe_highlight"/>
+                <!-- reviewer button -->
+                    <button name="action_submit_rfp" type="object" 
+                        string="Submit" class="oe_highlight" group="supplier_management.group_supplier_management_reviewer"
+                        invisible="status != 'draft'"/>
+                    <button name="action_return_to_draft_rfp" type="object" string="Return to Draft" class="oe_highlight"
+                        group="supplier_management.group_supplier_management_reviewer"
+                        invisible="status != 'submitted'"/>
+                <!-- approver button -->
+                    <button name="action_approve_rfp" type="object" string="Approve" class="oe_highlight" 
+                        group="supplier_management.group_supplier_management_approver"
+                        invisible="status != 'submitted'"/>
+                    
+                    <button name="action_reject_rfp" type="object" string="Reject" 
+                        class="oe_highlight" group="supplier_management.group_supplier_management_approver"
+                        invisible="status != 'submitted' or status != 'approved'"/>
+                        <!-- /> -->
+                    <button name="action_close_rfp" type="object" string="Close" class="oe_highlight"
+                         invisible="status != 'approved'"/>
+                    <button name="action_accept_rfp" type="object" string="Accept" class="oe_highlight" 
+                        invisible="status != 'recommanded'"/>
                     <field name='status' widget='statusbar'/> 
                 </header>
                 <sheet>
@@ -37,15 +51,40 @@
                             </field>
                         </page>
                         <page string="RFQ Lines">
-                            <field name="rfq_lines" readonly="1">
+                            <field name="rfq_lines">
                                 <tree >
                                     <field name="company_id" invisible="1"/>
                                     <field name="partner_id"/>
                                     <field name="amount_total"/>
                                     <field name= "notes"/>
                                     <field name="date_order"/>
-
+                                    <field name="score"/>
                                 </tree>
+                                <form string="RFQ Line">
+                                    <group>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="partner_id"/>
+                                        <field name="amount_total"/>
+                                        <field name="notes"/>
+                                        <field name="date_order"/>
+                                        <field name="score"/>
+                                        <field name="recommended" groups="supplier_management.group_supplier_management_reviewer"/>
+                                    </group>
+                                    <notebook>
+                                    <page string="Product Line Details">
+                                        <field name="order_line">
+                                            <tree editable="bottom">
+                                                <field name="product_id"/>
+                                                <field name="product_qty"/>
+                                                <field name="price_unit"/>
+                                                <field name="delivery_charge"/> 
+                                                <field name="price_total"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+                                    </notebook>
+                                </form>
+                            
                             </field>
                         </page>
                     </notebook>
