@@ -56,7 +56,7 @@ class SupplierManagement(http.Controller):
             """
         }
         request.env['mail.mail'].sudo().create(mail_values).send()
-        # Store email in session
+        
 
 
         return http.Response('{"status": "success", "message": "OTP has been sent"}', content_type='application/json')

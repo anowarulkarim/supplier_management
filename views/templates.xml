@@ -162,7 +162,7 @@
 
                 <!-- Step 1: Company Information -->
                 <div class="form-step" id="step-1">
-                    <h3 class="text-center mb-4">Section 1: Company Information</h3>
+                    <h3 class="text-center mb-4 card-header bg-primary text-white" style="font-style: italic;">Section 1: Company Information</h3>
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
@@ -240,7 +240,7 @@
                     </div>
 
                     <!-- Contact Person Information -->
-                    <h4 class="mt-4">Contact Person Information</h4>
+                    <h4 class="mt-4 card-header bg-primary text-white">Contact Person Information</h4>
                     <div class="row g-3">
                         <div class="col-md-4">
                             <div class="form-floating">
@@ -267,7 +267,7 @@
                             </div>
                         </div>
                     </div>
-                    <h4 class="mt-4">Finance Department Information</h4>
+                    <h4 class="mt-4 card-header bg-primary text-white">Finance Department Information</h4>
                     <div class="row g-3">
                         <div class="col-md-4">
                             <div class="form-floating">
@@ -294,7 +294,7 @@
                             </div>
                         </div>
                     </div>
-                    <h4 class="mt-4">Name of Authorized Person</h4>
+                    <h4 class="mt-4 card-header bg-primary text-white">Name of Authorized Person</h4>
                     <div class="row g-3">
                         <div class="col-md-4">
                             <div class="form-floating">
@@ -330,7 +330,7 @@
 
                 <!-- Step 2: Financial Information -->
                 <div class="form-step" id="step-2" style="display:none;">
-                    <h3 class="text-center mb-4">Section 2: Financial Information</h3>
+                    <h3 class="text-center mb-4 card-header bg-primary text-white" style="font-style: italic;">Section 2: Financial Information</h3>
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
@@ -385,11 +385,11 @@
 
                 <!-- Step 3: Client References -->
                 <div class="form-step" id="step-3" style="display:none;">
-                    <h3 class="text-center mb-4">Section 3: Previous Client References</h3>
+                    <h3 class="text-center mb-4 card-header bg-primary text-white" style="font-style: italic;">Section 3: Previous Client References</h3>
                     <div class="row g-3">
                         <!-- Client 1 -->
                         <div class="col-md-4">
-                            <h4>Client 1</h4>
+                            <h4 class="card-header bg-primary text-white">Client 1</h4>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="client_1_name" name="client_1_name" placeholder="Enter client name"/>
                                 <label for="client_1_name">Client Name</label>
@@ -411,7 +411,7 @@
 
                         <!-- Client 2 -->
                         <div class="col-md-4">
-                            <h4>Client 2</h4>
+                            <h4 class="card-header bg-primary text-white">Client 2</h4>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="client_2_name" name="client_2_name" placeholder="Enter client name"/>
                                 <label for="client_2_name">Client Name</label>
@@ -433,7 +433,7 @@
 
                         <!-- Client 3 -->
                         <div class="col-md-4">
-                            <h4>Client 3</h4>
+                            <h4 class="card-header bg-primary text-white">Client 3</h4>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="client_3_name" name="client_3_name" placeholder="Enter client name"/>
                                 <label for="client_3_name">Client Name</label>
@@ -452,8 +452,9 @@
                                 <label for="client_3_contact_phone">Client Contact Phone</label>
                             </div>
                         </div>
+                        <!-- client 4 -->
                         <div class="col-md-4">
-                            <h4>Client 4</h4>
+                            <h4 class="card-header bg-primary text-white">Client 4</h4>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="client_4_name" name="client_4_name" placeholder="Enter client name"/>
                                 <label for="client_4_name">Client Name</label>
@@ -472,8 +473,9 @@
                                 <label for="client_4_contact_phone">Client Contact Phone</label>
                             </div>
                         </div>
+                        <!-- client 5 -->
                         <div class="col-md-4">
-                            <h4>Client 5</h4>
+                            <h4 class="card-header bg-primary text-white">Client 5</h4>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="client_5_name" name="client_5_name" placeholder="Enter client name"/>
                                 <label for="client_5_name">Client Name</label>
@@ -504,7 +506,7 @@
 
                 <!-- Step 4: Certifications or Accreditations -->
                 <div class="form-step" id="step-4" style="display:none;">
-                    <h3 class="text-center mb-4">Section 4: Certifications or Accreditations</h3>
+                    <h3 class="text-center mb-4 card-header bg-primary text-white" style="font-style: italic;">Section 4: Certifications or Accreditations</h3>
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-floating">
@@ -549,117 +551,152 @@
                             <!-- Document Checklist -->
                         
                         <div class="form-step" id="step-5" style="display:none;">
-                            <h3>Section 5: Document Submission</h3>
+    <h3 class="text-center mb-4 card-header bg-primary text-white" style="font-style: italic;">Section 5: Document Submission</h3>
 
-                            <h4>Checklist</h4>
-                            <div class="form-group">
-                                <label for="trade_license_business_registration">Trade License / Business Registration
-                                </label>
-                                <input type="file" class="form-control" id="trade_license_business_registration"
-                                       name="trade_license_business_registration"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="certificate_of_incorporation">Certificate of Incorporation</label>
-                                <input type="file" class="form-control" id="certificate_of_incorporation"
-                                       name="certificate_of_incorporation"/>
-                            </div>
+    <!-- Checklist Section -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Checklist</h4>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <!-- File Upload Fields -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="trade_license_business_registration" class="form-label">Trade License / Business Registration</label>
+                        <input type="file" class="form-control" id="trade_license_business_registration" name="trade_license_business_registration"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="certificate_of_incorporation" class="form-label">Certificate of Incorporation</label>
+                        <input type="file" class="form-control" id="certificate_of_incorporation" name="certificate_of_incorporation"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="certificate_of_good_standing" class="form-label">Certificate of Good Standing</label>
+                        <input type="file" class="form-control" id="certificate_of_good_standing" name="certificate_of_good_standing"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="establishment_card" class="form-label">Establishment Card</label>
+                        <input type="file" class="form-control" id="establishment_card" name="establishment_card"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="vat_tax_certificate" class="form-label">VAT / Tax Certificate</label>
+                        <input type="file" class="form-control" id="vat_tax_certificate" name="vat_tax_certificate"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="memorandum_of_association" class="form-label">Memorandum of Association / Power of Attorney / Legal Instrument</label>
+                        <input type="file" class="form-control" id="memorandum_of_association" name="memorandum_of_association"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="identification_document_for_authorized_person" class="form-label">Identification Document for Authorized Person / Signatory</label>
+                        <input type="file" class="form-control" id="identification_document_for_authorized_person" name="identification_document_for_authorized_person"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="bank_letter_indicating_bank_account" class="form-label">Bank Letter indicating Bank Account Information</label>
+                        <input type="file" class="form-control" id="bank_letter_indicating_bank_account" name="bank_letter_indicating_bank_account"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="past_2_years_audited_financial_statements" class="form-label">Past 2 Years Audited Financial Statements</label>
+                        <input type="file" class="form-control" id="past_2_years_audited_financial_statements" name="past_2_years_audited_financial_statements"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="other_certifications" class="form-label">Other Certification / Accreditations</label>
+                        <input type="file" class="form-control" id="other_certifications" name="other_certifications"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Declaration Section -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Declaration</h4>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <p class="fw-bold text-danger">
+                    I confirm that all information and documents supplied are true and accurate to the best of my knowledge, and I understand that this information may be considered material in the evaluation of quotations, bids, and/or proposals.
+                </p>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="declaration" name="declaration" required="required"/>
+                    <label class="form-check-label" for="declaration">I agree</label>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            <div class="form-group">
-                                <label for="certificate_of_good_standing">Certificate of Good Standing</label>
-                                <input type="file" class="form-control" id="certificate_of_good_standing"
-                                       name="certificate_of_good_standing"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="establishment_card">Establishment Card</label>
-                                <input type="file" class="form-control" id="establishment_card"
-                                       name="establishment_card"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="vat_tax_certificate">VAT / Tax Certificate</label>
-                                <input type="file" class="form-control" id="vat_tax_certificate"
-                                       name="vat_tax_certificate"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="memorandum_of_association">Memorandum of Association / Power of Attorney /
-                                    Legal Instrument authorizing Authorized Person
-                                </label>
-                                <input type="file" class="form-control" id="memorandum_of_association"
-                                       name="memorandum_of_association"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="identification_document_for_authorized_person">Identification Document for
-                                    Authorized Person / Signatory
-                                </label>
-                                <input type="file" class="form-control"
-                                       id="identification_document_for_authorized_person"
-                                       name="identification_document_for_authorized_person"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="bank_letter_indicating_bank_account">Bank Letter indicating Bank Account
-                                    Information
-                                </label>
-                                <input type="file" class="form-control" id="bank_letter_indicating_bank_account"
-                                       name="bank_letter_indicating_bank_account"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="past_2_years_audited_financial_statements">Past 2 years Audited Financial
-                                    Statements
-                                </label>
-                                <input type="file" class="form-control" id="past_2_years_audited_financial_statements"
-                                       name="past_2_years_audited_financial_statements"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="other_certifications">Other Certification / Accreditations</label>
-                                <input type="file" class="form-control" id="other_certifications"
-                                       name="other_certifications"/>
-                            </div>
+    <!-- Signatory Information -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Signatory Information</h4>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="signatory_name" class="form-label">Name of Signatory</label>
+                        <input type="text" class="form-control" id="signatory_name" name="signatory_name" placeholder="Enter signatory name"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="authorized_signatory" class="form-label">Authorized Signatory</label>
+                        <input type="text" class="form-control" id="authorized_signatory" name="authorized_signatory" placeholder="Enter authorized signatory"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            <!-- Declaration -->
-                            <h4>Declaration</h4>
-                            <div class="form-group">
-                                <p style="font-weight: bold; color: red;">
-                                    I confirm that all information and documents supplied are true and accurate to the best of my
-                                    knowledge, and I understand that this information may be considered material in the evaluation of
-                                    quotations, bids, and/or proposals.
-                                </p>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="declaration" name="declaration" required="required"/>
-                                    <label class="form-check-label" for="declaration">I agree</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="signatory_name">Name of Signatory</label>
-                                <input type="text" class="form-control" id="signatory_name" name="signatory_name"
-                                       placeholder="Enter signatory name"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="authorized_signatory">Authorized Signatory</label>
-                                <input type="text" class="form-control" id="authorized_signatory"
-                                       name="authorized_signatory" placeholder="Enter authorized signatory"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label for="image_1920">Add Company logo</label>
-                                <input type="file" class="form-control" id="image_1920" name="image_1920" />
-                                <small class="form-text text-muted" style="color: red; display: none;">Please upload an image with a maximum resolution of 1920x1920 pixels.</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="company_stamp_and_date">Company Stamp &amp; Date (Image Upload)</label>
-                                <input type="file" class="form-control" id="company_stamp_and_date"
-                                       name="company_stamp_and_date"
-                                       accept="image/*"/>
-                                <small class="form-text text-muted" style="color: red; display: none;">Please upload an image of the company stamp with the
-                                    date.
-                                </small>
-                            </div>
+    <!-- Company Logo and Stamp -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Company Logo Stamp</h4>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="image_1920" class="form-label">Add Company Logo</label>
+                        <input type="file" class="form-control" id="image_1920" name="image_1920"/>
+                        <small class="form-text text-danger d-none">Please upload an image with a maximum resolution of 1920x1920 pixels.</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="company_stamp_and_date" class="form-label">Company Stamp Date (Image Upload)</label>
+                        <input type="file" class="form-control" id="company_stamp_and_date" name="company_stamp_and_date" accept="image/*"/>
+                        <small class="form-text text-danger d-none">Please upload an image of the company stamp with the date.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            <div class="d-flex justify-content-between mt-4">
-                                <button type="button" class="btn btn-secondary" id="prev-5">Previous</button>
-                                <button type="submit" class="btn btn-primary" id="submit-form">Submit</button>
-                            </div>
-
-                        </div>
+    <!-- Navigation Buttons -->
+    <div class="d-flex justify-content-between mt-4">
+        <button type="button" class="btn btn-secondary" id="prev-5">Previous</button>
+        <button type="submit" class="btn btn-primary" id="submit-form">Submit</button>
+    </div>
+</div>
 
                     </form>
                 </div>

@@ -1,0 +1,111 @@
+<odoo>
+<template id="rfq_list_template" name="RFP List">
+    <t t-call="portal.portal_layout">
+        <div class="container mt-4">
+            <h1 class="mb-4">Your RFQs</h1>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>RFP Number</th>
+                        <th>Required Date</th>
+                        <th>Total Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-if="rfqs">
+                        <t t-foreach="rfqs" t-as="rfp">
+                            <tr>
+                                <td><t t-esc="rfp.name"/></td>
+                                <td><t t-esc="rfp.date_order"/></td>
+                                <td><t t-esc="rfp.amount_total"/></td>
+                                <td>
+                                    <a t-att-href="'/supplier_management/rfq/%s' % rfp.id" class="btn btn-primary">View Details</a>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <tr>
+                            <td colspan="4" class="text-center">No RFQs found.</td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+</template>
+
+<template id="rfq_details_template" name="RFP Details">
+    <t t-call="portal.portal_layout">
+        <div class="container mt-4">
+            <h1 class="mb-4">RFP Details</h1>
+
+            <!-- Back Button -->
+            <a href="/supplier_management/rfq" class="btn btn-secondary mb-4">Back to RFQs</a>
+
+            <!-- RFQ Details -->
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">RFP Information</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>RFP Number:</strong> <t t-esc="rfp.name"/></p>
+                            <p><strong>Required Date:</strong> <t t-esc="rfp.date_order"/></p>
+                            <p><strong>Total Amount:</strong> <t t-esc="rfp.amount_total"/></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Status:</strong> <t t-esc="rfp.state"/></p>
+                            <p><strong>Vendor:</strong> <t t-esc="rfp.partner_id.name"/></p>
+                            <p><strong>Created On:</strong> <t t-esc="rfp.create_date"/></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div class="card mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Products</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="rfp.order_line" t-as="line">
+                                <tr>
+                                    <td><t t-esc="line.product_id.name"/></td>
+                                    <td><t t-esc="line.product_qty"/></td>
+                                    <td><t t-esc="line.price_unit"/></td>
+                                    <td><t t-esc="line.price_subtotal"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="card mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Additional Information</h4>
+                </div>
+                <div class="card-body">
+                    <p><strong>Turms and Conditions:</strong> <t t-esc="rfp.notes"/></p>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+
+</odoo>

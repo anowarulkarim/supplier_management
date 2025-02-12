@@ -8,24 +8,24 @@
                 <header>
                 <!-- reviewer button -->
                     <button name="action_submit_rfp" type="object" 
-                        string="Submit" class="oe_highlight" group="supplier_management.group_supplier_management_reviewer"
+                        string="Submit" class="oe_highlight" groups="supplier_management.group_supplier_management_reviewer"
                         invisible="status != 'draft'"/>
                     <button name="action_return_to_draft_rfp" type="object" string="Return to Draft" class="oe_highlight"
-                        group="supplier_management.group_supplier_management_reviewer"
+                        groups="supplier_management.group_supplier_management_reviewer"
                         invisible="status != 'submitted'"/>
                 <!-- approver button -->
                     <button name="action_approve_rfp" type="object" string="Approve" class="oe_highlight" 
-                        group="supplier_management.group_supplier_management_approver"
+                        groups="supplier_management.group_supplier_management_approver"
                         invisible="status != 'submitted'"/>
                     
                     <button name="action_reject_rfp" type="object" string="Reject" 
-                        class="oe_highlight" group="supplier_management.group_supplier_management_approver"
+                        class="oe_highlight" groups="supplier_management.group_supplier_management_approver"
                         invisible="status != 'submitted' and status != 'approved'"/>
                         <!-- /> -->
                     <button name="action_close_rfp" type="object" string="Close" class="oe_highlight"
-                         invisible="status != 'approved'"/>
+                         invisible="status != 'approved'" groups="supplier_management.group_supplier_management_approver"/>
                     <button name="action_accept_rfp" type="object" string="Accept" class="oe_highlight" 
-                        invisible="status != 'recommanded'"/>
+                        invisible="status != 'recommanded'" groups="supplier_management.group_supplier_management_approver"/>
                     <field name='status' widget='statusbar'/> 
                 </header>
                 <sheet>
@@ -60,14 +60,20 @@
                                     <field name="date_order"/>
                                     <field name="score"/>
                                 </tree>
-                                <form string="RFQ Line">
+                            <form string="RFQ Line">
+                                <header>
+                                    <button name="button_confirm" type="object" string="Approve RFQ" class="oe_highlight"
+                                        groups="supplier_management.group_supplier_management_approver"
+                                        />
+                                    </header>
                                     <group>
                                         <field name="company_id" invisible="1"/>
-                                        <field name="partner_id"/>
+                                        <field name="partner_id" readonly="1"/>
                                         <field name="amount_total"/>
-                                        <field name="notes"/>
-                                        <field name="date_order"/>
-                                        <field name="score"/>
+                                        <field name="notes" readonly="1"/>
+                                        <field name="date_order" readonly="1"/>
+                                        <!-- <field name="score" readonly="status not"/> -->
+                                        <field name="score" readonly="1"/>
                                         <field name="recommended" groups="supplier_management.group_supplier_management_reviewer"/>
                                     </group>
                                     <notebook>
