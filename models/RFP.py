@@ -24,17 +24,22 @@ class RFP(models.Model):
     currency_id = fields.Many2one('res.currency', default=lambda self: self.env.company.currency_id)
     product_line_ids = fields.One2many('rfp.product.line', 'rfp_id', string='Product Lines')
     rfq_lines = fields.One2many('purchase.order', 'rfp_id', string='RFQ Lines', tracking=True,domain=lambda self : self._get_rfq())
+    # rfq_lines = fields.One2many('purchase.order', 'rfp_id', string='RFQ Lines', tracking=True)
 
     @api.model
     def _get_rfq(self):
         if self.env.user.has_group('supplier_management.group_supplier_management_approver'):
-            return [('recommended', '=', True)]
+            # return [('recommended', '=', True)] if self.status in ['recommendation','accepted' ] else [("id","=",False)]
+            if self.status in ['recommendation','accepted','closed']:
+                return [('recommended', '=', True)]
+            else:
+                return [("id","=",False)]
         else:
             return []
 
     @api.model
     def create(self, vals):
-        self.status='submitted'
+        # self.status='submitted'
         if not vals.get('rfp_number') or vals.get('rfp_number') == _('New'):
             seq_number = self.env['ir.sequence'].next_by_code('serial.number.sequence')  # Match the XML code
             vals['rfp_number'] = seq_number or _('New')

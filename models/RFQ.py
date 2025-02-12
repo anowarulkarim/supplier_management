@@ -15,20 +15,26 @@ class RFQ(models.Model):
     score = fields.Integer(string='Score')
     product_line_ids = fields.One2many('rfp.product.line', 'rfp_id', string='Product Lines' )
     recommended = fields.Boolean(string='Recommended', default=False)
+    rfp_state = fields.Selection(related='rfp_id.status', string='RFP status')
 
-
-    @api.constrains('recommended')
-    def _check_unique_recommended(self):
-        for record in self:
-            if record.recommended:
-                existing_recommended = self.search([
-                    ('partner_id', '=', record.partner_id.id),
-                    ('recommended', '=', True),
-                    ('id', '!=', record.id)
-                ])
-                if existing_recommended:
-                    raise UserError(_('A supplier cannot have more than one recommended RFQ line.'))
+    # @api.constrains('recommended')
+    # def _check_unique_recommended(self):
+    #     for record in self:
+    #         if record.recommended:
+    #             existing_recommended = self.search([
+    #                 ('partner_id', '=', record.partner_id.id),
+    #                 ('recommended', '=', True),
+    #                 ('id', '!=', record.id)
+    #             ])
+    #             if existing_recommended:
+    #                 raise UserError(_('A supplier cannot have more than one recommended RFQ line.'))
     
+    def confirm_rfq(self):
+        # self.rfp_state = 'accepted'
+        self.rfp_id.write({'status': 'accepted'})
+        self.state='purchase'
+
+
     @api.depends('quantity', 'unit_price')
     def _compute_subtotal(self):
         for line in self:

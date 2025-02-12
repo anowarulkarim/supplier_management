@@ -62,10 +62,13 @@
                                 </tree>
                             <form string="RFQ Line">
                                 <header>
-                                    <button name="button_confirm" type="object" string="Approve RFQ" class="oe_highlight"
+                                    <field name="rfp_state" invisible="1"/>
+                                    <button name="confirm_rfq" type="object" string="Approve RFQ" class="oe_highlight"
+                                        invisible="rfp_state in ('accepted',)"
                                         groups="supplier_management.group_supplier_management_approver"
                                         />
                                     </header>
+                                    <!--  invisible="rfp_state not in ('purchase',)" -->
                                     <group>
                                         <field name="company_id" invisible="1"/>
                                         <field name="partner_id" readonly="1"/>
@@ -74,7 +77,10 @@
                                         <field name="date_order" readonly="1"/>
                                         <!-- <field name="score" readonly="status not"/> -->
                                         <field name="score" readonly="1"/>
-                                        <field name="recommended" groups="supplier_management.group_supplier_management_reviewer"/>
+                                        <field name="rfp_state" invisible="1"/>
+                                        <field name="recommended" groups="supplier_management.group_supplier_management_reviewer"
+                                            readonly="rfp_state not in ('closed',)"
+                                        />
                                     </group>
                                     <notebook>
                                     <page string="Product Line Details">

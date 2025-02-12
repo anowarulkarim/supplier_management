@@ -270,6 +270,7 @@ class SupplierManagement(http.Controller):
 
         # Filter records to show only approved RFPs
         search_domain.append(('status', '=', 'approved'))
+        search_domain.append(('status', '!=', 'colsed'))
 
         # Count the number of RFP records matching the domain
         rfp_count = request.env['rfp.request'].sudo().search_count(search_domain)
@@ -321,8 +322,10 @@ class SupplierManagement(http.Controller):
     @http.route('/supplier_management/rfp/<int:rfp_id>', auth='public', website=True, methods=['GET'])
     def view_rfp_details(self, rfp_id, **kwargs):
         """Show details of a specific RFP and allow RFQ creation"""
+
+
         rfp = request.env['rfp.request'].sudo().browse(rfp_id)
-        if not rfp.exists():
+        if not rfp.exists() or rfp.status in ['colsed','accepted','recommendation']:
             return request.not_found()
 
         return request.render('supplier_management.rfp_detail_template', {'rfp': rfp})
