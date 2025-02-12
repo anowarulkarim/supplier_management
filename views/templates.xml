@@ -18,9 +18,21 @@
                 <t t-call="portal.portal_docs_entry">
                     <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>
                     <t t-set="title">Rfp</t>
-                    <t t-set="placeholder_count" t-value="'school_count'"/>
+                    
                     <t t-set="text">Rfp</t>
                     <t t-set="url" t-value="'/supplier_management/rfp'"/>
+                    <t t-set="config_card" t-value="True"/>
+                </t>
+            </xpath>
+        </template>
+        <template id="portal_my_rfq" inherit_id="portal.portal_my_home">
+            <xpath expr="//div[@id='portal_common_category']" position="inside">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>
+                    <t t-set="title">Your Rfq</t>
+                    
+                    <t t-set="text">Rfp</t>
+                    <t t-set="url" t-value="'/supplier_management/rfq'"/>
                     <t t-set="config_card" t-value="True"/>
                 </t>
             </xpath>
