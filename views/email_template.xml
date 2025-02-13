@@ -4,8 +4,6 @@
         <field name="name">Vendor Registration Success</field>
         <field name="model_id" ref="model_res_partner"/>
         <field name="subject">Vendor Registration Successful</field>
-        <field name="email_from">{{user.email}}</field>
-        <field name="email_to">{{object.email}}</field>
         <field name="body_html" type="html">
             <h3>Dear
                 <span t-field="object.name"/>
@@ -24,6 +22,19 @@
             </p>
             <p>Thank you for registering with us. We look forward to working with you!</p>
 
+        </field>
+    </record>
+
+    <record id="vendor_registration_recommandation" model="mail.template">
+        <field name="name">Vendor Registration Recommandation</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="subject">Vendor Registration Recommandation</field>
+        <field name="body_html" type="html">
+            <h3>Dear
+                <span t-field="object.name"/>
+            </h3>
+            <p>A new Vendor request Recommanded check now</p>
+            
         </field>
     </record>
 
@@ -61,8 +72,6 @@
     </record>
 
 
-
-
     <record id="reviewer_notification_email" model="mail.template">
         <field name="name">Vendor Submission Success</field>
         <field name="model_id" ref="model_res_partner"/> <!-- Use a generic model -->
@@ -91,5 +100,76 @@
         </field>
     </record>
 
+    <record id="reviewer_notification_rfp_approved" model="mail.template">
+        <field name="name">RFP approved</field>
+        <field name="model_id" ref="model_purchase_order"/> <!-- Use a generic model -->
+        <field name="subject">RFP approved</field>
+        <field name="body_html" type="html">
+            <h3><t t-out="ctx.get('rfp_number')"/></h3>
+            <p>Dear Reviewer,{{object.create_uid.name}}</p>
+            <p>Your RFP approved</p>
+            <!-- <p>
+                <strong>RFQ Reference:</strong>
+                <span t-field="object.name"/>
+            </p>
+            <p>
+                <strong>Vendor:</strong>
+                <span t-field="object.partner_id.name"/>
+            </p>
+            <p>
+                <strong>Order Date:</strong>
+                <span t-field="object.date_order"/>
+            </p> -->
+            <p>Thank you.</p>
+        </field>
+    </record>
+
+    <record id="supplier_notification_new_rfp" model="mail.template">
+        <field name="name">New RFP</field>
+        <field name="model_id" ref="model_purchase_order"/> <!-- Use a generic model -->
+        <field name="subject">New RFP posted</field>
+        <field name="body_html" type="html">
+            <h3><t t-out="ctx.get('rfp_number')"/></h3>
+            <p>Dear supplier ,{{object.create_uid.name}}</p>
+            <p>A new RFP posted. please the visit the portal</p>
+            <p>Thank you.</p>
+        </field>
+    </record>
+
+    <record id="rfp_reject" model="mail.template">
+        <field name="name">RFP Rejected</field>
+        <field name="model_id" ref="model_purchase_order"/>
+        <field name="subject">RFP Rejected</field>
+        <field name="body_html" type="html">
+            <h3><t t-out="ctx.get('rfp_number')"/></h3>
+            <p>Dear Reviewer,{{object.create_uid.name}}</p>
+            <p>I am sorry to inform you that your RFP has been rejected.</p>
+            <p>Thank you.</p>
+        </field>
+    </record>
+
+    <record id="rfp_review_reviewer" model="mail.template">
+        <field name="name">RFP Review</field>
+        <field name="model_id" ref="model_purchase_order"/>
+        <field name="subject">RFP Review</field>
+        <field name="body_html" type="html">
+            <h3><t t-out="ctx.get('rfp_number')"/></h3>
+            <p>A new RFP is posted Waiting for review</p>
+            <p>Please review the RFP</p>
+            <p>Thank you.</p>
+        </field>
+    </record>
+
+    <record id="reviewer_notification_for_new_rfq" model="mail.template">
+        <field name="name">New RFQ</field>
+        <field name="model_id" ref="model_purchase_order"/> <!-- Use a generic model -->
+        <field name="subject">New RFQ posted</field>
+        <field name="body_html" type="html">
+            <h3><t t-out="ctx.get('rfq_number')"/></h3>
+            <p>Dear Reviewer,{{object.create_uid.name}}</p>
+            <p>A new RFQ posted. for <t t-out="ctx.get('rfq_number')"/></p>
+            <p>Thank you.</p>
+        </field>
+    </record>
 
 </odoo>

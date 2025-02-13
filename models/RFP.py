@@ -63,6 +63,27 @@ class RFP(models.Model):
         if self.status != 'draft':
             raise UserError(_('Only Draft RFPs can be submitted.'))
         self.status = 'submitted'
+        template = self.env.ref('supplier_management.rfp_review_reviewer')
+        if template:
+            try:
+                print("Attempting to send mail...")
+                    # Add context with force_send to ensure immediate email sending
+                email_values = {
+                    'email_to': self.create_uid.email,
+                    'email_from': 'anowarul.karim@bjitacademy.com'
+                }
+                ctx = {
+                    'default_model': 'rfp.request',
+                    'default_res_id': self.id,
+                    'default_use_template': bool(template),
+                    'default_template_id': template.id,
+                    'default_composition_mode': 'comment',
+                    'force_send': True,
+                    'rfp_number': self.rfp_number
+                }
+                template.with_context(**ctx).send_mail(self.id,email_values=email_values)
+            except Exception as e:
+                print("Error in send_mail:", str(e))
         self.message_post(body=_('RFP has been submitted.'))
 
     def action_return_to_draft_rfp(self):
@@ -75,11 +96,82 @@ class RFP(models.Model):
         if self.status != 'submitted':
             raise UserError(_('Only Submitted RFPs can be approved.'))
         self.status = 'approved'
+        template = self.env.ref('supplier_management.reviewer_notification_rfp_approved')
+        if template:
+            try:
+                print("Attempting to send mail...")
+                    # Add context with force_send to ensure immediate email sending
+                email_values = {
+                    'email_to': self.create_uid.email,
+                    'email_from': 'anowarul.karim@bjitacademy.com'
+                }
+                ctx = {
+                    'default_model': 'rfp.request',
+                    'default_res_id': self.id,
+                    'default_use_template': bool(template),
+                    'default_template_id': template.id,
+                    'default_composition_mode': 'comment',
+                    'force_send': True,
+                    'rfp_number': self.rfp_number
+                }
+                template.with_context(**ctx).send_mail(self.id, email_values=email_values)
+
+            except Exception as e:
+                print("Error in send_mail:", str(e))
+
+        template2 = self.env.ref('supplier_management.supplier_notification_new_rfp')
+        if template2:
+            try:
+                print("Attempting to send mail...")
+                    # Add context with force_send to ensure immediate email sending
+
+                suppliers = self.env['res.partner'].search([('supplier_rank', '>', 0)])
+                print("Suppliers:", suppliers)
+                for supplier in suppliers:
+                    email_values = {
+                        'email_to': supplier.email,
+                        'email_from': 'anowarul.karim@bjitacademy.com'
+                    }
+                    ctx = {
+                        'default_model': 'rfp.request',
+                        'default_res_id': self.id,
+                        'default_use_template': bool(template2),
+                        'default_template_id': template2.id,
+                        'default_composition_mode': 'comment',
+                        'force_send': True,
+                        'rfp_number': self.rfp_number,
+                    }
+                    template2.with_context(**ctx).send_mail(self.id, email_values=email_values)
+            except Exception as e:
+                print("Error in send_mail supplier for new added rfp:", str(e))
+
         self.message_post(body=_('RFP has been approved.'))
 
     def action_reject_rfp(self):
         if self.status != 'submitted':
             raise UserError(_('Only Submitted RFPs can be rejected.'))
+
+        template = self.env.ref('supplier_management.rfp_reject')
+        if template:
+            try:
+                print("Attempting to send mail...")
+                    # Add context with force_send to ensure immediate email sending
+                email_values = {
+                    'email_to': self.create_uid.email,
+                    'email_from': 'anowarul.karim@bjitacademy.com'
+                }
+                ctx = {
+                    'default_model': 'rfp.request',
+                    'default_res_id': self.id,
+                    'default_use_template': bool(template),
+                    'default_template_id': template.id,
+                    'default_composition_mode': 'comment',
+                    'force_send': True,
+                    'rfp_number': self.rfp_number
+                }
+                template.with_context(**ctx).send_mail(self.id, email_values=email_values)
+            except Exception as e:
+                print("Error in send_mail:", str(e))
         self.status = 'rejected'
         self.message_post(body=_('RFP has been rejected.'))
 

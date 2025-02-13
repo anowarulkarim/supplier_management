@@ -184,6 +184,29 @@ class SupplierRegistration(models.TransientModel):
             'company_id': self.env.company.id,
             'groups_id': [(6, 0, self.env.ref('base.group_portal').ids)]
         })
+        # template = self.env.ref('supplier_management.vendor_registration_recommandation')
+        template = self.env.ref('supplier_management.vendor_registration_confirmation')
+        try:
+            email_values = {
+                'email_to': self.email,
+                'email_from': 'anowarul.karim@bjitacademy.com'
+            }
+            print("Attempting to send mail...")
+            # Add context with force_send to ensure immediate email sending
+            ctx = {
+                    'default_model': 'supplier.registration',
+                    'default_res_id': self.id,
+                    'password': self.email,
+                    'email': self.email,
+                    'default_template_id': self.id,
+                    'force_send': True,
+                }
+            s = template.with_context(**ctx).send_mail(self.id,email_values=email_values)
+            print("Email Sent, ID:", s)
+
+        except Exception as e:
+            print("Error in send_mail:", str(e))
+
         # print(new_supplier.email)
         self.env.ref('supplier_management.vendor_registration_confirmation').send_mail(new_supplier.id)
         self.state = 'approved'
@@ -203,6 +226,33 @@ class SupplierRegistration(models.TransientModel):
         self.state = 'submitted'
 
     def action_recommend(self):
+        reviewer = self.env['res.groups'].search([('name', '=', 'Approver')])
+        reviewer_user = reviewer.users
+        template = self.env.ref('supplier_management.vendor_registration_recommandation')
+        for user in reviewer_user:
+            # template.with_context(user=user).send_mail(user.id, force_send=True)
+            print(user.email)
+
+            try:
+                email_values = {
+                    'email_to': user.email,
+                    'email_from': 'anowarul.karim@bjitacademy.com'
+                }
+                print("Attempting to send mail...")
+
+                # Add context with force_send to ensure immediate email sending
+                ctx = {
+                        'default_model': 'supplier.registration',
+                        'default_res_id': self.id,
+                        'default_email_to': user.email,  
+                        'default_template_id': self.id,
+                        'force_send': True,
+                    }
+                s = template.with_context(**ctx).send_mail(self.id,email_values=email_values)
+                print("Email Sent, ID:", s)
+            except Exception as e:
+                print("Error in send_mail:", str(e))
+
         self.state = 'recommanded'
 
     def action_open_reject_wizard(self):
