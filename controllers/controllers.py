@@ -35,27 +35,51 @@ class SupplierManagement(http.Controller):
             return http.Response('{"status": "error", "message": "Email is already used"}', content_type='application/json')
 
         # Store OTP in database
-        request.env['otp.verification'].sudo().create({
+        x=request.env['otp.verification'].sudo().create({
             'email': email,
             'otp': otp_code,
             'expiry_time': expiry_time,
             'verified': False
         })
         print("OTP Code:", otp_code)
+        template = request.env.ref('supplier_management.otp_verification_template')
+        if template:
+            try:
+                print("Attempting to send mail...")
 
+                # Add context with force_send to ensure immediate email sending
+                email_values = {
+                    'email_to': email,
+                    'email_from': 'anowarul.karim@bjitacademy.com'
+                }
+
+                ctx = {
+                    'default_model': 'otp.verification',
+                    'default_res_id': 1,
+                    'default_email_to': email,  # Ensure the email field exists
+                    'default_template_id': template.id,
+                    'otp_code': otp_code,
+                    'force_send': True,
+                }
+
+                s = template.with_context(**ctx).sudo().send_mail(x,email_values=email_values,force_send=True)
+                print("Email Sent, ID:", s)
+            except Exception as e:
+                print("Error in send_mail:", str(e))
         # Send OTP via email
-        mail_values = {
-            'email_to': email,
-            'email_from': 'anowarul.karim@bjitacademy.com',
-            'subject': "Your OTP Code",
-            'body_html': f"""
-                <p>Hello,</p>
-                <p>Your OTP for verification is: <b>{otp_code}</b></p>
-                <p>This OTP is valid for 5 minutes.</p>
-                <p>Thank you!</p>
-            """
-        }
-        request.env['mail.mail'].sudo().create(mail_values).send()
+
+        # mail_values = {
+        #     'email_to': email,
+        #     'email_from': 'anowarul.karim@bjitacademy.com',
+        #     'subject': "Your OTP Code",
+        #     'body_html': f"""
+        #         <p>Hello,</p>
+        #         <p>Your OTP for verification is: <b>{otp_code}</b></p>
+        #         <p>This OTP is valid for 5 minutes.</p>
+        #         <p>Thank you!</p>
+        #     """
+        # }
+        # request.env['mail.mail'].sudo().create(mail_values).send()
         
 
 
@@ -174,6 +198,29 @@ class SupplierManagement(http.Controller):
                 for user in reviewer_user:
                     # template.with_context(user=user).send_mail(user.id, force_send=True)
                     print(user.email)
+
+                    try:
+                        email_values = {
+                            'email_to': user.email,
+                            'email_from': 'anowarul.karim@bjitacademy.com'
+                        }
+                        print("Attempting to send mail...")
+
+                        # Add context with force_send to ensure immediate email sending
+                        ctx = {
+                            'default_model': 'supplier.registration',
+                            'default_res_id': new_supplier.id,
+                            'default_email_to': user.email,  # Ensure the email field exists
+                            'default_template_id': template.id,
+                            'force_send': True,
+                        }
+                        s = template.with_context(**ctx).send_mail(new_supplier.id,email_values=email_values)
+                        print("Email Sent, ID:", s)
+                    except Exception as e:
+                        print("Error in send_mail:", str(e))
+
+                    
+
                     template.with_context(email_to=user.email).send_mail(user.id, force_send=True)
                     # raise RuntimeError("Intentional error raised!")
 
