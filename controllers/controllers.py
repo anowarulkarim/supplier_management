@@ -446,29 +446,29 @@ class SupplierManagement(http.Controller):
                     'name': "asdfhjk",  # Add description from product line
                 })
 
-                # template = request.env.ref('supplier_management.reviewer_notification_for_new_rfq')
-                # if template:
-                #     try:
-                #         print("Attempting to send mail...")
+                template = request.env.ref('supplier_management.reviewer_notification_for_new_rfq')
+                if template:
+                    
+                    try:
+                        print("Attempting to send mail...")
 
-                #         # Add context with force_send to ensure immediate email sending
-                #         email_values = {
-                #             'email_to': self.create_uid.email,
-                #             'email_from': 'anowarul.karim@bjitacademy.com'
-                #         }
-                #         ctx = {
-                #             'default_model': 'purchase.order',
-                #             'default_res_id': purchase_order.id,
-                #             'default_use_template': bool(template),
-                #             'default_template_id': template.id,
-                #             'default_composition_mode': 'comment',
-                #             'force_send': True,
-                #             'rfp_number': rfp.rfp_number
-                #         }
-                #         template.with_context(**ctx).sudo().send_mail(purchase_order.id,email_values=email_values)
+                        # Add context with force_send to ensure immediate email sending
+                        email_values = {
+                            'email_to': rfp.create_uid.email,
+                            'email_from': 'anowarul.karim@bjitacademy.com'
+                        }
+                        ctx = {
+                            'default_model': 'purchase.order',
+                            'default_res_id': purchase_order.id,
+                            'default_template_id': template.id,
+                            'default_composition_mode': 'comment',
+                            'force_send': True,
+                            'rfp_number': rfp.rfp_number
+                        }
+                        template.with_context(**ctx).sudo().send_mail(purchase_order.id,email_values=email_values)
 
-                #     except Exception as e:
-                #         print("Error in send_mail:", str(e))
+                    except Exception as e:
+                        print("Error in send_mail:", str(e))
 
             # Redirect to success page after RFQ creation
             return request.redirect('/supplier_management/rfq/success')

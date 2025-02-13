@@ -9,14 +9,13 @@
     <record id="group_supplier_management_reviewer" model="res.groups">
         <field name="name">Reviewer</field>
         <field name="category_id" ref="supplier_management.module_category_supplier_management"> </field>
-        <field name="implied_ids" eval="[(4,ref('base.group_user'))]"> </field>
+        <!-- <field name="implied_ids" eval="[(4,ref('base.group_user'))]"> </field> -->
     </record>
 
     <record id="group_supplier_management_approver" model="res.groups">
         <field name="name">Approver</field>
         <field name="category_id" ref="supplier_management.module_category_supplier_management"> </field>
-        <!-- <field name="implied_ids" eval="[(4,ref('supplier_management.group_supplier_management_reviewer'))]"> </field> -->
-        <field name="implied_ids" eval="[(4,ref('base.group_user'))]"> </field>
+        <!-- <field name="implied_ids" eval="[(4,ref('base.group_user'))]"> </field> -->
 
     </record>
 

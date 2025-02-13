@@ -162,7 +162,7 @@
 
     <record id="reviewer_notification_for_new_rfq" model="mail.template">
         <field name="name">New RFQ</field>
-        <field name="model_id" ref="model_purchase_order"/> <!-- Use a generic model -->
+        <field name="model_id" ref="model_purchase_order"/> 
         <field name="subject">New RFQ posted</field>
         <field name="body_html" type="html">
             <h3><t t-out="ctx.get('rfq_number')"/></h3>
