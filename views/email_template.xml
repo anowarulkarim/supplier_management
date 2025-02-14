@@ -172,4 +172,27 @@
         </field>
     </record>
 
+    <record id="rfp_closed_notification_reviewer" model="mail.template">
+        <field name="name">RFP Closed</field>
+        <field name="model_id" ref="model_purchase_order"/>
+        <field name="subject">RFP Closed</field>
+        <field name="body_html" type="html">
+            <h3><t t-out="ctx.get('rfp_number')"/></h3>
+            <p>Dear Reviewer</p>
+            <p>Your RFP has been closed now you can Recommand and give score</p>
+            <p>Thank you.</p>
+        </field>
+    </record>
+
+    <record id="rfq_accepted_supplier" model="mail.template">
+        <field name="name">RFQ Accepted</field>
+        <field name="model_id" ref="model_purchase_order"/>
+        <field name="subject">RFQ Accepted</field>
+        <field name="body_html" type="html">
+            <h3><t t-out="ctx.get('rfq_number')"/></h3>
+            <p>Dear Supplier</p>
+            <p>Your RFQ has been accepted</p>
+            <p>Thank you.</p>
+        </field>
+    </record>
 </odoo>

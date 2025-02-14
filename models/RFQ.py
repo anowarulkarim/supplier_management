@@ -31,6 +31,21 @@ class RFQ(models.Model):
     
     def confirm_rfq(self):
         # self.rfp_state = 'accepted'
+
+        template = self.env.ref('supplier_management.rfq_accepted_supplier')
+        if template:
+            email_values = {
+                'email_to': self.partner_id.email,
+                # 'email_from': self.env.user.email,
+                'email_from': 'anowarul.karim@bjitacademy.com',
+            }
+            ctx = {
+                'rfq': self,
+                'rfp': self.rfp_id,
+                'rfq_number': self.rfp_id.rfp_number,
+            }
+            template.with_context(**ctx).send_mail(self.id, email_values=email_values)
+
         self.rfp_id.write({'status': 'accepted'})
         self.state='purchase'
 

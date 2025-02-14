@@ -179,6 +179,27 @@ class RFP(models.Model):
         if self.status != 'approved':
             raise UserError(_('Only Approved RFPs can be closed.'))
         self.status = 'closed'
+        template = self.env.ref('supplier_management.rfp_closed_notification_reviewer')
+        if template:
+            try:
+                print("Attempting to send mail...")
+                    # Add context with force_send to ensure immediate email sending
+                email_values = {
+                    'email_to': self.create_uid.email,
+                    'email_from': 'anowaru.karim@bjitacademy.com'
+                }
+                ctx ={
+                    'default_model': 'rfp.request',
+                    'default_res_id': self.id,
+                    'default_use_template': bool(template),
+                    'default_template_id': template.id,
+                    'default_composition_mode': 'comment',
+                    'force_send': True,
+                    'rfp_number': self.rfp_number
+                }
+                template.with_context(**ctx).send_mail(self.id, email_values=email_values)
+            except Exception as e:
+                print("Error in send_mail:", str(e))
         self.message_post(body=_('RFP has been closed.'))
 
     def action_accept_rfp(self):

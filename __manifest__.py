@@ -28,6 +28,7 @@ Long description of module's purpose
         'views/portal_rfp_templates.xml',
         'views/portal_rfq.xml',
         'views/email_template.xml',
+        'views/purchase_order_line_inherit.xml',
         'views/ir_sequence.xml',
         'views/views.xml',
         'views/rfp_views.xml',

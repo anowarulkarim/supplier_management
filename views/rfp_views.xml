@@ -20,12 +20,14 @@
                     
                     <button name="action_reject_rfp" type="object" string="Reject" 
                         class="oe_highlight" groups="supplier_management.group_supplier_management_approver"
-                        invisible="status != 'submitted' and status != 'approved'"/>
+                        invisible="status != 'submitted'"/>
                         <!-- /> -->
                     <button name="action_close_rfp" type="object" string="Close" class="oe_highlight"
                          invisible="status != 'approved'" groups="supplier_management.group_supplier_management_approver"/>
+
                     <button name="action_accept_rfp" type="object" string="Accept" class="oe_highlight" 
                         invisible="status != 'recommanded'" groups="supplier_management.group_supplier_management_approver"/>
+                        
                     <field name='status' widget='statusbar'/> 
                 </header>
                 <sheet>
