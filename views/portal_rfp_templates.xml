@@ -105,7 +105,7 @@
                 <div class="container">
                     <h1>Create RFQ for <t t-esc="rfp.rfp_number"/></h1>
                     <form action="" method="POST">
-                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <input type="hidden" name="rfp_id" t-att-value="rfp.id"/>
 
                         <!-- Warranty Period -->
@@ -129,6 +129,7 @@
                                     <th>Quantity</th>
                                     <th>Unit Price</th>
                                     <th>Delivery Charges</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -140,22 +141,30 @@
                                                 <div class="d-flex align-items-center">
                                                     <!-- Product Image -->
                                                     <img t-att-src="image_data_uri(line.product_id.image_1920)"
-                                                    class="image-thumbnail" style="max-width: 80px;" />
+                                                        class="image-thumbnail" style="max-width: 80px;" />
                                                     <t t-esc="product.name"/>
                                                 </div>
                                             </t>
                                         </td>
                                         <td class="text-center">
                                             <!-- Quantity -->
-                                            <input type="number" t-att-name="'quantity_' + str(line.id)" t-att-value="line.quantity" class="form-control" default="0" required="required"/>
+                                            <input type="number" t-att-name="'quantity_' + str(line.id)" t-att-value="line.quantity"
+                                                class="form-control" default="0" readonly="1"/>
                                         </td>
                                         <td>
                                             <!-- Unit Price -->
-                                            <input type="number" t-att-name="'unit_price_' + str(line.id)" class="form-control" required="required"/>
+                                            <input type="number" t-att-name="'unit_price_' + str(line.id)" class="form-control"
+                                                required="required"/>
                                         </td>
                                         <td>
                                             <!-- Delivery Charges -->
-                                            <input type="number" t-att-name="'delivery_charges_' + str(line.id)" class="form-control"/>
+                                            <input type="number" t-att-name="'delivery_charges_' + str(line.id)"
+                                                class="form-control"/>
+                                        </td>
+                                        <td>
+                                            <!-- Total -->
+                                            <input type="text" t-att-name="'total_' + str(line.id)" class="form-control"
+                                                readonly="readonly"/>
                                         </td>
                                     </tr>
                                 </t>
@@ -166,8 +175,14 @@
                         <button type="submit" class="btn btn-success">Submit RFQ</button>
                     </form>
                 </div>
+
+                <!-- JavaScript to calculate total -->
+                <script src="/supplier_management/static/src/js/total_calculation.js">
+                    
+                </script>
             </t>
         </template>
+
 
 
     </data>
