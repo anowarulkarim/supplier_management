@@ -48,6 +48,7 @@ class RFQ(models.Model):
 
         self.rfp_id.write({'status': 'accepted'})
         self.state='purchase'
+        self.rfp_id.approved_supplier_id = self.partner_id
 
 
     @api.depends('quantity', 'unit_price')

@@ -15,4 +15,7 @@
     <menuitem id="menu_rfp_request" name="Request for Purchase" 
               parent="supplier_management.menu_supplier_management_root"
               action="action_rfp_request" sequence="25"/>
+    <menuitem id="menu_rfp_reports_menu" name="RFP Reports" 
+              parent="supplier_management.menu_supplier_management_root" 
+              action="menu_rfp_report" sequence="30"/>
 </odoo>

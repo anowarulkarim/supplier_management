@@ -5,3 +5,4 @@ access_supplier_management_rfp_reviewer,access.supplier_management.rfp,model_rfp
 access_supplier_management_rfp_approver,access.supplier_management.rfp,model_rfp_request,supplier_management.group_supplier_management_approver,1,1,0,0
 access_supplier_management_product_line,access.supplier_management.product_line,model_rfp_product_line,base.group_user,1,1,1,1
 access_supplier_management_otp_varification,access.supplier_management.otp_varification,model_otp_verification,base.group_user,1,1,1,1
+access_suppleir_management_rfp_report,access.supplier_management.frp_report,model_rfp_report,base.group_user,1,1,1,1

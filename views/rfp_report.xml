@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_rfp_report_form" model="ir.ui.view">
+        <field name="name">rfp.report.form</field>
+        <field name="model">rfp.report</field>
+        <field name="arch" type="xml">
+            <form string="RFP Report">
+                <sheet>
+                    <group>
+                        <field name="supplier_id"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <div>
+                        <button name="action_generate_html_preview" string="Preview HTML" type="object" class="oe_highlight"/>
+                        <button name="action_generate_excel_report" string="Generate Excel Report" type="object" class="oe_highlight"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="menu_rfp_report" model="ir.actions.act_window">
+        <field name="name">RFP Reports</field>
+        <field name="res_model">rfp.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="rfp_report_html_preview_template">
+        
+    </template>
+
+    <record id="rfp_report_html_preview_action" model="ir.actions.report">
+        <field name="name">RFP Report HTML Preview</field>
+        <field name="model">rfp.report</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">supplier_management.rfp_report_html_preview_template</field>
+    </record>
+</odoo>
