@@ -1,13 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <template id="rfp_report_html_preview_template">
-        
-    </template>
+        <t t-call="web.html_container">
+            <!-- Include Bootstrap CDN -->
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 
-    <record id="rfp_report_html_preview_action" model="ir.actions.report">
-        <field name="name">RFP Report HTML Preview</field>
-        <field name="model">rfp.report</field>
-        <field name="report_type">qweb-html</field>
-        <field name="report_name">supplier_management.rfp_report_html_preview_template</field>
-    </record>
+            <!-- Section-1: Header with Company Logo and Supplier Info -->
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-12 text-center mb-4">
+                        <t t-if="company.logo">
+                            <img t-att-src="image_data_uri(company.logo)" alt="Company Logo" class="img-fluid" style="max-height: 150px;" />
+                        </t>
+                    </div>
+                </div>
+
+                <hr/>
+                <!-- Supplier Information -->
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="font-weight-bold text-primary" t-field="supplier.name"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <td><strong>Email:</strong></td>
+                                <td t-esc="supplier.email"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Phone:</strong></td>
+                                <td t-esc="supplier.phone"/>
+                            </tr>
+                            <tr>
+                                <td><strong>Address:</strong></td>
+                                <td t-esc="supplier.street"/>
+                            </tr>
+                            <tr>
+                                <td><strong>TIN:</strong></td>
+                                <td t-esc="supplier.vat"/>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <table class="table table-bordered table-striped">
+                            <tr t-if="supplier.bank_ids">
+                                <td><strong>Bank Name:</strong></td>
+                                <td t-esc="supplier.bank_ids[0].bank_name"/>
+                            </tr>
+                            <tr t-if="supplier.bank_ids">
+                                <td><strong>Account Name:</strong></td>
+                                <td t-esc="supplier.bank_ids[0].acc_holder_name"/>
+                            </tr>
+                            <tr t-if="supplier.bank_ids">
+                                <td><strong>Account Number:</strong></td>
+                                <td t-esc="supplier.bank_ids[0].acc_number"/>
+                            </tr>
+                            <tr t-if="supplier.bank_ids">
+                                <td><strong>IBAN:</strong></td>
+                                <td t-esc="supplier.bank_ids[0].iban"/>
+                            </tr>
+                            <tr t-if="supplier.bank_ids">
+                                <td><strong>SWIFT Code:</strong></td>
+                                <td t-esc="supplier.bank_ids[0].bic"/>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section-2: RFPs Table -->
+            <div class="container mt-5">
+                <h3 class="font-weight-bold text-primary">RFPs</h3>
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>RFP Number</th>
+                            <th>Date</th>
+                            <th>Required Date</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="rfps" t-as="rfp">
+                            <tr>
+                                <td t-esc="rfp.rfp_number"/>
+                                <td t-esc="rfp.create_date.strftime('%d/%m/%Y')"/>
+                                <td t-esc="rfp.required_date.strftime('%d/%m/%Y')"/>
+                                <td t-esc="rfp.total_amount"/>
+                            </tr>
+                        </t>
+                        <tr class="table-info">
+                            <td colspan="3"><strong>Total</strong></td>
+                            <td><strong t-esc="sum(rfp.total_amount for rfp in rfps)"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section-3: Product Lines Table -->
+            <div class="container mt-5">
+                <h3 class="font-weight-bold text-primary">Product Lines</h3>
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Purchase Order</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Delivery Charges</th>
+                            <th>Subtotal Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="products" t-as="purchase">
+                            <t t-set="first_row" t-value="True"/>
+                            <t t-foreach="purchase.order_line" t-as="line">
+                                <tr>
+                                    <!-- RFP ID with Rowspan (only for the first order line) -->
+                                    <td t-if="first_row" t-att-rowspan="len(purchase.order_line)">
+                                        <t t-esc="purchase.rfp_id.rfp_number"/>
+                                    </td>
+                                    <td><t t-esc="line.product_id.name"/></td>
+                                    <td><t t-esc="line.product_qty"/></td>
+                                    <td><t t-esc="line.price_unit"/></td>
+                                    <td><t t-esc="line.delivery_charge"/></td>
+                                    <td><t t-esc="line.price_subtotal"/></td>
+                                </tr>
+                                <t t-set="first_row" t-value="False"/> <!-- Disable rowspan for the next rows -->
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Section-4: Company Info -->
+            <div class="container mt-5">
+                <h3 class="font-weight-bold text-primary">Company Information</h3>
+                <ul class="list-unstyled">
+                    <li><strong>Email:</strong> <span t-esc="company.email"/></li>
+                    <li><strong>Phone:</strong> <span t-esc="company.phone"/></li>
+                    <li><strong>Address:</strong> <span t-esc="company.street"/></li>
+                </ul>
+            </div>
+
+        </t>
+    </template>
 </odoo>

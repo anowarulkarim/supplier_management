@@ -15,6 +15,9 @@
                         <button name="action_generate_html_preview" string="Preview HTML" type="object" class="oe_highlight"/>
                         <button name="action_generate_excel_report" string="Generate Excel Report" type="object" class="oe_highlight"/>
                     </div>
+                    <group>
+                        <field name="html_preview"></field>
+                    </group>
                 </sheet>
             </form>
         </field>
