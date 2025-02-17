@@ -41,10 +41,10 @@
                                 <td><strong>TIN:</strong></td>
                                 <td t-esc="supplier.vat"/>
                             </tr>
-                        </table>
+                        <!-- </table>
                     </div>
                     <div class="col-12 col-md-6">
-                        <table class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped"> -->
                             <tr t-if="supplier.bank_ids">
                                 <td><strong>Bank Name:</strong></td>
                                 <td t-esc="supplier.bank_ids[0].bank_name"/>
@@ -59,11 +59,11 @@
                             </tr>
                             <tr t-if="supplier.bank_ids">
                                 <td><strong>IBAN:</strong></td>
-                                <td t-esc="supplier.bank_ids[0].iban"/>
+                                <td t-esc="supplier.bank_ids[0].bank_id.iban"/>
                             </tr>
                             <tr t-if="supplier.bank_ids">
                                 <td><strong>SWIFT Code:</strong></td>
-                                <td t-esc="supplier.bank_ids[0].bic"/>
+                                <td t-esc="supplier.bank_ids[0].bank_bic"/>
                             </tr>
                         </table>
                     </div>

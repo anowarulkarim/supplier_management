@@ -123,47 +123,47 @@ class SupplierManagement(http.Controller):
             for key in keys:
                 if kw.get(key):
                     vals[key] = kw.get(key)
-            # if kw.get('tax_identification_number') and (len(kw.get('tax_identification_number')) != 15 or not kw.get(
-            #         'tax_identification_number').isdigit()):
-            #     error_list.append("Tax Identification Number Should Be Of 15 Digits And All Digits")
-            # if kw.get('trade_license_number') and (len(kw.get('trade_license_number')) != 15 or not kw.get(
-            #         'trade_license_number').isdigit()):
-            #     error_list.append("Trade License Number Should Be Of 15 Digits And All Digits")
-            # if kw.get('expiry_date') and fields.Date.to_date(kw.get('expiry_date')) <= fields.date.today():
-            #     error_list.append("Expiry Date Should Be Greater Than Today")
-            # if not kw.get('company_name'):
-            #     error_list.append("Company Name is mandatory")
-            # if not kw.get('email'):
-            #     error_list.append("Company Email is mandatory")
-            # if kw.get('email'):
-            #     already_exists = request.env['res.partner'].sudo().search([('email', '=', kw.get('email'))])
-            #     if already_exists:
-            #         error_list.append("Company Email Already Exists In the system. Try with another email")
-            # if not kw.get('bank_name'):
-            #     error_list.append("Bank Name is mandatory")
-            # if not kw.get('bank_address'):
-            #     error_list.append("Bank Address is mandatory")
-            # if not kw.get('accoutn_number'):
-            #     error_list.append("Account Number is mandatory")
-            # if kw.get('client_1_contact_email') or kw.get('client_1_address') or kw.get('client_1_contact_phone'):
-            #     if not kw.get('client_1_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 1 Name is mandatory")
-            #
-            # if kw.get('client_2_contact_email') or kw.get('client_2_address') or kw.get('client_2_contact_phone'):
-            #     if not kw.get('client_2_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 2 Name is mandatory")
-            #
-            # if kw.get('client_3_contact_email') or kw.get('client_3_address') or kw.get('client_3_contact_phone'):
-            #     if not kw.get('client_3_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 3 Name is mandatory")
-            #
-            # if kw.get('client_4_contact_email') or kw.get('client_4_address') or kw.get('client_4_contact_phone'):
-            #     if not kw.get('client_4_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 4 Name is mandatory")
-            #
-            # if kw.get('client_5_contact_email') or kw.get('client_5_address') or kw.get('client_5_contact_phone'):
-            #     if not kw.get('client_5_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 5 Name is mandatory")
+            if kw.get('tax_identification_number') and (len(kw.get('tax_identification_number')) != 15 or not kw.get(
+                    'tax_identification_number').isdigit()):
+                error_list.append("Tax Identification Number Should Be Of 15 Digits And All Digits")
+            if kw.get('trade_license_number') and (len(kw.get('trade_license_number')) != 15 or not kw.get(
+                    'trade_license_number').isdigit()):
+                error_list.append("Trade License Number Should Be Of 15 Digits And All Digits")
+            if kw.get('expiry_date') and fields.Date.to_date(kw.get('expiry_date')) <= fields.date.today():
+                error_list.append("Expiry Date Should Be Greater Than Today")
+            if not kw.get('company_name'):
+                error_list.append("Company Name is mandatory")
+            if not kw.get('email'):
+                error_list.append("Company Email is mandatory")
+            if kw.get('email'):
+                already_exists = request.env['res.partner'].sudo().search([('email', '=', kw.get('email'))])
+                if already_exists:
+                    error_list.append("Company Email Already Exists In the system. Try with another email")
+            if not kw.get('bank_name'):
+                error_list.append("Bank Name is mandatory")
+            if not kw.get('bank_address'):
+                error_list.append("Bank Address is mandatory")
+            if not kw.get('accoutn_number'):
+                error_list.append("Account Number is mandatory")
+            if kw.get('client_1_contact_email') or kw.get('client_1_address') or kw.get('client_1_contact_phone'):
+                if not kw.get('client_1_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 1 Name is mandatory")
+            
+            if kw.get('client_2_contact_email') or kw.get('client_2_address') or kw.get('client_2_contact_phone'):
+                if not kw.get('client_2_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 2 Name is mandatory")
+            
+            if kw.get('client_3_contact_email') or kw.get('client_3_address') or kw.get('client_3_contact_phone'):
+                if not kw.get('client_3_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 3 Name is mandatory")
+            
+            if kw.get('client_4_contact_email') or kw.get('client_4_address') or kw.get('client_4_contact_phone'):
+                if not kw.get('client_4_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 4 Name is mandatory")
+            
+            if kw.get('client_5_contact_email') or kw.get('client_5_address') or kw.get('client_5_contact_phone'):
+                if not kw.get('client_5_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 5 Name is mandatory")
 
 
             file_fields = [

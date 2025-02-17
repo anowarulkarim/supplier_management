@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
+    <record id="view_rfp_graph" model="ir.ui.view">
+        <field name="name">rfp.request.graph</field>
+        <field name="model">rfp.request</field>
+        <field name="arch" type="xml">
+            <graph string="RFP Analysis" type="line">
+                <!-- Fields for the graph -->
+                <field name="required_date" type="datetime" interval="month"/>
+                <field name="total_amount"/>
+
+                <!-- Optional: Display these fields for analysis -->
+                <field name="rfp_number" invisible="1"/>
+                <field name="approved_supplier_id" invisible="1"/>
+                <field name="status" invisible="1"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="rfp_pivot_view" model="ir.ui.view">
+        <field name="name">rfp.pivot.view</field>
+        <field name="model">rfp.request</field>
+        <field name="arch" type="xml">
+            <pivot string="RFP Pivot Analysis">
+                <field name="approved_supplier_id" type="row"/>
+                <field name="required_date" type="col" interval="month"/>
+                <field name="status" type="row"/>
+                
+                <!-- Explicitly define the aggregation method for each measure -->
+                <field name="rfp_number"/>
+                <field name="total_amount" type="measure" sum="sum"/>
+            </pivot>
+        </field>
+    </record>
+
+
     <record id="view_rfp_form" model="ir.ui.view">
         <field name="name">rfp.request.form</field>
         <field name="model">rfp.request</field>
@@ -129,7 +164,7 @@
     <record id="action_rfp_request" model="ir.actions.act_window">
         <field name="name">Requests for Purchase</field>
         <field name="res_model">rfp.request</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
         <field name="view_id" ref="view_rfp_tree"/>
     </record>
     
