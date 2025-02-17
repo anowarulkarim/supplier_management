@@ -1,0 +1,27 @@
+<templates id="template" xml:space="preserve">
+    <t t-name="owl.SupplierDashboard">
+        <div class="o_supplier_dashboard">
+            <h1>Supplier Dashboard</h1>
+            <div class="o_dashboard_content">
+                <div class="o_dashboard_section">
+                    <h2>Supplier Overview</h2>
+                    <div class="o_supplier_overview">
+                        <!-- Add your supplier overview content here -->
+                    </div>
+                </div>
+                <div class="o_dashboard_section">
+                    <h2>Recent Orders</h2>
+                    <div class="o_recent_orders">
+                        <!-- Add your recent orders content here -->
+                    </div>
+                </div>
+                <div class="o_dashboard_section">
+                    <h2>Performance Metrics</h2>
+                    <div class="o_performance_metrics">
+                        <!-- Add your performance metrics content here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

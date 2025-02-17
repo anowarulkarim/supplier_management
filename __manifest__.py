@@ -18,7 +18,7 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','mail','purchase'],
+    'depends': ['base','mail','purchase','web'],
 
     # always loaded
     'data': [
@@ -47,5 +47,12 @@ Long description of module's purpose
     'demo': [
         'demo/demo.xml',
     ],
+    # 'assets':{
+    #     'web.assets_backend':{
+    #     'supplier_management/static/src/components/**/*.js',
+    #     'supplier_management/static/src/components/**/*.xml',
+    #     'supplier_management/static/src/components/**/*.scss',
+    #     }
+    # }
 }
 
