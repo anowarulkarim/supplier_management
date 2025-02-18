@@ -1,26 +1,88 @@
 <templates id="template" xml:space="preserve">
     <t t-name="owl.SupplierDashboard">
         <div class="o_supplier_dashboard">
-            <h1>Supplier Dashboard</h1>
             <div class="o_dashboard_content">
-                <div class="o_dashboard_section">
-                    <h2>Supplier Overview</h2>
-                    <div class="o_supplier_overview">
-                        <!-- Add your supplier overview content here -->
+                
+                <div class="row">
+                    <div class="container mt-4">
+                        <div class="card shadow-lg border-0 rounded-lg overflow-hidden">
+                            <div class="card-body p-5">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h1 class="text-primary fw-bold mb-0">Supplier Dashboard</h1>
+                                    <div class="mb-3 mb-md-0">
+                                        <select id="date_range" t-model="state.dateRange" class="form-control" t-on-change="onDateRangeChange">
+                                            <option value="this_month">This Month</option>
+                                            <option value="this_week">This Week</option>
+                                            <option value="last_week">Last Week</option>
+                                            <option value="last_month">Last Month</option>
+                                            <option value="last_year">Last Year</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 mb-md-0">
+                                        <select class="form-select form-select-lg" t-model="state.selectedSupplier" t-on-change="onSupplierChange">
+                                            <option value="">-- Select Supplier --</option>
+                                            <option t-foreach="state.suppliers" t-as="supplier" t-key="supplier.id" t-att-value="supplier.id">
+                                                <t t-esc="supplier.name"/>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="o_dashboard_section">
-                    <h2>Recent Orders</h2>
-                    <div class="o_recent_orders">
-                        <!-- Add your recent orders content here -->
+
+                <!-- Cards Section -->
+                <div class="row mt-4">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <t t-call="supplier_dashboard.Card">
+                            <t t-set="props" t-value="{'name': 'Quotations Approved', 'value': state.approvedRFQs, 'percentage': 6}"/>
+                        </t>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <t t-call="supplier_dashboard.Card">
+                            <t t-set="props" t-value="{'name': 'Total Submitted Quotations', 'value': state.total_rfq, 'percentage': 6}"/>
+                        </t>
                     </div>
                 </div>
-                <div class="o_dashboard_section">
-                    <h2>Performance Metrics</h2>
-                    <div class="o_performance_metrics">
-                        <!-- Add your performance metrics content here -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h2 class="mb-4">Current RFPs and Product Lines</h2>
+                        <div class="accordion" id="rfpAccordion">
+                        <t t-if="state.all_rfqs">
+                            <t t-foreach="state.all_rfqs" t-as="rfp" t-key="rfp.id">
+                            <h2 class="mb-4">Current RFPs and Product Lines</h2>
+                                <div class="accordion-item">
+                                    <div class="accordion-collapse collapse" data-bs-parent="#rfpAccordion">
+                                        <div class="accordion-body">
+                                            <table class="table table-striped">
+                                            <h2 class="mb-4">Current RFPs and Product Lines</h2>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Quantity</th>
+                                                        <th>Unit Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="rfp.order_line" t-as="line" t-key="line.id">
+                                                        <tr>
+                                                            <!-- <td><t t-esc="line.product.name"/></td>
+                                                            <td><t t-esc="line.quantity"/></td>
+                                                            <td><t t-esc="line.unit_price"/></td> -->
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                            </t>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </t>
