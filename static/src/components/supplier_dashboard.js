@@ -1,9 +1,10 @@
-// import { Component } from '@odoo/owl';
-// import { registry } from '@odoo/owl';
-
 /** @odoo-module **/
 
+import { Component } from '@odoo/owl';
 import {registry} from "@web/core/registry"
+
+
+
 class SupplierDashboard extends Component {
     static template = 'SupplierDashboard';
     setup() {

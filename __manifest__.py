@@ -47,12 +47,12 @@ Long description of module's purpose
     'demo': [
         'demo/demo.xml',
     ],
-    # 'assets':{
-    #     'web.assets_backend':{
-    #     'supplier_management/static/src/components/**/*.js',
-    #     'supplier_management/static/src/components/**/*.xml',
-    #     'supplier_management/static/src/components/**/*.scss',
-    #     }
-    # }
+    'assets':{
+        'web.assets_backend':{
+            'supplier_management/static/src/components/**/*.js',
+            'supplier_management/static/src/components/**/*.xml',
+            'supplier_management/static/src/components/**/*.scss',
+        }
+    }
 }
 
