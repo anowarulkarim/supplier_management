@@ -1,4 +1,5 @@
 /** @odoo-module **/
+// import { ChartComponent } from "./graph/graph";
 import { loadJS } from "@web/core/assets"
 import { useService } from "@web/core/utils/hooks"
 const { onWillStart, useRef, onMounted, useState } = owl
@@ -6,6 +7,7 @@ import { Component } from '@odoo/owl';
 import {registry} from "@web/core/registry"
 import { Card } from './card/card'
 import { Product } from "./product/product";
+
 
 
 class SupplierDashboard extends Component {
@@ -23,12 +25,13 @@ class SupplierDashboard extends Component {
             productBreakdown: [],
         });
         onWillStart(async () => {
+            loadJS("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js")
             this.state.suppliers = await this.fetchSuppliers();
             await this.fetchMetrics();
-            // console.log("State Updated:", this.state.suppliers); // ✅ Debugging output
+            
         });
 
-        // console.log(this.state.suppliers)
+       
     }
     async fetchSuppliers() {
         try {
@@ -37,10 +40,7 @@ class SupplierDashboard extends Component {
                 [["supplier_rank", ">", -1]], // ✅ Only fetch suppliers
                 ["id", "name"]
             );
-            // console.log("Fetched Suppliers:", suppliers); // ✅ Debugging output
-            // suppliers.forEach(supplier => {
-            //     console.log("Supplier:", supplier);
-            // });
+            
             return suppliers;
         } catch (error) {
             // console.error("Error fetching suppliers:", error);
