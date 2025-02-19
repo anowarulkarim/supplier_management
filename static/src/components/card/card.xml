@@ -1,23 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <template>
     <t t-name="supplier_dashboard.Card" owl="1">
-        <div class="card p-4 shadow-lg rounded-lg text-center bg-white border border-light">
-            <div class="card-body">
-                <h5 class="card-title text-primary fw-bold mb-3">
+        <!-- <link rel="stylesheet" type="text/css" href="/supplier_management/static/src/components/card/card.css"/> -->
+        <div class="card p-4 shadow-sm" t-att-class="props.color ? 'card-' + props.color : 'card-primary'">
+            <div class="card-body text-center">
+                <!-- Card Title -->
+                <h5 class="card-title text-secondary mb-3">
                     <t t-esc="props.name"/>
                 </h5>
-                
-                <div class="d-flex align-items-center justify-content-center">
-                    <span class="fs-3 fw-bold text-dark me-2">
+
+                <!-- Card Value -->
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <span class="fs-1 fw-bold text-primary" style="font-size: 3rem;">
                         <t t-esc="props.value"/>
                     </span>
-                    <!-- <span t-attf-class="fs-5 fw-bold badge bg-#{ props.percentage > 0 ? 'success' : 'danger' }">
-                        <span t-attf-class="me-1 fa fa-arrow-#{ props.percentage > 0 ? 'up' : 'down' }"/>
-                        <t t-esc="props.percentage"/>%
-                    </span> -->
                 </div>
-
-                <hr class="my-3"/>
             </div>
         </div>
     </t>

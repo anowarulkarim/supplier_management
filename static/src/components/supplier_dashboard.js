@@ -83,9 +83,32 @@ class SupplierDashboard extends Component {
             rfqs.forEach(element => {
                 console.log(element.order_line)
                 element.order_line.forEach(a=>{
-                    console.log(typeof(a))
+                    console.log(typeof(element.order_line))
                 });
             });
+
+            const orderLineIds = rfqs.flatMap(rfq => rfq.order_line);
+            const orderLines = await this.orm.searchRead("purchase.order.line", [["id", "in", orderLineIds]], ["id", "product_id", "product_qty", "price_unit"]);
+            console.log("Order Lines:", orderLines);
+            const productFrequency = {};
+
+            orderLines.forEach(line => {
+                const productId = line.product_id[0];
+                console.log()
+                if (!productFrequency[productId]) {
+                    productFrequency[productId] = {
+                        product_id: line.product_id,
+                        product_qty: 0,
+                        total_amount: 0
+                    };
+                }
+                productFrequency[productId].product_qty += line.product_qty;
+                productFrequency[productId].total_amount += line.product_qty * line.price_unit;
+            });
+
+            this.state.productBreakdown = Object.values(productFrequency);
+            console.log("Product Break Down",this.state.productBreakdown)
+
 
             this.state.total_rfq=total_rfqs.length;
             this.state.approvedRFQs = rfqs.length;
@@ -96,6 +119,9 @@ class SupplierDashboard extends Component {
         } catch (error) {
             console.error("Error fetching metrics:", error);
         }
+    }
+    get_product_lines(){
+
     }
 
     getDateFilter() {
