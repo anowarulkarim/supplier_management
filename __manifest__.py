@@ -51,7 +51,7 @@ Long description of module's purpose
         'web.assets_backend':{
             'supplier_management/static/src/components/**/*.js',
             'supplier_management/static/src/components/**/*.xml',
-            'supplier_management/static/src/components/**/*.scss',
+            'supplier_management/static/src/components/**/*.css',
         }
     }
 }

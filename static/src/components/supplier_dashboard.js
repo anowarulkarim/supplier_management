@@ -5,6 +5,7 @@ const { onWillStart, useRef, onMounted, useState } = owl
 import { Component } from '@odoo/owl';
 import {registry} from "@web/core/registry"
 import { Card } from './card/card'
+import { Product } from "./product/product";
 
 
 class SupplierDashboard extends Component {
@@ -24,10 +25,10 @@ class SupplierDashboard extends Component {
         onWillStart(async () => {
             this.state.suppliers = await this.fetchSuppliers();
             await this.fetchMetrics();
-            console.log("State Updated:", this.state.suppliers); // ✅ Debugging output
+            // console.log("State Updated:", this.state.suppliers); // ✅ Debugging output
         });
 
-        console.log(this.state.suppliers)
+        // console.log(this.state.suppliers)
     }
     async fetchSuppliers() {
         try {
@@ -42,20 +43,20 @@ class SupplierDashboard extends Component {
             // });
             return suppliers;
         } catch (error) {
-            console.error("Error fetching suppliers:", error);
+            // console.error("Error fetching suppliers:", error);
             return [];
         }
     }
     
     async fetchMetrics() {
-        console.log("sdfkjlk")
+        // console.log("sdfkjlk")
         if (!this.state.selectedSupplier) return;
 
 
         const dateFilter = this.getDateFilter();
         const supplierId = this.state.selectedSupplier;
         
-        console.log(dateFilter,supplierId)
+        // console.log(dateFilter,supplierId)
 
         try {
 
@@ -65,45 +66,57 @@ class SupplierDashboard extends Component {
                 ["date_order", ">=", dateFilter[0]], // Start Date
                 ["date_order", "<=", dateFilter[1]]  // End Date
             ];
-            console.log(dateFilter[0],dateFilter[1])
+            // console.log(dateFilter[0],dateFilter[1])
             const rfqDomain = [
                 ["partner_id", "=", supplierId], // Supplier
                 ["date_order", ">=", dateFilter[0]], // Start Date
                 ["date_order", "<=", dateFilter[1]]  // End Date
             ];
-            console.log("kjjjhasdf")
+            // console.log("kjjjhasdf")
 
             
 
             const rfqs = await this.orm.searchRead("purchase.order", poDomain, ["id", "amount_total","order_line"]);
             const total_rfqs = await this.orm.searchRead("purchase.order", rfqDomain, ["id", "amount_total"]);
-            console.log("rfps     as",rfqs)
+            // console.log("rfps     as",rfqs)
             this.state.all_rfqs=rfqs
             
             rfqs.forEach(element => {
-                console.log(element.order_line)
+                // console.log(element.order_line)
                 element.order_line.forEach(a=>{
-                    console.log(typeof(element.order_line))
+                    // console.log(typeof(element.order_line))
                 });
             });
 
             const orderLineIds = rfqs.flatMap(rfq => rfq.order_line);
             const orderLines = await this.orm.searchRead("purchase.order.line", [["id", "in", orderLineIds]], ["id", "product_id", "product_qty", "price_unit"]);
-            console.log("Order Lines:", orderLines);
+            // console.log("Order Lines:", orderLines);
             const productFrequency = {};
+
+            const productIds = orderLines.map(line => line.product_id[0]);
+            const products = await this.orm.searchRead("product.product", [["id", "in", productIds]], ["id", "image_1920"]);
+
+            const productImageMap = {};
+            products.forEach(product => {
+                productImageMap[product.id] = product.image_1920;
+            });
+            let amount=0;
 
             orderLines.forEach(line => {
                 const productId = line.product_id[0];
-                console.log()
+
                 if (!productFrequency[productId]) {
                     productFrequency[productId] = {
                         product_id: line.product_id,
                         product_qty: 0,
-                        total_amount: 0
+                        total_amount: 0,
+                        image: productImageMap[productId] || null
                     };
                 }
                 productFrequency[productId].product_qty += line.product_qty;
                 productFrequency[productId].total_amount += line.product_qty * line.price_unit;
+                amount+=productFrequency[productId].total_amount
+
             });
 
             this.state.productBreakdown = Object.values(productFrequency);
@@ -112,12 +125,13 @@ class SupplierDashboard extends Component {
 
             this.state.total_rfq=total_rfqs.length;
             this.state.approvedRFQs = rfqs.length;
-            // this.state.totalAmount = data.totalAmount;
+            this.state.totalAmount = amount;
+            console.log("total amount",this.state.totalAmount)
             // this.state.productBreakdown = data.productBreakdown;
             
             
         } catch (error) {
-            console.error("Error fetching metrics:", error);
+            // console.error("Error fetching metrics:", error);
         }
     }
     get_product_lines(){
@@ -176,18 +190,18 @@ class SupplierDashboard extends Component {
     onSupplierChange(event) {
         this.state.selectedSupplier = parseInt(event.target.value);
         this.fetchMetrics();
-        console.log("here it is", this.state.selectedSupplier)
+        // console.log("here it is", this.state.selectedSupplier)
     }
 
     onDateRangeChange(event) {
         this.state.dateRange = String(event.target.value);
         this.fetchMetrics();
-        console.log("here it is for date", this.state.dateRange)
+        // console.log("here it is for date", this.state.dateRange)
     }
 }
 
 SupplierDashboard.template = "owl.SupplierDashboard"
-SupplierDashboard.components = { Card }
+SupplierDashboard.components = { Card , Product}
 
 registry.category("actions").add("owl.supplier_dashboard",SupplierDashboard)
 

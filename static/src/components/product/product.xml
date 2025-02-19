@@ -1,0 +1,29 @@
+<template>
+    <t t-name="supplier_dashboard.ProductBreakdownCard" owl="1">
+        <!-- Fixed width container to ensure uniform sizing -->
+        <div class="fixed-product-card">
+            <div class="card p-3 shadow-sm text-center">
+                <!-- Product Image -->
+                <img t-att-src="'data:image/png;base64,' + props.image_url" 
+                     class="product-image mb-2" 
+                     alt="Product Image" 
+                     style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;"/>
+
+                <!-- Product Name -->
+                <h6 class="card-title text-primary mb-2">
+                    <t t-esc="props.name"/>
+                </h6>
+
+                <!-- Product Quantity & Total Value -->
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <span class="fw-bold text-primary ">
+                        Qty: <t t-esc="props.quantity"/>
+                    </span>
+                    <span class="fw-bold text-success">
+                        $<t t-esc="props.total_amount"/>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
