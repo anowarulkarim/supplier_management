@@ -1,5 +1,5 @@
 /** @odoo-module **/
-// import { ChartComponent } from "./graph/graph";
+import { ChartComponent } from "./graph/graph";
 import { loadJS } from "@web/core/assets"
 import { useService } from "@web/core/utils/hooks"
 const { onWillStart, useRef, onMounted, useState } = owl
@@ -25,7 +25,7 @@ class SupplierDashboard extends Component {
             productBreakdown: [],
         });
         onWillStart(async () => {
-            loadJS("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js")
+            
             this.state.suppliers = await this.fetchSuppliers();
             await this.fetchMetrics();
             
@@ -201,7 +201,7 @@ class SupplierDashboard extends Component {
 }
 
 SupplierDashboard.template = "owl.SupplierDashboard"
-SupplierDashboard.components = { Card , Product}
+SupplierDashboard.components = { Card , Product, ChartComponent} 
 
 registry.category("actions").add("owl.supplier_dashboard",SupplierDashboard)
 
