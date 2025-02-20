@@ -1,3 +1,22 @@
 html .o_web_client > .o_action_manager {
     overflow: auto;
 }
+.product-scroll-container {
+    max-height: 800px; /* Adjust height as needed */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    padding-right: 10px; /* Prevent scrollbar from overlapping content */
+}
+
+/* Optional: Hide scrollbar for a cleaner UI */
+.product-scroll-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.product-scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.product-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

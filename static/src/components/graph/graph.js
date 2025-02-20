@@ -10,23 +10,21 @@ export class ChartComponent extends Component {
         // Ensure chart updates when props change
         useEffect(() => {
             if (this.chart1) {
-                this.chart1.data.datasets[0].data = [
-                    this.props.total_rfq,
-                    this.props.approvedRFQs,
-                ];
+                this.chart1.data.labels = this.props.graph_label;
+                this.chart1.data.datasets[0].data = this.props.graph_data;
+                this.chart1.data.datasets[0].backgroundColor = this.generateColors(this.props.graph_data.length);
                 this.chart1.update();
             }
-        }, () => [this.props.total_rfq, this.props.approvedRFQs]);
+        }, () => [this.props.graph_data, this.props.graph_label]);
 
         onMounted(this.loadAndRenderChart);
         onWillUnmount(this.cleanupChart);
     }
 
     async loadAndRenderChart() {
-        // Load Chart.js dynamically and wait until it's available
+        // Load Chart.js dynamically
         await loadJS("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js");
 
-        // Wait for Chart.js to be defined
         if (!window.Chart) {
             console.error("Chart.js failed to load");
             return;
@@ -34,28 +32,35 @@ export class ChartComponent extends Component {
 
         const ctx = this.chartCanvas.el.getContext("2d");
 
-        this.chart1 = new window.Chart(ctx, {  // Use `window.Chart` to avoid undefined issues
-            type: "pie",
+        this.chart1 = new window.Chart(ctx, {
+            type: "bar",
             data: {
-                labels: ["Total RFQ", "Approved RFQs"],
+                labels: this.props.graph_label,
                 datasets: [
                     {
-                        label: "Supplier Metrics",
-                        data: [this.props.total_rfq, this.props.approvedRFQs],
-                        backgroundColor: ["#3498db", "#2ecc71", "#e74c3c"]
+                        label: "Total Amount per RFP",
+                        data: this.props.graph_data,
+                        backgroundColor: this.generateColors(this.props.graph_data.length),
+                        borderColor: "#ffffff",
+                        borderWidth: 1
                     }
                 ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
+                plugins: {
+                    legend: {
+                        position: "top",
                     }
                 }
             }
         });
+    }
+
+    generateColors(count) {
+        // Generate a random color array for each slice
+        return Array.from({ length: count }, () => `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`);
     }
 
     cleanupChart() {
@@ -66,8 +71,8 @@ export class ChartComponent extends Component {
 }
 
 ChartComponent.props = {
-    total_rfq: { type: Number },
-    approvedRFQs: { type: Number },
+    graph_data: { type: Array },
+    graph_label: { type: Array },
 };
 
 ChartComponent.template = "supplier_dashboard.ChartComponent";

@@ -23,6 +23,10 @@ class SupplierDashboard extends Component {
             approvedRFQs: 0,
             totalAmount: 0,
             productBreakdown: [],
+            grap_type:"bar",
+            graph_lebel:[],
+            graph_data:[],
+
         });
         onWillStart(async () => {
             
@@ -75,18 +79,27 @@ class SupplierDashboard extends Component {
             // console.log("kjjjhasdf")
 
             
-
-            const rfqs = await this.orm.searchRead("purchase.order", poDomain, ["id", "amount_total","order_line"]);
+            let t=[]
+            let d=[]
+            const rfqs = await this.orm.searchRead("purchase.order", poDomain, ["id", "amount_total","order_line","rfp_id"]);
             const total_rfqs = await this.orm.searchRead("purchase.order", rfqDomain, ["id", "amount_total"]);
-            // console.log("rfps     as",rfqs)
+            console.log("rfps     as",rfqs)
             this.state.all_rfqs=rfqs
             
             rfqs.forEach(element => {
-                // console.log(element.order_line)
-                element.order_line.forEach(a=>{
-                    // console.log(typeof(element.order_line))
-                });
+                if (element.rfp_id) {  // Ensure `rfp_id` exists before pushing
+                    t.push(element.rfp_id[1]); // Push the name instead of full tuple [id, name]
+                } else {
+                    t.push("Unknown"); // Default value if rfp_id is missing
+                }
+                d.push(element.amount_total || 0); // Ensure `amount_total` is not undefined
             });
+            
+            console.log("RFP IDs:", t);
+            console.log("Amounts:", d);
+            this.state.graph_data=d
+            this.state.graph_lebel=t
+            console.log("this  is ",this.state.grap_type,this.state.graph_data,this.state.graph_lebel)
 
             const orderLineIds = rfqs.flatMap(rfq => rfq.order_line);
             const orderLines = await this.orm.searchRead("purchase.order.line", [["id", "in", orderLineIds]], ["id", "product_id", "product_qty", "price_unit"]);
