@@ -66,21 +66,21 @@
                     
                         <h2 class="mb-4 mt-3">Products</h2>
 
-<!-- Scrollable container for products -->
-<div class="product-scroll-container">
-    <div class="row">
-        <t t-foreach="state.productBreakdown" t-as="product" t-key="product.product_id[0]">
-            <div class="col-md-3 mt-4 d-flex justify-content-center">
-                <div class="fixed-product-card">
-                    <Product name="product.product_id[1]"  
-                            quantity="product.product_qty"
-                            total_amount="product.total_amount"
-                            image_url="product.image"/>
-                </div>
-            </div>
-        </t>
-    </div>
-</div>
+                            <!-- Scrollable container for products -->
+                            <div class="product-scroll-container">
+                                <div class="row">
+                                    <t t-foreach="state.productBreakdown" t-as="product" t-key="product.product_id[0]">
+                                        <div class="col-md-3 mt-4 d-flex justify-content-center">
+                                            <div class="fixed-product-card">
+                                                <Product name="product.product_id[1]"  
+                                                        quantity="product.product_qty"
+                                                        total_amount="product.total_amount"
+                                                        image_url="product.image"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
 
                                                 
                 </div>
