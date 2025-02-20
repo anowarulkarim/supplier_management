@@ -6,6 +6,7 @@ from odoo.addons.portal.controllers.portal import pager as portal_pager
 from odoo.http import request
 from math import ceil
 from itertools import groupby as groupbyelem
+import base64
 
 
 class SupplierManagement(http.Controller):
@@ -174,9 +175,13 @@ class SupplierManagement(http.Controller):
             ]
             max_file_size = 1 * 1024 * 1024  # 1 MB in bytes
             for field in file_fields:
-                if kw.get(field) and kw.get(field).content_length > max_file_size:
-                    error_list.append(f"{field.replace('_', ' ').title()} file size should not exceed 1 MB")
+                file_data = kw.get(field)
 
+                if file_data:
+                    if file_data.content_length > max_file_size:
+                        error_list.append(f"{field.replace('_', ' ').title()} file size should not exceed 1 MB")
+                    else:
+                        file_vals[field] = base64.b64encode(file_data.read()).decode("utf-8")  # Convert to base64
             file_vals = {}
             for field in file_fields:
                 if kw.get(field):

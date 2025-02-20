@@ -31,6 +31,9 @@ class RFQ(models.Model):
     
     def confirm_rfq(self):
         # self.rfp_state = 'accepted'
+        self.rfp_id.write({'status': 'accepted'})
+        self.state='purchase'
+        self.rfp_id.approved_supplier_id = self.partner_id
 
         template = self.env.ref('supplier_management.rfq_accepted_supplier')
         if template:
@@ -46,9 +49,7 @@ class RFQ(models.Model):
             }
             template.with_context(**ctx).send_mail(self.id, email_values=email_values)
 
-        self.rfp_id.write({'status': 'accepted'})
-        self.state='purchase'
-        self.rfp_id.approved_supplier_id = self.partner_id
+        
 
 
     @api.depends('quantity', 'unit_price')

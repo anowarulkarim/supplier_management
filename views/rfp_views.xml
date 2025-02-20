@@ -101,7 +101,7 @@
                                 <header>
                                     <field name="rfp_state" invisible="1"/>
                                     <button name="confirm_rfq" type="object" string="Approve RFQ" class="oe_highlight"
-                                        invisible="rfp_state  in ('accepted','closed')"
+                                        invisible="rfp_state not in ('closed',)"
                                         groups="supplier_management.group_supplier_management_approver"
                                         />
                                     </header>
@@ -114,14 +114,14 @@
                                         <field name="date_order" readonly="1"/>
                                         <!-- <field name="score" readonly="status not"/> -->
                                         <field name="score" readonly="1"/>
-                                        <field name="rfp_state" invisible="1"/>
+                                        <!-- <field name="rfp_state" invisible="1"/> -->
                                         <field name="recommended" groups="supplier_management.group_supplier_management_reviewer"
                                             readonly="rfp_state not in ('closed',)"
                                         />
                                     </group>
                                     <notebook>
                                     <page string="Product Line Details">
-                                        <field name="order_line">
+                                        <field name="order_line" readonly="1">
                                             <tree editable="bottom">
                                                 <field name="product_id"/>
                                                 <field name="product_qty"/>

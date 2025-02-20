@@ -9,6 +9,7 @@ class SupplierRegistration(models.TransientModel):
     _rec_name = 'company_name'
     _order = 'create_date desc'
     _inherit = ['mail.thread', 'mail.activity.mixin']
+    _log_access = True
 
     company_name = fields.Char(string='Company Name', tracking=True)
     email = fields.Char(string='Company Email')
@@ -106,6 +107,7 @@ class SupplierRegistration(models.TransientModel):
             'certificate_expiry_date': self.certificate_expiry_date or 'N/A',
             'supplier_rank': 1,
             'company_type': 'company',
+            'submission_date':self.create_date
         }
         vals = {k: v for k, v in vals.items() if v != 'N/A'}
         vals['child_ids'] = []

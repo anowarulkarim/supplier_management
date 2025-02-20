@@ -14,13 +14,13 @@
                             invisible="state not in ('submitted')" groups="supplier_management.group_supplier_management_reviewer"/>
 
                         <button name="action_approve" string="Approve" type="object" class="oe_highlight"
-                                invisible="state in ('submitted','rejected')" groups="supplier_management.group_supplier_management_approver"/>
+                                invisible="state in ('submitted','rejected','approved')" groups="supplier_management.group_supplier_management_approver"/>
 
                         <button name="action_open_reject_wizard" string="Reject" type="object" class="oe_highlight"
                             invisible="state not in ('submitted')"/>
                         
                         <button name="action_blacklist" string="Blacklist" type="object" class="oe_highlight"
-                            invisible="state not in ('approved','rejected')"/>
+                            invisible="state in ('approved','rejected')"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <group>
