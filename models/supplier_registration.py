@@ -231,7 +231,6 @@ class SupplierRegistration(models.TransientModel):
         template = self.env.ref('supplier_management.vendor_registration_recommandation')
         for user in reviewer_user:
             # template.with_context(user=user).send_mail(user.id, force_send=True)
-            print(user.email)
 
             try:
                 email_values = {
@@ -243,6 +242,7 @@ class SupplierRegistration(models.TransientModel):
                 # Add context with force_send to ensure immediate email sending
                 ctx = {
                         'default_model': 'supplier.registration',
+                        'user_name':user.name,
                         'default_res_id': self.id,
                         'default_email_to': user.email,  
                         'default_template_id': self.id,

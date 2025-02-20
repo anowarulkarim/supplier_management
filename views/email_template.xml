@@ -31,12 +31,12 @@
         <field name="subject">Vendor Registration Recommandation</field>
         <field name="body_html" type="html">
             <h3>Dear
-                <span t-field="object.name"/>
+                <t t-out="ctx.get('user_name')"/>
             </h3>
             <p>A new Vendor request Recommanded check now</p>
             
         </field>
-    </record>
+    </record> 
 
     <!-- <record id="vendor_submission_confirmation" model="mail.template">
         <field name="name">Vendor Submission Success</field>
@@ -106,7 +106,7 @@
         <field name="subject">RFP approved</field>
         <field name="body_html" type="html">
             <h3><t t-out="ctx.get('rfp_number')"/></h3>
-            <p>Dear Reviewer,{{object.create_uid.name}}</p>
+            <p>Dear Reviewer, <t t-out="ctx.get('rfp_number')"/></p>
             <p>Your RFP approved</p>
             <!-- <p>
                 <strong>RFQ Reference:</strong>

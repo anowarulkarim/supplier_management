@@ -14,7 +14,7 @@ class SupplierManagement(http.Controller):
     @http.route('/supplier_management/rfq/<int:rfp_id>', auth='user', website=True)
     def show_rfq_details(self, rfp_id):
         # Fetch the specific RFQ based on the ID
-        rfp = request.env['purchase.order'].browse(rfp_id)
+        rfp = request.env['purchase.order'].sudo().browse(rfp_id)
 
         # Ensure the RFQ belongs to the logged-in user's partner
         if rfp.partner_id.id != request.env.user.partner_id.id:

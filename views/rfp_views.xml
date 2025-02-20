@@ -101,7 +101,7 @@
                                 <header>
                                     <field name="rfp_state" invisible="1"/>
                                     <button name="confirm_rfq" type="object" string="Approve RFQ" class="oe_highlight"
-                                        invisible="rfp_state in ('accepted',)"
+                                        invisible="rfp_state  in ('accepted','closed')"
                                         groups="supplier_management.group_supplier_management_approver"
                                         />
                                     </header>

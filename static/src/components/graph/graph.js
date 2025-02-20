@@ -13,11 +13,10 @@ export class ChartComponent extends Component {
                 this.chart1.data.datasets[0].data = [
                     this.props.total_rfq,
                     this.props.approvedRFQs,
-                    this.props.totalAmount
                 ];
                 this.chart1.update();
             }
-        }, () => [this.props.total_rfq, this.props.approvedRFQs, this.props.totalAmount]);
+        }, () => [this.props.total_rfq, this.props.approvedRFQs]);
 
         onMounted(this.loadAndRenderChart);
         onWillUnmount(this.cleanupChart);
@@ -36,13 +35,13 @@ export class ChartComponent extends Component {
         const ctx = this.chartCanvas.el.getContext("2d");
 
         this.chart1 = new window.Chart(ctx, {  // Use `window.Chart` to avoid undefined issues
-            type: "bar",
+            type: "pie",
             data: {
-                labels: ["Total RFQ", "Approved RFQs", "Total Amount"],
+                labels: ["Total RFQ", "Approved RFQs"],
                 datasets: [
                     {
                         label: "Supplier Metrics",
-                        data: [this.props.total_rfq, this.props.approvedRFQs, this.props.totalAmount],
+                        data: [this.props.total_rfq, this.props.approvedRFQs],
                         backgroundColor: ["#3498db", "#2ecc71", "#e74c3c"]
                     }
                 ]
@@ -69,7 +68,6 @@ export class ChartComponent extends Component {
 ChartComponent.props = {
     total_rfq: { type: Number },
     approvedRFQs: { type: Number },
-    totalAmount: { type: Number },
 };
 
 ChartComponent.template = "supplier_dashboard.ChartComponent";
