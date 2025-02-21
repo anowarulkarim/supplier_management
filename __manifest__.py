@@ -32,7 +32,7 @@ Long description of module's purpose
         'views/bank_views_extended.xml',
         'views/res_partner_extended.xml',
         'views/res_partner_inherit_views.xml',
-        'views/rfp_report.xml',
+        'wizard/rfp_report.xml',
         'views/supplier_rfp_report.xml',
         'views/ir_sequence.xml',
         'views/views.xml',

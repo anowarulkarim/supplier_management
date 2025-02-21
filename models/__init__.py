@@ -10,4 +10,3 @@ from . import product_line
 from . import RFP
 from . import RFQ
 from . import product_order_line_inherit
-from . import RFPreport
