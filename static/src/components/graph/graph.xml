@@ -2,7 +2,7 @@
     <t t-name="supplier_dashboard.ChartComponent" owl="1">
     <div class="fixed-graph-card">
         <div class="card p-3 shadow-sm ">
-            <div class="card-body" style="position: relative; height:300px;">
+            <div class="card-body" style="position: relative; height:600px;">
                 <canvas t-ref="chartCanvas"></canvas>
             </div>
         </div>

@@ -2,7 +2,6 @@
     <t t-name="owl.SupplierDashboard">
         <div class="o_supplier_dashboard p-4">
             <div class="o_dashboard_content">
-                
                 <div class="row">
                     <div class="container mt-4">
                         <div class="card shadow-lg border-0 rounded-lg overflow-hidden">
@@ -33,68 +32,68 @@
                                     </div>
                                 </div>
 
-                                <!-- Additional Content (Placeholder) -->
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                <!-- Cards Section with Three Column Layout -->
-                <div class="row mt-3 col-md-8">
-                    <!-- First Card (1/3 of the screen) -->
-                    <div class="col-md-4 d-flex justify-content-center">
-                        <div class="dashboard-card w-100">
-                            <Card name="'Quotations Approved'" value= "state.approvedRFQs" curr=""/>
-                        </div>
-                    </div>
-                    
-                    <!-- Second Card (1/3 of the screen) -->
-                    <div class="col-md-4 d-flex justify-content-center">
-                        <div class="dashboard-card w-100">
-                            <Card name="'Total Submitted Quotations'" value= "state.total_rfq" curr=""/>
-                        </div>
-                    </div>
-                    
-                    <!-- Empty Third Column (1/3 of the screen) -->
-                    <div class="col-md-4">
-                        <!-- Placeholder for future content -->
-                        <Card name="'Total Spend'" value="state.totalAmount" curr= "'USD'"/>
-                    </div>
-                
-                
-                    
-                        <h2 class="mb-4 mt-3">Products</h2>
-
-                            <!-- Scrollable container for products -->
-                            <div class="product-scroll-container">
-                                <div class="row">
-                                    <t t-foreach="state.productBreakdown" t-as="product" t-key="product.product_id[0]">
-                                        <div class="col-md-3 mt-4 d-flex justify-content-center">
-                                            <div class="fixed-product-card">
-                                                <Product name="product.product_id[1]"  
-                                                        quantity="product.product_qty"
-                                                        total_amount="product.total_amount"
-                                                        image_url="product.image"/>
-                                            </div>
+                                <div class="row mt-3">
+                                    <!-- First Card (1/3 of the screen) -->
+                                    <div class="col-md-4 d-flex justify-content-center">
+                                        <div class="dashboard-card w-100">
+                                            <Card name="'Quotations Approved'" value="state.approvedRFQs" curr=""/>
                                         </div>
-                                    </t>
+                                    </div>
+                                    
+                                    <!-- Second Card (1/3 of the screen) -->
+                                    <div class="col-md-4 d-flex justify-content-center">
+                                        <div class="dashboard-card w-100">
+                                            <Card name="'Total Submitted Quotations'" value="state.total_rfq" curr=""/>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Third Card (1/3 of the screen) -->
+                                    <div class="col-md-4 d-flex justify-content-center">
+                                        <div class="dashboard-card w-100">
+                                            <Card name="'Total Spend'" value="state.totalAmount" curr="'USD'"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-12 d-flex justify-content-center row-md-12">
+                                        <ChartComponent 
+                                            graph_data="state.graph_data" 
+                                            graph_label="state.graph_lebel"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Search Bar -->
+                                <div class="col-md-12 mt-4 d-flex align-items-center">
+                                    <div class="col-md-6">
+                                    <input type="text" 
+                                           class="form-control me-2" 
+                                           placeholder="Search Products..." 
+                                           t-model="state.searchQuery"
+                                           t-on-change="onSearchQueryChange"/>
+                                    </div>
+                                </div>
+
+                                <!-- Products Section -->
+                                <h2 class="mb-4 mt-3">Products</h2>
+                                <div class="product-scroll-container">
+                                    <div class="row">
+                                        <t t-foreach="filteredProducts" t-as="product" t-key="product.product_id[0]">
+                                            <div class="col-md-3 mt-4 d-flex justify-content-center">
+                                                <div class="fixed-product-card">
+                                                    <Product name="product.product_id[1]"  
+                                                            quantity="product.product_qty"
+                                                            total_amount="product.total_amount"
+                                                            image_url="product.image"/>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
                                 </div>
                             </div>
-
-                                                
-                </div>
-                <div class="row mt-3 col-md-4">
-                    <div class="row">
-                        <div class="col-md-12 d-flex justify-content-center">
-                            <ChartComponent 
-                                        graph_data="state.graph_data" 
-                                        graph_label="state.graph_lebel"
-                                    />
-
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
