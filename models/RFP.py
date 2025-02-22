@@ -68,20 +68,24 @@ class RFP(models.Model):
             try:
                 print("Attempting to send mail...")
                     # Add context with force_send to ensure immediate email sending
-                email_values = {
-                    'email_to': self.create_uid.email,
-                    'email_from': 'anowarul.karim@bjitacademy.com'
-                }
-                ctx = {
-                    'default_model': 'rfp.request',
-                    'default_res_id': self.id,
-                    'default_use_template': bool(template),
-                    'default_template_id': template.id,
-                    'default_composition_mode': 'comment',
-                    'force_send': True,
-                    'rfp_number': self.rfp_number
-                }
-                template.with_context(**ctx).send_mail(self.id,email_values=email_values)
+                # approvers=self.env["res.user"].search([("groups.id","in",self.env.ref("group_supplier_management_approver")),])
+                approvers = self.env['res.groups'].search([('name', '=', 'Approver')])
+                approver_all = approvers.users
+                for approver in approver_all:
+                    email_values = {
+                        'email_to': approver.email,
+                        'email_from': 'anowarul.karim@bjitacademy.com'
+                    }
+                    ctx = {
+                        'default_model': 'rfp.request',
+                        'default_res_id': self.id,
+                        'default_use_template': bool(template),
+                        'default_template_id': template.id,
+                        'default_composition_mode': 'comment',
+                        'force_send': True,
+                        'rfp_number': self.rfp_number
+                    }
+                    template.with_context(**ctx).send_mail(self.id,email_values=email_values)
             except Exception as e:
                 print("Error in send_mail:", str(e))
         self.message_post(body=_('RFP has been submitted.'))

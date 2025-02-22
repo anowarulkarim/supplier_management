@@ -30,7 +30,7 @@
                             <field name="company_type_category"/>
                             <field name="trade_license_number"/>
                             <field name="tax_identification_number"/>
-                            <field name="state"/>
+                            <!-- <field name="state"/> -->
                         </group>
                         <group>
                             <field name="company_registered_address"/>

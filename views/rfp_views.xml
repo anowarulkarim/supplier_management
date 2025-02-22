@@ -62,10 +62,16 @@
 
                     <button name="action_accept_rfp" type="object" string="Accept" class="oe_highlight" 
                         invisible="status != 'recommanded'" groups="supplier_management.group_supplier_management_approver"/>
+
+                    
                         
                     <field name='status' widget='statusbar'/> 
+                    
                 </header>
                 <sheet>
+                    <widget name="web_ribbon" title="Rejected" bg_color="text-bg-danger" invisible="status != 'rejected'"/>
+                    <widget name="web_ribbon" title="Accepted" bg_color="text-bg-success" invisible="status != 'accepted'"/>
+
                     <group>
                         <group name="rfp_details">
                             <field name="create_uid" string="Created By" readonly="1"/>
