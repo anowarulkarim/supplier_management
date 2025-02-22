@@ -174,6 +174,7 @@ class SupplierManagement(http.Controller):
                 'past_2_years_audited_financial_statements', 'other_certifications','image_1920'
             ]
             max_file_size = 1 * 1024 * 1024  # 1 MB in bytes
+            file_vals = {}
             for field in file_fields:
                 file_data = kw.get(field)
 
@@ -181,11 +182,14 @@ class SupplierManagement(http.Controller):
                     if file_data.content_length > max_file_size:
                         error_list.append(f"{field.replace('_', ' ').title()} file size should not exceed 1 MB")
                     else:
-                        file_vals[field] = base64.b64encode(file_data.read()).decode("utf-8")  # Convert to base64
-            file_vals = {}
-            for field in file_fields:
-                if kw.get(field):
-                    file_vals[field] = kw.get(field).read()
+                        # Read the file data and convert it to base64
+                        file_bytes = file_data.read()
+                        file_base64 = base64.b64encode(file_bytes).decode("utf-8")
+                        file_vals[field] = file_base64
+           
+            # for field in file_fields:
+            #     if kw.get(field):
+            #         file_vals[field] = kw.get(field).read()
             vals['state'] = 'submitted'
             if not error_list:
                 new_supplier = request.env['supplier.registration'].sudo().create(vals)
