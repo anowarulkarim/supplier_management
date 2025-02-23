@@ -34,7 +34,7 @@ class RFQ(models.Model):
         self.rfp_id.write({'status': 'accepted'})
         self.state='purchase'
         self.rfp_id.approved_supplier_id = self.partner_id
-
+        self.rfp_id.write({'total_amount': self.amount_total})
         template = self.env.ref('supplier_management.rfq_accepted_supplier')
         if template:
             email_values = {

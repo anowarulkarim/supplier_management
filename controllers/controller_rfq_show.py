@@ -9,7 +9,7 @@ class SupplierManagement(http.Controller):
     @http.route([
         '/supplier_management/rfq',
         '/supplier_management/rfq/page/<int:page>',
-    ], type='http', auth='public', website=True)
+    ], type='http', auth='user', website=True)
     def show_rfq(self, page=1, sortby=None, search=None, search_in=None, groupby=None, **kwargs):
         limit = 4  # Number of items per page
 
@@ -44,8 +44,7 @@ class SupplierManagement(http.Controller):
         # Define search filters
         search_list = {
             'all': {'label': _('All'), 'input': 'all', 'domain': []},
-            'rfp_id': {'label': _('RFP Number'), 'input': 'rfp_id', 'domain': [('rfp_id', 'ilike', search)]},
-            'required_date': {'label': _('Required Date'), 'input': 'required_date', 'domain': [('required_date', '=', search)]},
+            'total_number': {'label': _('RFP Number'), 'input': 'rfp_id', 'domain': [('rfp_id', 'ilike', search)]},
         }
 
         # Build the search domain based on the provided search term

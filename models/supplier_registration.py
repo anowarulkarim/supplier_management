@@ -86,6 +86,9 @@ class SupplierRegistration(models.TransientModel):
         [('draft', 'Draft'), ('submitted', 'Submitted'),('recommanded','Recommanded'), ('approved', 'Approved'),('rejected', 'Rejected')],
         string='State', default='draft', tracking=True)
 
+    signatory_name = fields.Char(string='Signatory Name')
+    authorized_signatory = fields.Char(string='Authorized Signatory')
+
     reject_reason = fields.Text(string="Rejection Reason")
 
     def action_approve(self):

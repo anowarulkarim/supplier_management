@@ -81,6 +81,31 @@ document.getElementById("expiry_date").addEventListener("change", function (even
     }
 });
 
+document.getElementById("signatory_name").addEventListener("keyup", function (event) {
+    let signatoryNameField = document.getElementById("signatory_name");
+    let errorMsg = document.getElementById("signatory_name_error_msg");
+    console.log("asdfjklaskdfjl")
+
+    let signatoryName = signatoryNameField.value.trim();
+    if (signatoryName.length == 0) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("authorized_signatory").addEventListener("keyup", function (event) {
+    let authorizedSignatoryField = document.getElementById("authorized_signatory");
+    let errorMsg = document.getElementById("authorized_signatory_error_msg");
+
+    let authorizedSignatory = authorizedSignatoryField.value.trim();
+    if (authorizedSignatory.length == 0) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
 
 // document.getElementById("file_input").addEventListener("change", function (event) {
 //     let fileInput = document.getElementById("file_input");

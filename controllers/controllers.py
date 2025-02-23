@@ -119,53 +119,59 @@ class SupplierManagement(http.Controller):
                 'client_5_address', 'client_5_contact_email',
                 'client_5_contact_phone', 
                 'certification', 'certificate_number',
-                'certifying_body', 'award_date', 'certificate_expiry_date'
-            ]
+                'certifying_body', 'award_date', 'certificate_expiry_date',
+                'authorized_signatory','signatory_name',
+            ]  
             for key in keys:
                 if kw.get(key):
                     vals[key] = kw.get(key)
             vals['email']=request.session['varified_email']
+            if not kw.get('signatory_name'):
+                error_list.append("Signatory Name is mandatory")
+            if not kw.get('authorized_signatory'):
+                error_list.append("Authorized Signatory is mandatory")
+            
             if kw.get('tax_identification_number') and (len(kw.get('tax_identification_number')) != 16 or not kw.get(
                     'tax_identification_number').isdigit()):
                 error_list.append("Tax Identification Number Should Be Of 16 Digits And All Digits")
-            # if kw.get('trade_license_number') and (len(kw.get('trade_license_number')) <= 16 or not kw.get(
-            #         'trade_license_number').isdigit()):
-            #     error_list.append("Trade License Number Should Be Of 16 Digits And All Digits")
-            # if kw.get('expiry_date') and fields.Date.to_date(kw.get('expiry_date')) <= fields.date.today():
-            #     error_list.append("Expiry Date Should Be Greater Than Today")
-            # if not kw.get('company_name'):
-            #     error_list.append("Company Name is mandatory")
-            # if not kw.get('email'):
-            #     error_list.append("Company Email is mandatory")
-            # if kw.get('email'):
-            #     already_exists = request.env['res.partner'].sudo().search([('email', '=', kw.get('email'))])
-            #     if already_exists:
-            #         error_list.append("Company Email Already Exists In the system. Try with another email")
-            # if not kw.get('bank_name'):
-            #     error_list.append("Bank Name is mandatory")
-            # if not kw.get('bank_address'):
-            #     error_list.append("Bank Address is mandatory")
-            # if not kw.get('account_number'):
-            #     error_list.append("Account Number is mandatory")
-            # if kw.get('client_1_contact_email') or kw.get('client_1_address') or kw.get('client_1_contact_phone'):
-            #     if not kw.get('client_1_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 1 Name is mandatory")
+            if kw.get('trade_license_number') and (len(kw.get('trade_license_number')) <= 16 or not kw.get(
+                    'trade_license_number').isdigit()):
+                error_list.append("Trade License Number Should Be Of 16 Digits And All Digits")
+            if kw.get('expiry_date') and fields.Date.to_date(kw.get('expiry_date')) <= fields.date.today():
+                error_list.append("Expiry Date Should Be Greater Than Today")
+            if not kw.get('company_name'):
+                error_list.append("Company Name is mandatory")
+            if not kw.get('email'):
+                error_list.append("Company Email is mandatory")
+            if kw.get('email'):
+                already_exists = request.env['res.partner'].sudo().search([('email', '=', kw.get('email'))])
+                if already_exists:
+                    error_list.append("Company Email Already Exists In the system. Try with another email")
+            if not kw.get('bank_name'):
+                error_list.append("Bank Name is mandatory")
+            if not kw.get('bank_address'):
+                error_list.append("Bank Address is mandatory")
+            if not kw.get('account_number'):
+                error_list.append("Account Number is mandatory")
+            if kw.get('client_1_contact_email') or kw.get('client_1_address') or kw.get('client_1_contact_phone'):
+                if not kw.get('client_1_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 1 Name is mandatory")
             
-            # if kw.get('client_2_contact_email') or kw.get('client_2_address') or kw.get('client_2_contact_phone'):
-            #     if not kw.get('client_2_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 2 Name is mandatory")
+            if kw.get('client_2_contact_email') or kw.get('client_2_address') or kw.get('client_2_contact_phone'):
+                if not kw.get('client_2_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 2 Name is mandatory")
             
-            # if kw.get('client_3_contact_email') or kw.get('client_3_address') or kw.get('client_3_contact_phone'):
-            #     if not kw.get('client_3_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 3 Name is mandatory")
+            if kw.get('client_3_contact_email') or kw.get('client_3_address') or kw.get('client_3_contact_phone'):
+                if not kw.get('client_3_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 3 Name is mandatory")
             
-            # if kw.get('client_4_contact_email') or kw.get('client_4_address') or kw.get('client_4_contact_phone'):
-            #     if not kw.get('client_4_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 4 Name is mandatory")
+            if kw.get('client_4_contact_email') or kw.get('client_4_address') or kw.get('client_4_contact_phone'):
+                if not kw.get('client_4_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 4 Name is mandatory")
             
-            # if kw.get('client_5_contact_email') or kw.get('client_5_address') or kw.get('client_5_contact_phone'):
-            #     if not kw.get('client_5_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 5 Name is mandatory")
+            if kw.get('client_5_contact_email') or kw.get('client_5_address') or kw.get('client_5_contact_phone'):
+                if not kw.get('client_5_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 5 Name is mandatory")
 
 
             file_fields = [
@@ -264,7 +270,7 @@ class SupplierManagement(http.Controller):
 
         return http.Response('{"status": "success", "message": "OTP verified successfully"}', content_type='application/json')
 
-    @http.route(['/supplier_management/rfp', '/supplier_management/rfp/page/<int:page>'], auth='public', website=True)
+    @http.route(['/supplier_management/rfp', '/supplier_management/rfp/page/<int:page>'], auth='user', website=True)
     def portal_rfp_list(self, page=1, sortby=None, search=None, search_in=None, groupby='required_date', **kw):
         limit = 4
 
@@ -352,7 +358,7 @@ class SupplierManagement(http.Controller):
             'rfps' : rfps,
         })
 
-    @http.route('/supplier_management/rfp/<int:rfp_id>', auth='public', website=True, methods=['GET'])
+    @http.route('/supplier_management/rfp/<int:rfp_id>', auth='user', website=True, methods=['GET'])
     def view_rfp_details(self, rfp_id, **kwargs):
         """Show details of a specific RFP and allow RFQ creation"""
 
@@ -442,7 +448,7 @@ class SupplierManagement(http.Controller):
         # If GET request, render form
         return request.render('supplier_management.rfq_form', {'rfp': rfp})
 
-    @http.route('/supplier_management/rfq/success', type='http', auth="public", website=True)
+    @http.route('/supplier_management/rfq/success', type='http', auth="user", website=True)
     def rfq_success(self):
         
         return request.render('supplier_management.rfq_success_template', {})

@@ -130,7 +130,12 @@
                                 </tr>
                                 <t t-set="first_row" t-value="False"/> <!-- Disable rowspan for the next rows -->
                             </t>
+                            
                         </t>
+                        <tr class="table-info">
+                                <td colspan="5"><strong>Total</strong></td>
+                                <td><strong t-esc="sum(line.price_subtotal for line in purchase.order_line)"/></td>
+                            </tr>
                     </tbody>
                 </table>
             </div>

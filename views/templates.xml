@@ -678,12 +678,14 @@
                     <div class="form-group">
                         <label for="signatory_name" class="form-label">Name of Signatory</label>
                         <input type="text" class="form-control" id="signatory_name" name="signatory_name" placeholder="Enter signatory name"/>
+                        <small id="signatory_name_error_msg" class="form-text text-danger">Please enter the name of the signatory.</small>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="authorized_signatory" class="form-label">Authorized Signatory</label>
                         <input type="text" class="form-control" id="authorized_signatory" name="authorized_signatory" placeholder="Enter authorized signatory"/>
+                        <smell id="authorized_signatory_error_msg" class="form-text text-danger">Please enter the name of the authorized signatory.</smell>
                     </div>
                 </div>
             </div>

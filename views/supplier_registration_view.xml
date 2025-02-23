@@ -4,7 +4,7 @@
         <field name="name">supplier.registration.form</field>
         <field name="model">supplier.registration</field>
         <field name="arch" type="xml">
-            <form string="Supplier Registration">
+            <form string="Supplier Registration" readonly="1">
                 <sheet>
                     <header>
                         <button name="action_submit" string="Submit" type="object" class="oe_highlight"
@@ -39,9 +39,9 @@
                             <field name="expiry_date"/>
                         </group>
                     </group>
-                    <notebook>
+                    <notebook readonly="1">
                         <page name="contact_info" string="Contact Information">
-                            <group>
+                            <group readonly="1">
                                 <group string="Primary Contact" name="primary_contact">
                                     <field name="contact_person_title"/>
                                     <field name="contact_email"/>
@@ -97,6 +97,18 @@
                                     <field name="client_3_address"/>
                                     <field name="client_3_contact_email"/>
                                     <field name="client_3_contact_phone"/>
+                                </group>
+                                <group name="client_4" string="client 4">
+                                    <field name="client_4_name"/>
+                                    <field name="client_4_address"/>
+                                    <field name="client_4_contact_email"/>
+                                    <field name="client_4_contact_phone"/>
+                                </group>
+                                <group name="client_5" string="client 5">
+                                    <field name="client_5_name"/>
+                                    <field name="client_5_address"/>
+                                    <field name="client_5_contact_email"/>
+                                    <field name="client_5_contact_phone"/>
                                 </group>
                             </group>
                         </page>
