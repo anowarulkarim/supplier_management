@@ -195,12 +195,12 @@
                                 <small id="company_name_error_msg" style="color: red; ">You Must Input Company Name</small>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter company email"/>
                                 <label for="email">Company Email</label>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <select class="form-select" id="company_type_category" name="company_type_category" required="required">
@@ -236,21 +236,21 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="trade_license_number" name="trade_license_number" placeholder="Enter trade license number"/>
                                 <label for="trade_license_number">Trade License Number</label>
-                                <small id="trade_license_error_msg" style="color: red; ;">It should be alphanumeric and 8-20 characters long.</small>
+                                <small id="trade_license_error_msg" style="color: red; display:none ;">It should be alphanumeric and 8-20 characters long.</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="tax_identification_number" name="tax_identification_number" placeholder="Enter TIN"/>
                                 <label for="tax_identification_number">Tax Identification Number (TIN)</label>
-                                <small id="tin_error_msg" style="color: red; ;">TIN must be exactly 16 digits Numaric Number.</small>
+                                <small id="tin_error_msg" style="color: red; display:none;">TIN must be exactly 16 digits Numaric Number.</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="date" class="form-control" id="commencement_date" name="commencement_date"/>
                                 <label for="commencement_date">Commencement Date</label>
-                                <small id="commencement_date_error_msg" style="color: red; ;">The commencement date should be before today.</small>
+                                <small id="commencement_date_error_msg" style="color: red; display:none;">The commencement date should be before today.</small>
                             </div>
                         </div>
                         <div class="col-md-6">

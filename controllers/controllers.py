@@ -101,7 +101,7 @@ class SupplierManagement(http.Controller):
         if request.httprequest.method == 'POST':
             vals = {}
             keys = [
-                'company_name', 'email', 'phone', 'company_registered_address', 'company_alternate_address',
+                'company_name', 'phone', 'company_registered_address', 'company_alternate_address',
                 'company_type_category', 'company_type', 'trade_license_number',
                 'tax_identification_number', 'commencement_date', 'expiry_date',
                 'contact_person_title', 'contact_email', 'contact_phone', 'contact_address',
@@ -124,6 +124,7 @@ class SupplierManagement(http.Controller):
             for key in keys:
                 if kw.get(key):
                     vals[key] = kw.get(key)
+            vals['email']=request.session['varified_email']
             if kw.get('tax_identification_number') and (len(kw.get('tax_identification_number')) != 16 or not kw.get(
                     'tax_identification_number').isdigit()):
                 error_list.append("Tax Identification Number Should Be Of 16 Digits And All Digits")
@@ -233,28 +234,8 @@ class SupplierManagement(http.Controller):
                     # raise RuntimeError("Intentional error raised!")
                     # Clear the session
                     request.session.pop('otp_email', None)
+                    request.session.pop('varified_email', None)
                         
-
-                    # user.partner_id.notify_info(message="New Supplier Registration Request has been submitted")
-                # template = request.env.ref('supplier_management.vendor_submission_confirmation')
-                # print("template", template)
-                # if template:
-                #     try:
-                #         print("Attempting to send mail...")
-
-                #         # Add context with force_send to ensure immediate email sending
-                #         ctx = {
-                #             'default_model': 'supplier.registration',
-                #             'default_res_id': new_supplier.id,
-                #             'default_email_to': new_supplier.email,  # Ensure the email field exists
-                #             'default_template_id': template.id,
-                #             'force_send': True,
-                #         }
-
-                #         s = template.with_context(**ctx).send_mail(new_supplier.id, force_send=True)
-                #         print("Email Sent, ID:", s)
-                #     except Exception as e:
-                #         print("Error in send_mail:", str(e))
 
         return request.render("supplier_management.new_supplier_registration_form_view_portal",
                               {'page_name': 'supplier_registration',
@@ -278,6 +259,7 @@ class SupplierManagement(http.Controller):
         # Mark OTP as verified
         otp_record.sudo().write({'verified': True})
         request.session['otp_email'] = email
+        request.session['varified_email'] = email
         # return request.render('supplier_management.user_registration_form',{})
 
         return http.Response('{"status": "success", "message": "OTP verified successfully"}', content_type='application/json')
@@ -286,7 +268,7 @@ class SupplierManagement(http.Controller):
     def portal_rfp_list(self, page=1, sortby=None, search=None, search_in=None, groupby='required_date', **kw):
         limit = 4
 
-        # Define sorting options
+        # Define sorting options    
         searchbar_sortings = {
             'rfp_number': {'label': _('RFP Number'), 'order': 'rfp_number'},
             'required_date': {'label': _('Required Date'), 'order': 'required_date'},
@@ -370,7 +352,6 @@ class SupplierManagement(http.Controller):
             'rfps' : rfps,
         })
 
-
     @http.route('/supplier_management/rfp/<int:rfp_id>', auth='public', website=True, methods=['GET'])
     def view_rfp_details(self, rfp_id, **kwargs):
         """Show details of a specific RFP and allow RFQ creation"""
@@ -382,33 +363,7 @@ class SupplierManagement(http.Controller):
 
         return request.render('supplier_management.rfp_detail_template', {'rfp': rfp})
 
-    # @http.route('/supplier_management/rfp/<int:rfp_id>/create_rfq', auth='public', website=True, methods=['POST','GET'])
-    # def create_rfq(self, rfp_id, **kwargs):
-    #     """Create an RFQ for a given RFP"""
-    #     rfp = request.env['rfp.request'].sudo().browse(rfp_id)
-    #     if not rfp.exists():
-    #         return request.not_found()
 
-    #     # Get supplier info from the request
-    #     supplier_id = int(kwargs.get('supplier_id', 0))
-    #     warranty_period = int(kwargs.get('warranty_period', 0))
-
-    #     if not supplier_id:
-    #         return request.render('supplier_management.rfp_detail_template', {
-    #             'rfp': rfp,
-    #             'error': 'Supplier is required to create an RFQ.'
-    #         })
-
-    #     rfq_vals = {
-    #         'partner_id': supplier_id,
-    #         'rfp_id': rfp.id,
-    #         'date_order': fields.Date.today(),
-    #         'currency_id': rfp.currency_id.id,
-    #         'warranty_period': warranty_period,
-    #     }
-    #     rfq = request.env['purchase.order'].sudo().create(rfq_vals)
-
-    #     return request.redirect('/supplier_management/rfp/{}'.format(rfp_id))
     @http.route('/supplier_management/rfp/<int:rfp_id>/create_rfq', auth='user', website=True, methods=['GET', 'POST'])
     def create_rfq(self, rfp_id, **kwargs):
         """Handles both GET (display form) and POST (submit RFQ)."""

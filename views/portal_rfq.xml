@@ -1,9 +1,69 @@
 <odoo>
-<template id="rfq_list_template" name="RFP List">
+<!-- <template id="rfq_list_template" name="RFP List">
     <t t-call="portal.portal_layout">
         <div class="container mt-4">
             <h1 class="mb-4">Your RFQs</h1>
 
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>RFP Number</th>
+                        <th>Required Date</th>
+                        <th>Total Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-if="rfqs">
+                        <t t-foreach="rfqs" t-as="rfp">
+                            <tr>
+                                <td><t t-esc="rfp.name"/></td>
+                                <td><t t-esc="rfp.date_order"/></td>
+                                <td><t t-esc="rfp.amount_total"/></td>
+                                <td>
+                                    <a t-att-href="'/supplier_management/rfq/%s' % rfp.id" class="btn btn-primary">View Details</a>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <tr>
+                            <td colspan="4" class="text-center">No RFQs found.</td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+</template> -->
+<template id="rfq_list_template" name="RFP List">
+    <t t-call="portal.portal_layout">
+        <div class="container">
+            <h1 class="mt-4">Your RFQs</h1>
+
+            <!-- Searchbar -->
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">RFQ</t>
+            </t>
+
+            <!-- Table with search, sort, and pagination -->
+            <t t-call="portal.portal_table">
+                <t t-set="table_id" t-value="'rfq_table'"/>
+                <t t-set="table_class" t-value="'table table-striped'"/>
+                <t t-set="table_columns" t-value="[
+                    {'name': 'RFP Number', 'sort_key': 'name'},
+                    {'name': 'Required Date', 'sort_key': 'date_order'},
+                    {'name': 'Total Amount', 'sort_key': 'amount_total'},
+                    {'name': 'Action', 'sort_key': None},
+                ]"/>
+                <t t-set="table_rows" t-value="rfqs"/>
+                <t t-set="table_pager" t-value="pager"/>
+                <t t-set="table_sortby" t-value="sortby"/>
+                <t t-set="table_search" t-value="search"/>
+                <t t-set="table_search_in" t-value="search_in"/>
+            </t>
+
+            <!-- Original table structure -->
             <table class="table table-striped">
                 <thead>
                     <tr>
