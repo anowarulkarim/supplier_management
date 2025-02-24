@@ -24,6 +24,7 @@ Long description of module's purpose
     'data': [
         'security/supplier_management_security.xml',
         'security/ir.model.access.csv',
+        'data/supplier_registration_demo.xml',
         'views/supplier_res_web.xml',
         'views/portal_rfp_templates.xml',
         'views/portal_rfq.xml',
