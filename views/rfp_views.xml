@@ -76,7 +76,7 @@
                         <group name="rfp_details">
                             <field name="create_uid" string="Created By" readonly="1"/>
                             <field name="rfp_number"/>
-                            <field name="status"/>
+                            <!-- <field name="status"/> -->
                             <field name="required_date"/>
                         
                         </group>

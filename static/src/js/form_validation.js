@@ -107,6 +107,182 @@ document.getElementById("authorized_signatory").addEventListener("keyup", functi
 });
 
 
+document.getElementById("contact_person_title").addEventListener("keyup", function (event) {
+    let contactPersonTitleField = document.getElementById("contact_person_title");
+    let errorMsg = document.getElementById("contact_person_title_error_msg");
+
+    let contactPersonTitle = contactPersonTitleField.value.trim();
+    if (contactPersonTitle.length == 0) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("contact_email").addEventListener("keyup", function (event) {
+    let contactEmailField = document.getElementById("contact_email");
+    let errorMsg = document.getElementById("contact_email_error_msg");
+
+    let contactEmail = contactEmailField.value.trim();
+    let emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+
+    if (contactEmail.length == 0 || !emailRegex.test(contactEmail)) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("contact_phone").addEventListener("keyup", function (event) {
+    let contactPhoneField = document.getElementById("contact_phone");
+    let errorMsg = document.getElementById("contact_phone_error_msg");
+
+    let contactPhone = contactPhoneField.value.trim();
+    let phoneRegex = /^[0-9]+$/;
+
+    if (contactPhone.length == 0 || !phoneRegex.test(contactPhone)) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("contact_address").addEventListener("keyup", function (event) {
+    let contactAddressField = document.getElementById("contact_address");
+    let errorMsg = document.getElementById("contact_address_error_msg");
+
+    let contactAddress = contactAddressField.value.trim();
+    if (contactAddress.length == 0) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("finance_contact_title").addEventListener("keyup", function (event) {
+    let financeContactTitleField = document.getElementById("finance_contact_title");
+    let errorMsg = document.getElementById("finance_contact_title_error_msg");
+
+    let financeContactTitle = financeContactTitleField.value.trim();
+    if (financeContactTitle.length == 0) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("finance_contact_email").addEventListener("keyup", function (event) {
+    let financeContactEmailField = document.getElementById("finance_contact_email");
+    let errorMsg = document.getElementById("finance_contact_email_error_msg");
+
+    let financeContactEmail = financeContactEmailField.value.trim();
+    let emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+
+    if (financeContactEmail.length == 0 || !emailRegex.test(financeContactEmail)) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("finance_contact_phone").addEventListener("keyup", function (event) {
+    let financeContactPhoneField = document.getElementById("finance_contact_phone");
+    let errorMsg = document.getElementById("finance_contact_phone_error_msg");
+
+    let financeContactPhone = financeContactPhoneField.value.trim();
+    let phoneRegex = /^[0-9]+$/;
+
+    if (financeContactPhone.length == 0 || !phoneRegex.test(financeContactPhone)) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("finance_contact_address").addEventListener("keyup", function (event) {
+    let financeContactAddressField = document.getElementById("finance_contact_address");
+    let errorMsg = document.getElementById("finance_contact_address_error_msg");
+
+    let financeContactAddress = financeContactAddressField.value.trim();
+    if (financeContactAddress.length == 0) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("authorized_person_name").addEventListener("keyup", function (event) {
+    let authorizedPersonNameField = document.getElementById("authorized_person_name");
+    let errorMsg = document.getElementById("authorized_person_name_error_msg");
+
+    let authorizedPersonName = authorizedPersonNameField.value.trim();
+    if (authorizedPersonName.length == 0) {
+        errorMsg.style.display = "block";  // Show the error message
+    } else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("authorized_person_email").addEventListener("keyup", function (event) {
+    let authorizedPersonEmailField = document.getElementById("authorized_person_email");
+    let errorMsg = document.getElementById("authorized_person_email_error_msg");
+
+    let authorizedPersonEmail = authorizedPersonEmailField.value.trim();
+    let emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+
+    if (authorizedPersonEmail.length == 0 || !emailRegex.test(authorizedPersonEmail)) {
+        errorMsg.style.display = "block";  // Show the error message
+    }
+    else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("authorized_person_phone").addEventListener("keyup", function (event) {
+    let authorizedPersonPhoneField = document.getElementById("authorized_person_phone");
+    let errorMsg = document.getElementById("authorized_person_phone_error_msg");
+
+    let authorizedPersonPhone = authorizedPersonPhoneField.value.trim();
+    let phoneRegex = /^[0-9]+$/;
+
+    if (authorizedPersonPhone.length == 0 || !phoneRegex.test(authorizedPersonPhone)) {
+        errorMsg.style.display = "block";  // Show the error message
+    }
+    else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("authorized_person_address").addEventListener("keyup", function (event) {
+    let authorizedPersonAddressField = document.getElementById("authorized_person_address");
+    let errorMsg = document.getElementById("authorized_person_address_error_msg");
+
+    let authorizedPersonAddress = authorizedPersonAddressField.value.trim();
+    if (authorizedPersonAddress.length == 0) {
+        errorMsg.style.display = "block";  // Show the error message
+    }
+    else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // document.getElementById("file_input").addEventListener("change", function (event) {
 //     let fileInput = document.getElementById("file_input");
 //     let errorMsg = document.getElementById("file_error_msg");

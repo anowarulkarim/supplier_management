@@ -25,7 +25,7 @@
                     </header>
                     <group>
                         <group>
-                            <field name="company_name"/>
+                            <field name="company_name" />
                             <field name="email"/>
                             <field name="company_type_category"/>
                             <field name="trade_license_number"/>

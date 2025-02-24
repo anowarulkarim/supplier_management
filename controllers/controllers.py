@@ -131,6 +131,33 @@ class SupplierManagement(http.Controller):
             if not kw.get('authorized_signatory'):
                 error_list.append("Authorized Signatory is mandatory")
             
+            if not kw.get('contact_person_title'):
+                error_list.append("Contact Person Title is mandatory")
+            if not kw.get('contact_email'):
+                error_list.append("Contact Email is mandatory")
+            if not kw.get('contact_phone'):
+                error_list.append("Contact Phone is mandatory")
+            if not kw.get('contact_address'):
+                error_list.append("Contact Address is mandatory")
+            if not kw.get('finance_contact_title'):
+                error_list.append("Finance Contact Title is mandatory")
+            if not kw.get('finance_contact_email'):
+                error_list.append("Finance Contact Email is mandatory")
+            if not kw.get('finance_contact_phone'):
+                error_list.append("Finance Contact Phone is mandatory")
+            if not kw.get('finance_contact_address'):
+                error_list.append("Finance Contact Address is mandatory")
+            if not kw.get('authorized_person_name'):
+                error_list.append("Authorized Person Name is mandatory")
+
+            if not kw.get('authorized_person_email'):
+                error_list.append("Authorized Person Email is mandatory")
+            if not kw.get('authorized_person_phone'):
+                error_list.append("Authorized Person Phone is mandatory")
+            if not kw.get('authorized_person_address'):
+                error_list.append("Authorized Person Address is mandatory")
+            
+            
             if kw.get('tax_identification_number') and (len(kw.get('tax_identification_number')) != 16 or not kw.get(
                     'tax_identification_number').isdigit()):
                 error_list.append("Tax Identification Number Should Be Of 16 Digits And All Digits")
@@ -271,22 +298,15 @@ class SupplierManagement(http.Controller):
         return http.Response('{"status": "success", "message": "OTP verified successfully"}', content_type='application/json')
 
     @http.route(['/supplier_management/rfp', '/supplier_management/rfp/page/<int:page>'], auth='user', website=True)
-    def portal_rfp_list(self, page=1, sortby=None, search=None, search_in=None, groupby='required_date', **kw):
+    def portal_rfp_list(self, page=1, sortby=None, search=None, search_in=None, **kw):
         limit = 4
 
         # Define sorting options    
         searchbar_sortings = {
             'rfp_number': {'label': _('RFP Number'), 'order': 'rfp_number'},
-            'required_date': {'label': _('Required Date'), 'order': 'required_date'},
+            
         }
 
-        # Define grouping options (status grouping removed since all RFPs are approved)
-        groupby_list = {
-            'required_date': {'input': 'required_date', 'label': _('Required Date')},
-        }
-        group_by_rfp = groupby_list.get(groupby, {})
-
-        # Default search field is 'name'
         if not search_in:
             search_in = 'rfp_number'
 
@@ -299,8 +319,8 @@ class SupplierManagement(http.Controller):
         search_list = {
             'all': {'label': _('All'), 'input': 'all', 'domain': []},
             'rfp_number': {'label': _('RFP Number'), 'input': 'rfp_number', 'domain': [('rfp_number', 'ilike', search)]},
-            'required_date': {'label': _('Required Date'), 'input': 'required_date',
-                              'domain': [('required_date', '=', search)]},
+            # 'required_date': {'label': _('Required Date'), 'input': 'required_date',
+            #                   'domain': [('required_date', '=', search)]},
         }
 
         # Build the search domain based on the provided search term
@@ -330,16 +350,16 @@ class SupplierManagement(http.Controller):
         )
 
         # Group the RFPs according to the selected grouping option (only required_date remains)
-        if groupby_list.get(groupby) and groupby_list[groupby]['input']:
-            rfp_group_list = [
-                {
-                    'group_name': key.rfp_number if hasattr(key, 'rfp_number') else key,
-                    'rfps': list(group)
-                }
-                for key, group in groupbyelem(rfps, key=lambda r: getattr(r, group_by_rfp['input']))
-            ]
-        else:
-            rfp_group_list = [{'group_name': _('All RFPs'), 'rfps': rfps}]
+        # if groupby_list.get(groupby) and groupby_list[groupby]['input']:
+        #     rfp_group_list = [
+        #         {
+        #             'group_name': key.rfp_number if hasattr(key, 'rfp_number') else key,
+        #             'rfps': list(group)
+        #         }
+        #         for key, group in groupbyelem(rfps, key=lambda r: getattr(r, group_by_rfp['input']))
+        #     ]
+        # else:
+        #     rfp_group_list = [{'group_name': _('All RFPs'), 'rfps': rfps}]
         # print(rfp_group_list[0]['rfps'])
 
         # Render the portal view template with the prepared values
@@ -351,10 +371,10 @@ class SupplierManagement(http.Controller):
             'searchbar_inputs': search_list,
             'search_in': search_in,
             'search': search,
-            'rfp_groups': rfp_group_list,
+            # 'rfp_groups': rfp_group_list,
             'default_url': 'supplier_management/rfp',
-            'groupby': groupby,
-            'searchbar_groupby': groupby_list,
+            # 'groupby': groupby,
+            # 'searchbar_groupby': groupby_list,
             'rfps' : rfps,
         })
 

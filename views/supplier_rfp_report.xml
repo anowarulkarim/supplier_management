@@ -8,7 +8,7 @@
             <!-- Section-1: Header with Company Logo and Supplier Info -->
             <div class="container mt-5">
                 <div class="row">
-                    <div class="col-12 text-center mb-4">
+                    <div class="col-12">
                         <t t-if="company.logo">
                             <img t-att-src="image_data_uri(company.logo)" alt="Company Logo" class="img-fluid" style="max-height: 150px;" />
                         </t>
@@ -114,6 +114,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <t t-set="totalp" t-value="0"/>
                         <t t-foreach="products" t-as="purchase">
                             <t t-set="first_row" t-value="True"/>
                             <t t-foreach="purchase.order_line" t-as="line">
@@ -127,6 +128,7 @@
                                     <td><t t-esc="line.price_unit"/></td>
                                     <td><t t-esc="line.delivery_charge"/></td>
                                     <td><t t-esc="line.price_subtotal"/></td>
+                                    <t t-set="totalp" t-value="totalp + line.price_subtotal"/>
                                 </tr>
                                 <t t-set="first_row" t-value="False"/> <!-- Disable rowspan for the next rows -->
                             </t>
@@ -134,7 +136,7 @@
                         </t>
                         <tr class="table-info">
                                 <td colspan="5"><strong>Total</strong></td>
-                                <td><strong t-esc="sum(line.price_subtotal for line in purchase.order_line)"/></td>
+                                <td><strong t-esc="totalp"/></td>
                             </tr>
                     </tbody>
                 </table>

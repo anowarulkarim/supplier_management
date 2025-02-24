@@ -48,7 +48,7 @@
 
             <!-- Table with search, sort, and pagination -->
             <t t-call="portal.portal_table">
-                <t t-set="table_id" t-value="'rfq_table'"/>
+                <!-- <t t-set="table_id" t-value="'rfq_table'"/>
                 <t t-set="table_class" t-value="'table table-striped'"/>
                 <t t-set="table_columns" t-value="[
                     {'name': 'RFP Number', 'sort_key': 'name'},
@@ -60,39 +60,41 @@
                 <t t-set="table_pager" t-value="pager"/>
                 <t t-set="table_sortby" t-value="sortby"/>
                 <t t-set="table_search" t-value="search"/>
-                <t t-set="table_search_in" t-value="search_in"/>
-            </t>
-
-            <!-- Original table structure -->
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>RFP Number</th>
-                        <th>Required Date</th>
-                        <th>Total Amount</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <t t-if="rfqs">
-                        <t t-foreach="rfqs" t-as="rfp">
+                <t t-set="table_search_in" t-value="search_in"/> -->
+            
+                <!-- Original table structure -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>RFP Number</th>
+                            <th>Required Date</th>
+                            <th>Total Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-if="rfqs">
+                            <t t-foreach="rfqs" t-as="rfp">
+                                <tr>
+                                    <td><t t-esc="rfp.rfp_id.rfp_number"/></td>
+                                    <td><t t-esc="rfp.date_order"/></td>
+                                    <td><t t-esc="rfp.amount_total"/></td>
+                                    <td>
+                                        <a t-att-href="'/supplier_management/rfq/%s' % rfp.id" class="btn btn-primary">View Details</a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                        <t t-else="">
                             <tr>
-                                <td><t t-esc="rfp.name"/></td>
-                                <td><t t-esc="rfp.date_order"/></td>
-                                <td><t t-esc="rfp.amount_total"/></td>
-                                <td>
-                                    <a t-att-href="'/supplier_management/rfq/%s' % rfp.id" class="btn btn-primary">View Details</a>
-                                </td>
+                                <td colspan="4" class="text-center">No RFQs found.</td>
                             </tr>
                         </t>
-                    </t>
-                    <t t-else="">
-                        <tr>
-                            <td colspan="4" class="text-center">No RFQs found.</td>
-                        </tr>
-                    </t>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+
+            </t>
+            
         </div>
     </t>
 </template>
@@ -113,7 +115,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <p><strong>RFP Number:</strong> <t t-esc="rfp.name"/></p>
+                            <p><strong>RFP Number:</strong> <t t-esc="rfp.rfp_id.rfp_number"/></p>
                             <p><strong>Required Date:</strong> <t t-esc="rfp.date_order"/></p>
                             <p><strong>Total Amount:</strong> <t t-esc="rfp.amount_total"/></p>
                         </div>

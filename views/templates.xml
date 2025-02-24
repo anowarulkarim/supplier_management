@@ -1,7 +1,7 @@
 <odoo>
     <data>
         <!-- ✅ Inheriting the Portal Home Template to Add a New Section -->
-        <template id="portal_my_school_home" inherit_id="portal.portal_my_home">
+        <!-- <template id="portal_my_school_home" inherit_id="portal.portal_my_home">
             <xpath expr="//div[@id='portal_common_category']" position="inside">
                 <t t-call="portal.portal_docs_entry">
                     <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>
@@ -12,12 +12,12 @@
                     <t t-set="config_card" t-value="True"/>
                 </t>
             </xpath>
-        </template>
+        </template> -->
         <template id="portal_my_rfp" inherit_id="portal.portal_my_home">
             <xpath expr="//div[@id='portal_common_category']" position="inside">
                 <t t-call="portal.portal_docs_entry">
                     <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>
-                    <t t-set="title">Rfp</t>
+                    <t t-set="title">Request For Purchase</t>
                     
                     <t t-set="text">Rfp</t>
                     <t t-set="url" t-value="'/supplier_management/rfp'"/>
@@ -270,24 +270,28 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="contact_person_title" name="contact_person_title" placeholder="Enter contact person's title"/>
                                 <label for="contact_person_title">Contact Person’s Title</label>
+                                <small id="contact_person_title_error_msg" style="color: red;">Contact Person Title is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="contact_email" name="contact_email" placeholder="Enter contact email"/>
                                 <label for="contact_email">Contact Email</label>
+                                <small id="contact_email_error_msg" style="color: red;">Contact Email is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="tel" class="form-control" id="contact_phone" name="contact_phone" placeholder="Enter contact phone number"/>
                                 <label for="contact_phone">Contact Phone</label>
+                                <small id="contact_phone_error_msg" style="color: red;">Contact Phone is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="contact_address" name="contact_address" placeholder="Enter contact person address"/>
                                 <label for="contact_address">Contact Person Address</label>
+                                <small id="contact_address_error_msg" style="color: red;">Contact Address is mandatory</small>
                             </div>
                         </div>
                     </div>
@@ -297,24 +301,28 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="finance_contact_title" name="finance_contact_title" placeholder="Enter contact person's title"/>
                                 <label for="finance_contact_title">Contact Person’s Title</label>
+                                <small id="finance_contact_title_error_msg" style="color: red;">Finance Contact Title is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="finance_contact_email" name="finance_contact_email" placeholder="Enter contact email"/>
                                 <label for="finance_contact_email">Contact Email</label>
+                                <small id="finance_contact_email_error_msg" style="color: red;">Finance Contact Email is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="tel" class="form-control" id="finance_contact_phone" name="finance_contact_phone" placeholder="Enter contact phone number"/>
                                 <label for="finance_contact_phone">Contact Phone</label>
+                                <small id="finance_contact_phone_error_msg" style="color: red;">Finance Contact Phone is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="finance_contact_address" name="finance_contact_address" placeholder="Enter contact person address"/>
                                 <label for="finance_contact_address">Finance Person Address</label>
+                                <small id="finance_contact_address_error_msg" style="color: red;">Finance Contact Address is mandatory</small>
                             </div>
                         </div>
                     </div>
@@ -324,24 +332,28 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="authorized_person_name" name="authorized_person_name" placeholder="Enter contact person's title"/>
                                 <label for="authorized_person_name">Contact Person’s Title</label>
+                                <small id="authorized_person_name_error_msg" style="color: red;">Authorized Person Name is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="authorized_person_email" name="authorized_person_email" placeholder="Enter contact email"/>
                                 <label for="authorized_person_email">Contact Email</label>
+                                <small id="authorized_person_email_error_msg" style="color: red;">Authorized Person Email is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="tel" class="form-control" id="authorized_person_phone" name="authorized_person_phone" placeholder="Enter contact phone number"/>
                                 <label for="authorized_person_phone">Contact Phone</label>
+                                <small id="authorized_person_phone_error_msg" style="color: red;">Authorized Person Phone is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="authorized_person_address" name="authorized_person_address" placeholder="Enter contact person address"/>
                                 <label for="authorized_person_address">Authorized Person Address</label>
+                                <small id="authorized_person_address_error_msg" style="color: red;">Authorized Person Address is mandatory</small>
                             </div>
                         </div>
                     </div>
