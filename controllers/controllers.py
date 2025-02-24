@@ -258,6 +258,9 @@ class SupplierManagement(http.Controller):
                             'default_res_id': new_supplier.id,
                             'default_email_to': user.email,  # Ensure the email field exists
                             'default_template_id': template.id,
+                            'supplier_name': new_supplier.company_name,
+                            'supplier_email': new_supplier.email,
+                            'supplier_phone': new_supplier.phone,
                             'force_send': True,
                         }
                         s = template.with_context(**ctx).sudo().send_mail(new_supplier.id,email_values=email_values)
@@ -456,6 +459,7 @@ class SupplierManagement(http.Controller):
                             'default_res_id': purchase_order.id,
                             'default_template_id': template.id,
                             'default_composition_mode': 'comment',
+                            'name_user': rfp.create_uid.name,
                             'force_send': True,
                             'rfp_number': rfp.rfp_number
                         }

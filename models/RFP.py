@@ -130,7 +130,7 @@ class RFP(models.Model):
                     # Add context with force_send to ensure immediate email sending
 
                 suppliers = self.env['res.partner'].search([('supplier_rank', '>', 0)])
-                print("Suppliers:", suppliers)
+
                 for supplier in suppliers:
                     email_values = {
                         'email_to': supplier.email,
@@ -143,6 +143,7 @@ class RFP(models.Model):
                         'default_template_id': template2.id,
                         'default_composition_mode': 'comment',
                         'force_send': True,
+                        'supplier_name': supplier.name,
                         'rfp_number': self.rfp_number,
                     }
                     template2.with_context(**ctx).send_mail(self.id, email_values=email_values)
@@ -170,6 +171,7 @@ class RFP(models.Model):
                     'default_use_template': bool(template),
                     'default_template_id': template.id,
                     'default_composition_mode': 'comment',
+                    'name_user': self.create_uid.name,
                     'force_send': True,
                     'rfp_number': self.rfp_number
                 }

@@ -64,7 +64,7 @@
                         invisible="status != 'recommanded'" groups="supplier_management.group_supplier_management_approver"/>
 
                     
-                        
+
                     <field name='status' widget='statusbar'/> 
                     
                 </header>
@@ -78,7 +78,6 @@
                             <field name="rfp_number"/>
                             <!-- <field name="status"/> -->
                             <field name="required_date"/>
-                        
                         </group>
                     </group>
                     <notebook>
@@ -96,11 +95,11 @@
                         <page string="RFQ Lines">
                             <field name="rfq_lines">
                                 <tree >
-                                    <field name="company_id" invisible="1"/>
-                                    <field name="partner_id"/>
-                                    <field name="amount_total"/>
-                                    <field name= "notes"/>
-                                    <field name="date_order"/>
+                                    <!-- <field name="company_id" readonly="1"/> -->
+                                    <field name="partner_id" readonly="1"/>
+                                    <field name="amount_total" readonly="1"/>
+                                    <field name= "notes" readonly="1"/>
+                                    <field name="date_order" readonly="1"/>
                                     <field name="score"/>
                                 </tree>
                             <form string="RFQ Line">
@@ -119,7 +118,7 @@
                                         <field name="notes" readonly="1"/>
                                         <field name="date_order" readonly="1"/>
                                         <!-- <field name="score" readonly="status not"/> -->
-                                        <field name="score" readonly="1"/>
+                                        <field name="score" readonly="rfp_state not in ('closed',)"/>
                                         <!-- <field name="rfp_state" invisible="1"/> -->
                                         <field name="recommended" groups="supplier_management.group_supplier_management_reviewer"
                                             readonly="rfp_state not in ('closed',)"

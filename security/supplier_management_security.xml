@@ -35,7 +35,7 @@
             <field name="domain_force">[('status', '!=', "draft")]</field>
             <field name="groups" eval="[(4, ref('supplier_management.group_supplier_management_approver'))]"/>
             <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
+            <field name="perm_write" eval="False"/>
             <field name="perm_unlink" eval="False"/>
             <field name="perm_create" eval="False"/>
         </record>
