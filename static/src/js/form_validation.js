@@ -267,6 +267,46 @@ document.getElementById("authorized_person_address").addEventListener("keyup", f
 });
 
 
+document.getElementById("bank_name").addEventListener("keyup", function (event) {
+    let bankNameField = document.getElementById("bank_name");
+    let errorMsg = document.getElementById("bank_name_error_msg");
+
+    let bankName = bankNameField.value.trim();
+    if (bankName.length == 0) {
+        errorMsg.style.display = "block";  // Show the error message
+    }
+    else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("bank_address").addEventListener("keyup", function (event) {
+    let bankAddressField = document.getElementById("bank_address");
+    let errorMsg = document.getElementById("bank_address_error_msg");
+
+    let bankAddress = bankAddressField.value.trim();
+    if (bankAddress.length == 0) {
+        errorMsg.style.display = "block";  // Show the error message
+    }
+    else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
+document.getElementById("account_number").addEventListener("keyup", function(event){
+    let accountNumberField = document.getElementById("account_number");
+    let errorMsg = document.getElementById("account_number_error_msg");
+
+    let accountNumber = accountNumberField.value.trim();
+    
+    if (accountNumber.length == 0) {
+        errorMsg.style.display = "block";  // Show the error message
+    }
+    else {
+        errorMsg.style.display = "none";   // Hide the error message
+    }
+});
+
 
 
 

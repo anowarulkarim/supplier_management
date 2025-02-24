@@ -161,15 +161,17 @@ class SupplierManagement(http.Controller):
             if kw.get('tax_identification_number') and (len(kw.get('tax_identification_number')) != 16 or not kw.get(
                     'tax_identification_number').isdigit()):
                 error_list.append("Tax Identification Number Should Be Of 16 Digits And All Digits")
+            
             if kw.get('trade_license_number') and (len(kw.get('trade_license_number')) <= 16 or not kw.get(
                     'trade_license_number').isdigit()):
                 error_list.append("Trade License Number Should Be Of 16 Digits And All Digits")
+
             if kw.get('expiry_date') and fields.Date.to_date(kw.get('expiry_date')) <= fields.date.today():
                 error_list.append("Expiry Date Should Be Greater Than Today")
             if not kw.get('company_name'):
                 error_list.append("Company Name is mandatory")
-            if not kw.get('email'):
-                error_list.append("Company Email is mandatory")
+            # if not kw.get('email'):
+            #     error_list.append("Company Email is mandatory")
             if kw.get('email'):
                 already_exists = request.env['res.partner'].sudo().search([('email', '=', kw.get('email'))])
                 if already_exists:
@@ -200,7 +202,7 @@ class SupplierManagement(http.Controller):
                 if not kw.get('client_5_name'):
                     error_list.append("If you input any of the field of phone or address or email then Client 5 Name is mandatory")
 
-
+            
             file_fields = [
                 'trade_license_business_registration', 'certificate_of_incorporation', 'certificate_of_good_standing',
                 'establishment_card', 'vat_tax_certificate', 'memorandum_of_association',
@@ -237,7 +239,7 @@ class SupplierManagement(http.Controller):
 
                 if not template:
                     return {"error": "Email template not found!"}
-                reviewer = request.env['res.groups'].search([('name', '=', 'Reviewer')])
+                reviewer = request.env['res.groups'].sudo().search([('name', '=', 'Reviewer')])
                 reviewer_user = reviewer.users
                 for user in reviewer_user:
                     # template.with_context(user=user).send_mail(user.id, force_send=True)
@@ -258,12 +260,12 @@ class SupplierManagement(http.Controller):
                             'default_template_id': template.id,
                             'force_send': True,
                         }
-                        s = template.with_context(**ctx).send_mail(new_supplier.id,email_values=email_values)
+                        s = template.with_context(**ctx).sudo().send_mail(new_supplier.id,email_values=email_values)
                         print("Email Sent, ID:", s)
                     except Exception as e:
                         print("Error in send_mail:", str(e))
 
-                    template.with_context(email_to=user.email).send_mail(user.id, force_send=True)
+                    template.with_context(email_to=user.email).sudo().send_mail(user.id, force_send=True)
                     # raise RuntimeError("Intentional error raised!")
                     # Clear the session
                     request.session.pop('otp_email', None)

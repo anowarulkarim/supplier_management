@@ -15,3 +15,26 @@ fileFields.forEach(field => {
         }
     });
 });
+
+
+document.getElementById("image_1920").addEventListener('change', function(event) {
+    let file = document.getElementById("image_1920");
+    let file_error_msg = document.getElementById("image_1920_error_msg");
+    if (!file) {
+        file_error_msg.style.display="block";
+    }
+    else {
+        file_error_msg.style.display="none";
+    }
+});
+
+document.getElementById("company_stamp_and_date").addEventListener('change', function(event) {
+    let file = document.getElementById("company_stamp_and_date");
+    let file_error_msg = document.getElementById("company_stamp_and_date_error_msg");
+    if (!file) {
+        file_error_msg.style.display="block";
+    }
+    else {
+        file_error_msg.style.display="none";
+    }
+});

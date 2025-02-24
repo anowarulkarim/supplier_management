@@ -17,17 +17,18 @@ class RFQ(models.Model):
     recommended = fields.Boolean(string='Recommended', default=False)
     rfp_state = fields.Selection(related='rfp_id.status', string='RFP status')
 
-    # @api.constrains('recommended')
-    # def _check_unique_recommended(self):
-    #     for record in self:
-    #         if record.recommended:
-    #             existing_recommended = self.search([
-    #                 ('partner_id', '=', record.partner_id.id),
-    #                 ('recommended', '=', True),
-    #                 ('id', '!=', record.id)
-    #             ])
-    #             if existing_recommended:
-    #                 raise UserError(_('A supplier cannot have more than one recommended RFQ line.'))
+    @api.constrains('recommended')
+    def _check_unique_recommended(self):
+        for record in self:
+            if record.recommended:
+                existing_recommended = self.search([
+                    ('rfp_id','=', record.rfp_id.id),
+                    ('partner_id', '=', record.partner_id.id),
+                    ('recommended', '=', True),
+                    ('id', '!=', record.id)
+                ])
+                if existing_recommended:
+                    raise UserError(_('A supplier cannot have more than one recommended RFQ line.'))
     
     def confirm_rfq(self):
         # self.rfp_state = 'accepted'

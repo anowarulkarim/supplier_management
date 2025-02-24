@@ -372,12 +372,14 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="bank_name" name="bank_name" placeholder="Enter bank name"/>
                                 <label for="bank_name">Bank Name</label>
+                                <small id="bank_name_error_msg" style="color: red;">Bank Name is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="bank_address" name="bank_address" placeholder="Enter bank address"/>
                                 <label for="bank_address">Bank Address</label>
+                                <small id="bank_address_error_msg" style="color: red;">Bank Address is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -396,6 +398,7 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="account_number" name="account_number" placeholder="Enter account number"/>
                                 <label for="account_number">Account Number</label>
+                                <small id="account_number_error_msg" style="color: red;">Account Number is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -715,14 +718,14 @@
                     <div class="form-group">
                         <label for="image_1920" class="form-label">Add Company Logo</label>
                         <input type="file" class="form-control" id="image_1920" name="image_1920"/>
-                        <small class="form-text text-danger d-none">Please upload an image with a maximum resolution of 1920x1920 pixels.</small>
+                        <small class="form-text text-danger" id="image_1920_error_msg">Please upload an image with a maximum resolution of 1920x1920 pixels.</small>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="company_stamp_and_date" class="form-label">Company Stamp Date (Image Upload)</label>
                         <input type="file" class="form-control" id="company_stamp_and_date" name="company_stamp_and_date" accept="image/*"/>
-                        <small class="form-text text-danger d-none">Please upload an image of the company stamp with the date.</small>
+                        <small class="form-text text-danger" id="company_stamp_and_date_error_msg">Please upload an image of the company stamp with the date.</small>
                     </div>
                 </div>
             </div>
