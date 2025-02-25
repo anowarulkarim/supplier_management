@@ -66,7 +66,7 @@ class RFP(models.Model):
         template = self.env.ref('supplier_management.rfp_review_reviewer')
         if template:
             try:
-                print("Attempting to send mail...")
+                
                     # Add context with force_send to ensure immediate email sending
                 # approvers=self.env["res.user"].search([("groups.id","in",self.env.ref("group_supplier_management_approver")),])
                 approvers = self.env['res.groups'].search([('name', '=', 'Approver')])
@@ -87,7 +87,7 @@ class RFP(models.Model):
                     }
                     template.with_context(**ctx).send_mail(self.id,email_values=email_values)
             except Exception as e:
-                print("Error in send_mail:", str(e))
+                pass
         self.message_post(body=_('RFP has been submitted.'))
 
     def action_return_to_draft_rfp(self):
@@ -103,7 +103,7 @@ class RFP(models.Model):
         template = self.env.ref('supplier_management.reviewer_notification_rfp_approved')
         if template:
             try:
-                print("Attempting to send mail...")
+                
                     # Add context with force_send to ensure immediate email sending
                 email_values = {
                     'email_to': self.create_uid.email,
@@ -121,12 +121,12 @@ class RFP(models.Model):
                 template.with_context(**ctx).send_mail(self.id, email_values=email_values)
 
             except Exception as e:
-                print("Error in send_mail:", str(e))
+                pass
 
         template2 = self.env.ref('supplier_management.supplier_notification_new_rfp')
         if template2:
             try:
-                print("Attempting to send mail...")
+                
                     # Add context with force_send to ensure immediate email sending
 
                 suppliers = self.env['res.partner'].search([('supplier_rank', '>', 0)])
@@ -148,7 +148,7 @@ class RFP(models.Model):
                     }
                     template2.with_context(**ctx).send_mail(self.id, email_values=email_values)
             except Exception as e:
-                print("Error in send_mail supplier for new added rfp:", str(e))
+                pass
 
         self.message_post(body=_('RFP has been approved.'))
 
@@ -159,7 +159,7 @@ class RFP(models.Model):
         template = self.env.ref('supplier_management.rfp_reject')
         if template:
             try:
-                print("Attempting to send mail...")
+                
                     # Add context with force_send to ensure immediate email sending
                 email_values = {
                     'email_to': self.create_uid.email,
@@ -177,7 +177,7 @@ class RFP(models.Model):
                 }
                 template.with_context(**ctx).send_mail(self.id, email_values=email_values)
             except Exception as e:
-                print("Error in send_mail:", str(e))
+                pass
         self.status = 'rejected'
         self.message_post(body=_('RFP has been rejected.'))
 
@@ -188,7 +188,7 @@ class RFP(models.Model):
         template = self.env.ref('supplier_management.rfp_closed_notification_reviewer')
         if template:
             try:
-                print("Attempting to send mail...")
+                
                     # Add context with force_send to ensure immediate email sending
                 email_values = {
                     'email_to': self.create_uid.email,
@@ -205,7 +205,7 @@ class RFP(models.Model):
                 }
                 template.with_context(**ctx).send_mail(self.id, email_values=email_values)
             except Exception as e:
-                print("Error in send_mail:", str(e))
+                pass
         self.message_post(body=_('RFP has been closed.'))
 
     def action_accept_rfp(self):

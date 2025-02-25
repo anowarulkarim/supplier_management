@@ -201,6 +201,9 @@
                     <filter name="group_state" string="State" domain="[]" context="{'group_by': 'state'}"/>
                     <filter name="group_create_date" string="Date" domain="[]" context="{'group_by': 'create_date'}"/>
                 </group>
+                <searchpanel>
+                    <field name="state" string="Status" icon="fa-filter"/>
+                </searchpanel>
             </search>
         </field>
     </record>
