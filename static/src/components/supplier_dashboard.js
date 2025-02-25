@@ -86,7 +86,7 @@ class SupplierDashboard extends Component {
             this.state.graph_lebel = t;
 
             const orderLineIds = rfqs.flatMap(rfq => rfq.order_line);
-            const orderLines = await this.orm.searchRead("purchase.order.line", [["id", "in", orderLineIds]], ["id", "product_id", "product_qty", "price_unit"]);
+            const orderLines = await this.orm.searchRead("purchase.order.line", [["id", "in", orderLineIds]], ["id", "product_id", "product_qty", "price_unit","delivery_charge"]);
             const productFrequency = {};
 
             const productIds = orderLines.map(line => line.product_id[0]);
@@ -112,6 +112,7 @@ class SupplierDashboard extends Component {
                 productFrequency[productId].product_qty += line.product_qty;
                 productFrequency[productId].total_amount += line.product_qty * line.price_unit;
                 amount += productFrequency[productId].total_amount;
+                amount += line.delivery_charge;
             });
 
             this.state.productBreakdown = Object.values(productFrequency);

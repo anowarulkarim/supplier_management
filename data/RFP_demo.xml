@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data noupdate="0">
+        <record id="rfp_request_1" model="rfp.request">
+            <field name="status">submitted</field>
+            <field name="required_date">2025-01-01</field>
+            <field name="create_uid">6</field>
+        </record>
+
+        <record id="rfp_request_2" model="rfp.request">
+            <field name="status">submitted</field>
+            <field name="required_date">2025-01-02</field>
+            <field name="create_uid">6</field>
+        </record>
+
+        <record id="rfp_request_3" model="rfp.request">
+            <field name="status">submitted</field>
+            <field name="required_date">2025-01-03</field>
+            <field name="create_uid">6</field>
+        </record>
+        
+        <record id="rfp_request_4" model="rfp.request">
+            <field name="status">submitted</field>
+            <field name="required_date">2025-01-04</field>
+            <field name="create_uid">6</field>
+        </record>
+    </data>
+</odoo>
