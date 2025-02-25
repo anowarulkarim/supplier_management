@@ -29,6 +29,12 @@ class RFQ(models.Model):
                 ])
                 if existing_recommended:
                     raise UserError(_('A supplier cannot have more than one recommended RFQ line.'))
+
+    @api.onchange('score')
+    def _onchange_score(self):
+        for record in self:
+            if record.score < 0 or record.score > 10:
+                raise UserError(_('Score must be in 0-10'))
     
     def confirm_rfq(self):
         # self.rfp_state = 'accepted'

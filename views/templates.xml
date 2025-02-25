@@ -603,61 +603,67 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="trade_license_business_registration" class="form-label">Trade License / Business Registration</label>
-                        <input type="file" class="form-control" id="trade_license_business_registration" name="trade_license_business_registration"/>
+                        <input type="file" class="form-control" id="trade_license_business_registration" name="trade_license_business_registration"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="certificate_of_incorporation" class="form-label">Certificate of Incorporation</label>
-                        <input type="file" class="form-control" id="certificate_of_incorporation" name="certificate_of_incorporation"/>
+                        <input type="file" class="form-control" id="certificate_of_incorporation" name="certificate_of_incorporation" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="certificate_of_good_standing" class="form-label">Certificate of Good Standing</label>
-                        <input type="file" class="form-control" id="certificate_of_good_standing" name="certificate_of_good_standing"/>
+                        <input type="file" class="form-control" id="certificate_of_good_standing" name="certificate_of_good_standing"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="establishment_card" class="form-label">Establishment Card</label>
-                        <input type="file" class="form-control" id="establishment_card" name="establishment_card"/>
+                        <input type="file" class="form-control" id="establishment_card" name="establishment_card"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="vat_tax_certificate" class="form-label">VAT / Tax Certificate</label>
-                        <input type="file" class="form-control" id="vat_tax_certificate" name="vat_tax_certificate"/>
+                        <input type="file" class="form-control" id="vat_tax_certificate" name="vat_tax_certificate"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="memorandum_of_association" class="form-label">Memorandum of Association / Power of Attorney / Legal Instrument</label>
-                        <input type="file" class="form-control" id="memorandum_of_association" name="memorandum_of_association"/>
+                        <input type="file" class="form-control" id="memorandum_of_association" name="memorandum_of_association"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="identification_document_for_authorized_person" class="form-label">Identification Document for Authorized Person / Signatory</label>
-                        <input type="file" class="form-control" id="identification_document_for_authorized_person" name="identification_document_for_authorized_person"/>
+                        <input type="file" class="form-control" id="identification_document_for_authorized_person" name="identification_document_for_authorized_person" 
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="bank_letter_indicating_bank_account" class="form-label">Bank Letter indicating Bank Account Information</label>
-                        <input type="file" class="form-control" id="bank_letter_indicating_bank_account" name="bank_letter_indicating_bank_account"/>
+                        <input type="file" class="form-control" id="bank_letter_indicating_bank_account" name="bank_letter_indicating_bank_account" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="past_2_years_audited_financial_statements" class="form-label">Past 2 Years Audited Financial Statements</label>
-                        <input type="file" class="form-control" id="past_2_years_audited_financial_statements" name="past_2_years_audited_financial_statements"/>
+                        <input type="file" class="form-control" id="past_2_years_audited_financial_statements" name="past_2_years_audited_financial_statements" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="other_certifications" class="form-label">Other Certification / Accreditations</label>
-                        <input type="file" class="form-control" id="other_certifications" name="other_certifications"/>
+                        <input type="file" class="form-control" id="other_certifications" name="other_certifications" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
             </div>
@@ -717,14 +723,14 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="image_1920" class="form-label">Add Company Logo</label>
-                        <input type="file" class="form-control" id="image_1920" name="image_1920"/>
+                        <input type="file" class="form-control" id="image_1920" name="image_1920" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                         <small class="form-text text-danger" id="image_1920_error_msg">Please upload an image with a maximum resolution of 1920x1920 pixels.</small>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="company_stamp_and_date" class="form-label">Company Stamp Date (Image Upload)</label>
-                        <input type="file" class="form-control" id="company_stamp_and_date" name="company_stamp_and_date" accept="image/*"/>
+                        <input type="file" class="form-control" id="company_stamp_and_date" name="company_stamp_and_date" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                         <small class="form-text text-danger" id="company_stamp_and_date_error_msg">Please upload an image of the company stamp with the date.</small>
                     </div>
                 </div>

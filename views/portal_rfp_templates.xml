@@ -72,8 +72,7 @@
                                 <th>Product</th>
                                 <th>Description</th>
                                 <th>Quantity</th>
-                                <th>Unit Price</th>
-                                <th>Subtotal</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -89,8 +88,7 @@
                                         </t>
                                     </td>
                                     <td t-esc="line.quantity"/>
-                                    <td t-esc="line.unit_price"/>
-                                    <td t-esc="line.subtotal_price"/>
+                                    
                                 </tr>
                             </t>
                         </tbody>
@@ -154,12 +152,12 @@
                                         <td>
                                             <!-- Unit Price -->
                                             <input type="number" t-att-name="'unit_price_' + str(line.id)" class="form-control"
-                                                required="required"/>
+                                                required="required" min="0"/>
                                         </td>
                                         <td>
                                             <!-- Delivery Charges -->
                                             <input type="number" t-att-name="'delivery_charges_' + str(line.id)"
-                                                class="form-control"/>
+                                                class="form-control" min="0"/>
                                         </td>
                                         <td>
                                             <!-- Total -->
