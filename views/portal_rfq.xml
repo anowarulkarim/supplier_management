@@ -22,19 +22,7 @@
 
             <!-- Table with search, sort, and pagination -->
             <t t-call="portal.portal_table">
-                <!-- <t t-set="table_id" t-value="'rfq_table'"/>
-                <t t-set="table_class" t-value="'table table-striped'"/>
-                <t t-set="table_columns" t-value="[
-                    {'name': 'RFP Number', 'sort_key': 'name'},
-                    {'name': 'Required Date', 'sort_key': 'date_order'},
-                    {'name': 'Total Amount', 'sort_key': 'amount_total'},
-                    {'name': 'Action', 'sort_key': None},
-                ]"/>
-                <t t-set="table_rows" t-value="rfqs"/>
-                <t t-set="table_pager" t-value="pager"/>
-                <t t-set="table_sortby" t-value="sortby"/>
-                <t t-set="table_search" t-value="search"/>
-                <t t-set="table_search_in" t-value="search_in"/> -->
+                
             
                 <!-- Original table structure -->
                 <table class="table table-striped">
