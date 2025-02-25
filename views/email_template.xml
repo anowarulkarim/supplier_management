@@ -14,11 +14,11 @@
             </p>
             <p>
                 <strong>Username:</strong>
-                <span t-field="object.email"/>
+                <span><t t-out = "ctx.get('user_name')"/></span>
             </p>
             <p>
                 <strong>Password:</strong>
-                <span t-field="object.email"/>
+                <span><t t-out = "ctx.get('password')"/></span>
             </p>
             <p>Thank you for registering with us. We look forward to working with you!</p>
 
