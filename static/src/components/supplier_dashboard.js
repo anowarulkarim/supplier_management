@@ -38,7 +38,7 @@ class SupplierDashboard extends Component {
         try {
             const suppliers = await this.orm.searchRead(
                 "res.partner",
-                [["supplier_rank", ">", -1]], // ✅ Only fetch suppliers
+                [["supplier_rank", ">", 0]], // ✅ Only fetch suppliers
                 ["id", "name"]
             );
             return suppliers;
