@@ -369,7 +369,7 @@ class SupplierManagement(http.Controller):
         if not rfp.exists() or rfp.status in ['colsed','accepted','recommendation']:
             return request.not_found()
 
-        return request.render('supplier_management.rfp_detail_template', {'rfp': rfp})
+        return request.render('supplier_management.rfp_detail_template', {'rfp': rfp,'page_name': 'rfp_detail'})
 
 
     @http.route('/supplier_management/rfp/<int:rfp_id>/create_rfq', auth='user', website=True, methods=['GET', 'POST'])
@@ -449,7 +449,7 @@ class SupplierManagement(http.Controller):
             return request.redirect('/supplier_management/rfq/success')
 
         # If GET request, render form
-        return request.render('supplier_management.rfq_form', {'rfp': rfp})
+        return request.render('supplier_management.rfq_form', {'rfp': rfp, 'page_name': 'rfq_form'})
 
     @http.route('/supplier_management/rfq/success', type='http', auth="user", website=True)
     def rfq_success(self):

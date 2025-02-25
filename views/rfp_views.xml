@@ -64,7 +64,6 @@
                         invisible="status != 'recommanded'" groups="supplier_management.group_supplier_management_approver"/>
 
                     
-
                     <field name='status' widget='statusbar'/> 
                     
                 </header>
@@ -128,6 +127,7 @@
                                     <page string="Product Line Details">
                                         <field name="order_line" readonly="1">
                                             <tree editable="bottom">
+                                                <field name="currency_id" column_invisible="1"/>
                                                 <field name="product_id"/>
                                                 <field name="product_qty"/>
                                                 <field name="price_unit"/>

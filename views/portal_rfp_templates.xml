@@ -1,5 +1,16 @@
 <odoo>
     <data>
+    <template id="portal_my_home_rfp_breadcrumbs" name="Portal RFP Menu" inherit_id="portal.portal_breadcrumbs" priority="30">
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name in ['rfp_list','rfp_detail','rfq_form']" class="breadcrumb-item">
+                    <a t-attf-href="/supplier_management/rfp">RFPs</a>
+                </li>
+           
+                <li t-if="page_name in ['rfp_detail','rfq_form']" class="breadcrumb-item">
+                    <a t-attf-href="/supplier_management/rfp"><t t-esc="rfp.rfp_number"/></a>
+                </li>
+            </xpath>
+        </template>
         <template id="rfp_list_template" name="RFP List">
         <t t-call="portal.portal_layout">
             <div class="container">
@@ -58,7 +69,7 @@
 
 
         <template id="rfp_detail_template" name="RFP Details">
-            <t t-call="website.layout">
+            <t t-call="portal.portal_layout">
                 <div class="container">
                     <h1 class="mt-4">RFP Details</h1>
                     <p><strong>RFP Number:</strong> <t t-esc="rfp.rfp_number"/></p>
@@ -99,7 +110,7 @@
             </t>
         </template>
         <template id="rfq_form" name="rfq form">
-            <t t-call="website.layout">
+            <t t-call="portal.portal_layout">
                 <div class="container">
                     <h1>Create RFQ for <t t-esc="rfp.rfp_number"/></h1>
                     <form action="" method="POST">

@@ -94,4 +94,5 @@ class SupplierManagement(http.Controller):
         # Render the template with the RFQ details
         return request.render('supplier_management.rfq_details_template', {
             'rfp': rfp,
+            'page_name': 'rfq_details',
         })
