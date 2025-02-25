@@ -1,13 +1,13 @@
 <odoo>
     <data>
-    <template id="portal_my_home_rfp_breadcrumbs" name="Portal RFP Menu" inherit_id="portal.portal_breadcrumbs" priority="30">
+    <template id="portal_my_home_rfp_breadcrumbs1" name="Portal RFP Menu" inherit_id="portal.portal_breadcrumbs" priority="30">
             <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
                 <li t-if="page_name in ['rfp_list','rfp_detail','rfq_form']" class="breadcrumb-item">
                     <a t-attf-href="/supplier_management/rfp">RFPs</a>
                 </li>
            
                 <li t-if="page_name in ['rfp_detail','rfq_form']" class="breadcrumb-item">
-                    <a t-attf-href="/supplier_management/rfp"><t t-esc="rfp.rfp_number"/></a>
+                    <t t-esc="rfp.rfp_number"/>
                 </li>
             </xpath>
         </template>

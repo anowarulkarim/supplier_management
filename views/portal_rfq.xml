@@ -6,7 +6,7 @@
                 </li>
            
                 <li t-if="page_name in ['rfq_details']" class="breadcrumb-item">
-                    <a t-attf-href="/supplier_management/rfq"><t t-esc="rfp.rfp_id.rfp_number"/></a>
+                    <t t-esc="rfp.rfp_id.rfp_number"/>
                 </li>
             </xpath>
         </template>
