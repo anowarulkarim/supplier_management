@@ -14,7 +14,7 @@
             </p>
             <p>
                 <strong>Username:</strong>
-                <span><t t-out = "ctx.get('user_name')"/></span>
+                <span><t t-out = "ctx.get('email')"/></span>
             </p>
             <p>
                 <strong>Password:</strong>
@@ -37,23 +37,6 @@
             
         </field>
     </record> 
-
-    <!-- <record id="vendor_submission_confirmation" model="mail.template">
-        <field name="name">Vendor Submission Success</field>
-        <field name="model_id" ref="model_res_partner"/>
-        <field name="subject">Vendor Submission Successful</field>
-
-        <field name="email_from">anowarul.karim@bjitacademy.com</field>
-        <field name="email_to">{{object.email}}</field>
-        <field name="body_html" type="html">
-            <h3>Dear
-                <span t-field="object.name"/>
-            </h3>
-            <p>We are pleased to inform you that your vendor submission has been successfully received.</p>
-            <p>Our team will review your submission and get back to you shortly. If you have any questions in the meantime, please feel free to contact us.</p>
-            <p>Thank you for your interest in partnering with us!</p>
-        </field>
-    </record> -->
 
     <record id="otp_verification_template" model="mail.template">
         <field name="name">OTP Verification Email</field>

@@ -160,7 +160,6 @@
                 <field name="rfp_number"/>
                 <field name="status"/>
                 <field name="required_date"/>
-                <field name="total_amount"/>
                 <field name="approved_supplier_id"/>
             </tree>
         </field>
