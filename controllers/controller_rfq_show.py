@@ -15,7 +15,7 @@ class SupplierManagement(http.Controller):
 
         # Define sorting options
         rfps=request.env["purchase.order"].search([('partner_id','=',request.env.user.partner_id.id)])
-        print(search)
+        
 
         searchbar_sortings = {
             'rfp_id': {'label': _('RFQ Number'), 'order': 'rfp_id'},
@@ -64,7 +64,7 @@ class SupplierManagement(http.Controller):
         rfps = request.env['purchase.order'].sudo().search(
             combined_domain, limit=limit, offset=pager['offset'], order=order
         )
-        print(rfps)
+        
         return request.render('supplier_management.rfq_list_template', {
             'page_name': 'rfq_list',
             'pager': pager,
@@ -80,13 +80,7 @@ class SupplierManagement(http.Controller):
         })
 
 
-    # @http.route('/supplier_management/rfq', type='http', auth='public', website=True)
-    # def show_rfq(self, **kwargs):
-    #     rfqs = request.env['purchase.order'].search([('partner_id', '=', request.env.user.partner_id.id)])
-    #     print(rfqs)
-    #     return request.render('supplier_management.rfq_list_template', {
-    #         'rfqs': rfqs
-    #     })
+    
 
     @http.route('/supplier_management/rfq/<int:rfp_id>', auth='user', website=True)
     def show_rfq_details(self, rfp_id):

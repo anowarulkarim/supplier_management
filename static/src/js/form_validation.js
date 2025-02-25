@@ -17,7 +17,7 @@ document.getElementById("company_name").addEventListener("keyup", function (even
     let errorMsg = document.getElementById("company_name_error_msg");
 
     let companyName = companyNameField.value.trim();
-    console.log("companyName");
+    
     if (companyName.length == 0) {
         errorMsg.style.display = "block";  // Show the error message
     }else {
@@ -30,7 +30,7 @@ document.getElementById("company_registered_address").addEventListener("keyup", 
     let errorMsg = document.getElementById("company_registered_address_error_msg");
 
     let companyAddress = companyAddressField.value.trim();
-    console.log("companyAddress");
+   
     if (companyAddress.length == 0) {
         errorMsg.style.display = "block";  // Show the error message
     } else {
@@ -84,7 +84,7 @@ document.getElementById("expiry_date").addEventListener("change", function (even
 document.getElementById("signatory_name").addEventListener("keyup", function (event) {
     let signatoryNameField = document.getElementById("signatory_name");
     let errorMsg = document.getElementById("signatory_name_error_msg");
-    console.log("asdfjklaskdfjl")
+
 
     let signatoryName = signatoryNameField.value.trim();
     if (signatoryName.length == 0) {

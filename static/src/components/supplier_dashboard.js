@@ -43,7 +43,7 @@ class SupplierDashboard extends Component {
             );
             return suppliers;
         } catch (error) {
-            console.error("Error fetching suppliers:", error);
+            
             return [];
         }
     }
@@ -121,7 +121,7 @@ class SupplierDashboard extends Component {
             this.state.approvedRFQs = rfqs.length;
             this.state.totalAmount = amount;
         } catch (error) {
-            console.error("Error fetching metrics:", error);
+            var a=10;
         }
     }
 
@@ -175,18 +175,18 @@ class SupplierDashboard extends Component {
     // Search handler
     onSearchQueryChange(event) {
         this.state.searchQuery = event.target.value;
-        console.log("Search Query:", this.state.searchQuery); // Debugging
+        
     }
 
     get filteredProducts() {
-        console.log("Filtering Products..."); // Debugging
+        
         if (!this.state.searchQuery) {
             return this.state.productBreakdown;
         }
         const filtered = this.state.productBreakdown.filter(product =>
             product.product_id[1].toLowerCase().includes(this.state.searchQuery.toLowerCase())
         );
-        console.log("Filtered Products:", filtered); // Debugging
+        
         return filtered;
     }
 }

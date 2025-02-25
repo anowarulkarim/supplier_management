@@ -46,7 +46,7 @@ class SupplierManagement(http.Controller):
         template = request.env.ref('supplier_management.otp_verification_template')
         if template:
             try:
-                print("Attempting to send mail...")
+                
 
                 # Add context with force_send to ensure immediate email sending
                 email_values = {
@@ -64,23 +64,10 @@ class SupplierManagement(http.Controller):
                 }
 
                 s = template.with_context(**ctx).sudo().send_mail(x,email_values=email_values,force_send=True)
-                print("Email Sent, ID:", s)
+                
             except Exception as e:
-                print("Error in send_mail:", str(e))
-        # Send OTP via email
+                pass
 
-        # mail_values = {
-        #     'email_to': email,
-        #     'email_from': 'anowarul.karim@bjitacademy.com',
-        #     'subject': "Your OTP Code",
-        #     'body_html': f"""
-        #         <p>Hello,</p>
-        #         <p>Your OTP for verification is: <b>{otp_code}</b></p>
-        #         <p>This OTP is valid for 5 minutes.</p>
-        #         <p>Thank you!</p>
-        #     """
-        # }
-        # request.env['mail.mail'].sudo().create(mail_values).send()
         
 
 
@@ -222,7 +209,7 @@ class SupplierManagement(http.Controller):
                         file_bytes = file_data.read()
                         file_base64 = base64.b64encode(file_bytes).decode("utf-8")
                         file_vals[field] = file_base64
-                        print(file_base64)
+                        
 
             # for field in file_fields:
             #     if kw.get(field):
@@ -243,14 +230,14 @@ class SupplierManagement(http.Controller):
                 reviewer_user = reviewer.users
                 for user in reviewer_user:
                     # template.with_context(user=user).send_mail(user.id, force_send=True)
-                    print(user.email)
+                    
 
                     try:
                         email_values = {
                             'email_to': user.email,
                             'email_from': 'anowarul.karim@bjitacademy.com'
                         }
-                        print("Attempting to send mail...")
+                        
 
                         # Add context with force_send to ensure immediate email sending
                         ctx = {
@@ -264,9 +251,10 @@ class SupplierManagement(http.Controller):
                             'force_send': True,
                         }
                         s = template.with_context(**ctx).sudo().send_mail(new_supplier.id,email_values=email_values)
-                        print("Email Sent, ID:", s)
+                        
                     except Exception as e:
-                        print("Error in send_mail:", str(e))
+                        pass
+                        
 
                     template.with_context(email_to=user.email).sudo().send_mail(user.id, force_send=True)
                     # raise RuntimeError("Intentional error raised!")
@@ -354,18 +342,7 @@ class SupplierManagement(http.Controller):
             search_domain, limit=limit, offset=pager['offset'], order=order
         )
 
-        # Group the RFPs according to the selected grouping option (only required_date remains)
-        # if groupby_list.get(groupby) and groupby_list[groupby]['input']:
-        #     rfp_group_list = [
-        #         {
-        #             'group_name': key.rfp_number if hasattr(key, 'rfp_number') else key,
-        #             'rfps': list(group)
-        #         }
-        #         for key, group in groupbyelem(rfps, key=lambda r: getattr(r, group_by_rfp['input']))
-        #     ]
-        # else:
-        #     rfp_group_list = [{'group_name': _('All RFPs'), 'rfps': rfps}]
-        # print(rfp_group_list[0]['rfps'])
+       
 
         # Render the portal view template with the prepared values
         return request.render('supplier_management.rfp_list_template', {
@@ -428,7 +405,7 @@ class SupplierManagement(http.Controller):
                 product_qty = int(kwargs.get(f'quantity_{line.id}', 0))
                 unit_price = float(kwargs.get(f'unit_price_{line.id}', 0))
                 delivery_charges = float(kwargs.get(f'delivery_charges_{line.id}', 0))
-                print("asdfjkljasdlfjl     ",delivery_charges,"asdf")
+                
                 if kwargs[f'delivery_charges_{line.id}'] == '':
                     delivery_charges = 0
 
@@ -447,7 +424,7 @@ class SupplierManagement(http.Controller):
                 if template:
                     
                     try:
-                        print("Attempting to send mail...")
+                        
 
                         # Add context with force_send to ensure immediate email sending
                         email_values = {
@@ -466,7 +443,7 @@ class SupplierManagement(http.Controller):
                         template.with_context(**ctx).sudo().send_mail(purchase_order.id,email_values=email_values)
 
                     except Exception as e:
-                        print("Error in send_mail:", str(e))
+                        pass
 
             # Redirect to success page after RFQ creation
             return request.redirect('/supplier_management/rfq/success')
