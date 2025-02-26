@@ -80,7 +80,6 @@ class SupplierDashboard extends Component {
                     t.push("Unknown");
                 }
                 d.push(element.amount_total || 0);
-                amount += element.amount_total;
             });
 
             this.state.graph_data = d;
@@ -112,7 +111,7 @@ class SupplierDashboard extends Component {
                 }
                 productFrequency[productId].product_qty += line.product_qty;
                 productFrequency[productId].total_amount += line.product_qty * line.price_unit;
-                // amount += productFrequency[productId].total_amount;
+                amount += productFrequency[productId].total_amount;
                 // amount += line.delivery_charge;
             });
 
