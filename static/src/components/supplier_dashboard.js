@@ -112,7 +112,7 @@ class SupplierDashboard extends Component {
                 productFrequency[productId].product_qty += line.product_qty;
                 productFrequency[productId].total_amount += line.product_qty * line.price_unit;
                 amount += productFrequency[productId].total_amount;
-                amount += line.delivery_charge;
+                // amount += line.delivery_charge;
             });
 
             this.state.productBreakdown = Object.values(productFrequency);
