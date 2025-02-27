@@ -1,38 +1,62 @@
 <odoo>
+            <template id="portal_my_home_rfp_breadcrumbs" name="Portal RFP Menu" inherit_id="portal.portal_breadcrumbs" priority="30">
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+                <li t-if="page_name in ['rfq_list','rfq_details']" class="breadcrumb-item">
+                    <a t-attf-href="/supplier_management/rfq">Your RFQs</a>
+                </li>
+           
+                <li t-if="page_name in ['rfq_details']" class="breadcrumb-item">
+                    <t t-esc="rfp.rfp_id.rfp_number"/>
+                </li>
+            </xpath>
+        </template>
 <template id="rfq_list_template" name="RFP List">
     <t t-call="portal.portal_layout">
-        <div class="container mt-4">
-            <h1 class="mb-4">Your RFQs</h1>
+        <div class="container">
+            <h1 class="mt-4">Your RFQs</h1>
 
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>RFP Number</th>
-                        <th>Required Date</th>
-                        <th>Total Amount</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <t t-if="rfqs">
-                        <t t-foreach="rfqs" t-as="rfp">
+            <!-- Searchbar -->
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">RFQ</t>
+            </t>
+
+            <!-- Table with search, sort, and pagination -->
+            <t t-call="portal.portal_table">
+                
+            
+                <!-- Original table structure -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>RFP Number</th>
+                            <th>Required Date</th>
+                            <th>Total Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-if="rfqs">
+                            <t t-foreach="rfqs" t-as="rfp">
+                                <tr>
+                                    <td><t t-esc="rfp.rfp_id.rfp_number"/></td>
+                                    <td><t t-esc="rfp.date_order"/></td>
+                                    <td><t t-esc="rfp.amount_total"/></td>
+                                    <td>
+                                        <a t-att-href="'/supplier_management/rfq/%s' % rfp.id" class="btn btn-primary">View Details</a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                        <t t-else="">
                             <tr>
-                                <td><t t-esc="rfp.name"/></td>
-                                <td><t t-esc="rfp.date_order"/></td>
-                                <td><t t-esc="rfp.amount_total"/></td>
-                                <td>
-                                    <a t-att-href="'/supplier_management/rfq/%s' % rfp.id" class="btn btn-primary">View Details</a>
-                                </td>
+                                <td colspan="4" class="text-center">No RFQs found.</td>
                             </tr>
                         </t>
-                    </t>
-                    <t t-else="">
-                        <tr>
-                            <td colspan="4" class="text-center">No RFQs found.</td>
-                        </tr>
-                    </t>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+
+            </t>
+            
         </div>
     </t>
 </template>
@@ -53,7 +77,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <p><strong>RFP Number:</strong> <t t-esc="rfp.name"/></p>
+                            <p><strong>RFP Number:</strong> <t t-esc="rfp.rfp_id.rfp_number"/></p>
                             <p><strong>Required Date:</strong> <t t-esc="rfp.date_order"/></p>
                             <p><strong>Total Amount:</strong> <t t-esc="rfp.amount_total"/></p>
                         </div>

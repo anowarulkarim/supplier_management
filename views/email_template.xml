@@ -14,11 +14,11 @@
             </p>
             <p>
                 <strong>Username:</strong>
-                <span t-field="object.email"/>
+                <span><t t-out = "ctx.get('email')"/></span>
             </p>
             <p>
                 <strong>Password:</strong>
-                <span t-field="object.email"/>
+                <span><t t-out = "ctx.get('password')"/></span>
             </p>
             <p>Thank you for registering with us. We look forward to working with you!</p>
 
@@ -37,23 +37,6 @@
             
         </field>
     </record> 
-
-    <!-- <record id="vendor_submission_confirmation" model="mail.template">
-        <field name="name">Vendor Submission Success</field>
-        <field name="model_id" ref="model_res_partner"/>
-        <field name="subject">Vendor Submission Successful</field>
-
-        <field name="email_from">anowarul.karim@bjitacademy.com</field>
-        <field name="email_to">{{object.email}}</field>
-        <field name="body_html" type="html">
-            <h3>Dear
-                <span t-field="object.name"/>
-            </h3>
-            <p>We are pleased to inform you that your vendor submission has been successfully received.</p>
-            <p>Our team will review your submission and get back to you shortly. If you have any questions in the meantime, please feel free to contact us.</p>
-            <p>Thank you for your interest in partnering with us!</p>
-        </field>
-    </record> -->
 
     <record id="otp_verification_template" model="mail.template">
         <field name="name">OTP Verification Email</field>
@@ -81,20 +64,16 @@
             <p>Dear Reviewer,</p>
             <p>A new vendor submission has been received. Please review the details below:</p>
             <p>
-                <strong>Vendor Name:</strong>
-                <span t-field="object.name"/>
+                <strong>Company:</strong>
+                <span><t t-out="ctx.get('supplier_name')"/></span>
             </p>
             <p>
                 <strong>Email:</strong>
-                <span t-field="object.email"/>
+                <span><t t-out="ctx.get('supplier_email')"/></span>
             </p>
             <p>
                 <strong>Phone:</strong>
-                <span t-field="object.phone"/>
-            </p>
-            <p>
-                <strong>Company:</strong>
-                <span t-field="object.company_name"/>
+                <span><t t-out="ctx.get('supplier_phone')"/></span>
             </p>
             <p>Thank you.</p>
         </field>
@@ -108,18 +87,7 @@
             <h3><t t-out="ctx.get('rfp_number')"/></h3>
             <p>Dear Reviewer, <t t-out="ctx.get('rfp_number')"/></p>
             <p>Your RFP approved</p>
-            <!-- <p>
-                <strong>RFQ Reference:</strong>
-                <span t-field="object.name"/>
-            </p>
-            <p>
-                <strong>Vendor:</strong>
-                <span t-field="object.partner_id.name"/>
-            </p>
-            <p>
-                <strong>Order Date:</strong>
-                <span t-field="object.date_order"/>
-            </p> -->
+            
             <p>Thank you.</p>
         </field>
     </record>
@@ -130,7 +98,7 @@
         <field name="subject">New RFP posted</field>
         <field name="body_html" type="html">
             <h3><t t-out="ctx.get('rfp_number')"/></h3>
-            <p>Dear supplier ,{{object.create_uid.name}}</p>
+            <p>Dear supplier <t t-out="ctx.get('supplier_name')"/></p>
             <p>A new RFP posted. please the visit the portal</p>
             <p>Thank you.</p>
         </field>
@@ -142,7 +110,7 @@
         <field name="subject">RFP Rejected</field>
         <field name="body_html" type="html">
             <h3><t t-out="ctx.get('rfp_number')"/></h3>
-            <p>Dear Reviewer,{{object.create_uid.name}}</p>
+            <p>Dear Reviewer <t t-out="ctx.get('name_user')"/></p>
             <p>I am sorry to inform you that your RFP has been rejected.</p>
             <p>Thank you.</p>
         </field>
@@ -165,9 +133,9 @@
         <field name="model_id" ref="model_purchase_order"/> 
         <field name="subject">New RFQ posted</field>
         <field name="body_html" type="html">
-            <h3><t t-out="ctx.get('rfq_number')"/></h3>
-            <p>Dear Reviewer,{{object.create_uid.name}}</p>
-            <p>A new RFQ posted. for <t t-out="ctx.get('rfq_number')"/></p>
+            <h3><t t-out="ctx.get('rfp_number')"/></h3>
+            <p>Dear Reviewer, <t t-out="ctx.get('name_user')"/></p>
+            <p>A new RFQ posted. for <t t-out="ctx.get('rfp_number')"/></p>
             <p>Thank you.</p>
         </field>
     </record>

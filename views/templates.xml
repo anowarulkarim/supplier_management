@@ -1,7 +1,7 @@
 <odoo>
     <data>
         <!-- ✅ Inheriting the Portal Home Template to Add a New Section -->
-        <template id="portal_my_school_home" inherit_id="portal.portal_my_home">
+        <!-- <template id="portal_my_school_home" inherit_id="portal.portal_my_home">
             <xpath expr="//div[@id='portal_common_category']" position="inside">
                 <t t-call="portal.portal_docs_entry">
                     <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>
@@ -12,12 +12,12 @@
                     <t t-set="config_card" t-value="True"/>
                 </t>
             </xpath>
-        </template>
+        </template> -->
         <template id="portal_my_rfp" inherit_id="portal.portal_my_home">
             <xpath expr="//div[@id='portal_common_category']" position="inside">
                 <t t-call="portal.portal_docs_entry">
                     <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>
-                    <t t-set="title">Rfp</t>
+                    <t t-set="title">Request For Purchase</t>
                     
                     <t t-set="text">Rfp</t>
                     <t t-set="url" t-value="'/supplier_management/rfp'"/>
@@ -195,12 +195,12 @@
                                 <small id="company_name_error_msg" style="color: red; ">You Must Input Company Name</small>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter company email"/>
                                 <label for="email">Company Email</label>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <select class="form-select" id="company_type_category" name="company_type_category" required="required">
@@ -236,21 +236,21 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="trade_license_number" name="trade_license_number" placeholder="Enter trade license number"/>
                                 <label for="trade_license_number">Trade License Number</label>
-                                <small id="trade_license_error_msg" style="color: red; ;">It should be alphanumeric and 8-20 characters long.</small>
+                                <small id="trade_license_error_msg" style="color: red; display:none ;">It should be alphanumeric and 8-20 characters long.</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="tax_identification_number" name="tax_identification_number" placeholder="Enter TIN"/>
                                 <label for="tax_identification_number">Tax Identification Number (TIN)</label>
-                                <small id="tin_error_msg" style="color: red; ;">TIN must be exactly 16 digits Numaric Number.</small>
+                                <small id="tin_error_msg" style="color: red; display:none;">TIN must be exactly 16 digits Numaric Number.</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="date" class="form-control" id="commencement_date" name="commencement_date"/>
                                 <label for="commencement_date">Commencement Date</label>
-                                <small id="commencement_date_error_msg" style="color: red; ;">The commencement date should be before today.</small>
+                                <small id="commencement_date_error_msg" style="color: red; display:none;">The commencement date should be before today.</small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -270,24 +270,28 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="contact_person_title" name="contact_person_title" placeholder="Enter contact person's title"/>
                                 <label for="contact_person_title">Contact Person’s Title</label>
+                                <small id="contact_person_title_error_msg" style="color: red;">Contact Person Title is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="contact_email" name="contact_email" placeholder="Enter contact email"/>
                                 <label for="contact_email">Contact Email</label>
+                                <small id="contact_email_error_msg" style="color: red;">Contact Email is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="tel" class="form-control" id="contact_phone" name="contact_phone" placeholder="Enter contact phone number"/>
                                 <label for="contact_phone">Contact Phone</label>
+                                <small id="contact_phone_error_msg" style="color: red;">Contact Phone is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="contact_address" name="contact_address" placeholder="Enter contact person address"/>
                                 <label for="contact_address">Contact Person Address</label>
+                                <small id="contact_address_error_msg" style="color: red;">Contact Address is mandatory</small>
                             </div>
                         </div>
                     </div>
@@ -297,24 +301,28 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="finance_contact_title" name="finance_contact_title" placeholder="Enter contact person's title"/>
                                 <label for="finance_contact_title">Contact Person’s Title</label>
+                                <small id="finance_contact_title_error_msg" style="color: red;">Finance Contact Title is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="finance_contact_email" name="finance_contact_email" placeholder="Enter contact email"/>
                                 <label for="finance_contact_email">Contact Email</label>
+                                <small id="finance_contact_email_error_msg" style="color: red;">Finance Contact Email is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="tel" class="form-control" id="finance_contact_phone" name="finance_contact_phone" placeholder="Enter contact phone number"/>
                                 <label for="finance_contact_phone">Contact Phone</label>
+                                <small id="finance_contact_phone_error_msg" style="color: red;">Finance Contact Phone is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="finance_contact_address" name="finance_contact_address" placeholder="Enter contact person address"/>
                                 <label for="finance_contact_address">Finance Person Address</label>
+                                <small id="finance_contact_address_error_msg" style="color: red;">Finance Contact Address is mandatory</small>
                             </div>
                         </div>
                     </div>
@@ -324,24 +332,28 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="authorized_person_name" name="authorized_person_name" placeholder="Enter contact person's title"/>
                                 <label for="authorized_person_name">Contact Person’s Title</label>
+                                <small id="authorized_person_name_error_msg" style="color: red;">Authorized Person Name is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="authorized_person_email" name="authorized_person_email" placeholder="Enter contact email"/>
                                 <label for="authorized_person_email">Contact Email</label>
+                                <small id="authorized_person_email_error_msg" style="color: red;">Authorized Person Email is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="tel" class="form-control" id="authorized_person_phone" name="authorized_person_phone" placeholder="Enter contact phone number"/>
                                 <label for="authorized_person_phone">Contact Phone</label>
+                                <small id="authorized_person_phone_error_msg" style="color: red;">Authorized Person Phone is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="authorized_person_address" name="authorized_person_address" placeholder="Enter contact person address"/>
                                 <label for="authorized_person_address">Authorized Person Address</label>
+                                <small id="authorized_person_address_error_msg" style="color: red;">Authorized Person Address is mandatory</small>
                             </div>
                         </div>
                     </div>
@@ -360,12 +372,14 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="bank_name" name="bank_name" placeholder="Enter bank name"/>
                                 <label for="bank_name">Bank Name</label>
+                                <small id="bank_name_error_msg" style="color: red;">Bank Name is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="bank_address" name="bank_address" placeholder="Enter bank address"/>
                                 <label for="bank_address">Bank Address</label>
+                                <small id="bank_address_error_msg" style="color: red;">Bank Address is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -384,6 +398,7 @@
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="account_number" name="account_number" placeholder="Enter account number"/>
                                 <label for="account_number">Account Number</label>
+                                <small id="account_number_error_msg" style="color: red;">Account Number is mandatory</small>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -588,61 +603,67 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="trade_license_business_registration" class="form-label">Trade License / Business Registration</label>
-                        <input type="file" class="form-control" id="trade_license_business_registration" name="trade_license_business_registration"/>
+                        <input type="file" class="form-control" id="trade_license_business_registration" name="trade_license_business_registration"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="certificate_of_incorporation" class="form-label">Certificate of Incorporation</label>
-                        <input type="file" class="form-control" id="certificate_of_incorporation" name="certificate_of_incorporation"/>
+                        <input type="file" class="form-control" id="certificate_of_incorporation" name="certificate_of_incorporation" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="certificate_of_good_standing" class="form-label">Certificate of Good Standing</label>
-                        <input type="file" class="form-control" id="certificate_of_good_standing" name="certificate_of_good_standing"/>
+                        <input type="file" class="form-control" id="certificate_of_good_standing" name="certificate_of_good_standing"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="establishment_card" class="form-label">Establishment Card</label>
-                        <input type="file" class="form-control" id="establishment_card" name="establishment_card"/>
+                        <input type="file" class="form-control" id="establishment_card" name="establishment_card"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="vat_tax_certificate" class="form-label">VAT / Tax Certificate</label>
-                        <input type="file" class="form-control" id="vat_tax_certificate" name="vat_tax_certificate"/>
+                        <input type="file" class="form-control" id="vat_tax_certificate" name="vat_tax_certificate"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="memorandum_of_association" class="form-label">Memorandum of Association / Power of Attorney / Legal Instrument</label>
-                        <input type="file" class="form-control" id="memorandum_of_association" name="memorandum_of_association"/>
+                        <input type="file" class="form-control" id="memorandum_of_association" name="memorandum_of_association"
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="identification_document_for_authorized_person" class="form-label">Identification Document for Authorized Person / Signatory</label>
-                        <input type="file" class="form-control" id="identification_document_for_authorized_person" name="identification_document_for_authorized_person"/>
+                        <input type="file" class="form-control" id="identification_document_for_authorized_person" name="identification_document_for_authorized_person" 
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="bank_letter_indicating_bank_account" class="form-label">Bank Letter indicating Bank Account Information</label>
-                        <input type="file" class="form-control" id="bank_letter_indicating_bank_account" name="bank_letter_indicating_bank_account"/>
+                        <input type="file" class="form-control" id="bank_letter_indicating_bank_account" name="bank_letter_indicating_bank_account" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="past_2_years_audited_financial_statements" class="form-label">Past 2 Years Audited Financial Statements</label>
-                        <input type="file" class="form-control" id="past_2_years_audited_financial_statements" name="past_2_years_audited_financial_statements"/>
+                        <input type="file" class="form-control" id="past_2_years_audited_financial_statements" name="past_2_years_audited_financial_statements" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="other_certifications" class="form-label">Other Certification / Accreditations</label>
-                        <input type="file" class="form-control" id="other_certifications" name="other_certifications"/>
+                        <input type="file" class="form-control" id="other_certifications" name="other_certifications" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
                     </div>
                 </div>
             </div>
@@ -678,12 +699,14 @@
                     <div class="form-group">
                         <label for="signatory_name" class="form-label">Name of Signatory</label>
                         <input type="text" class="form-control" id="signatory_name" name="signatory_name" placeholder="Enter signatory name"/>
+                        <small id="signatory_name_error_msg" class="form-text text-danger">Please enter the name of the signatory.</small>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="authorized_signatory" class="form-label">Authorized Signatory</label>
                         <input type="text" class="form-control" id="authorized_signatory" name="authorized_signatory" placeholder="Enter authorized signatory"/>
+                        <smell id="authorized_signatory_error_msg" class="form-text text-danger">Please enter the name of the authorized signatory.</smell>
                     </div>
                 </div>
             </div>
@@ -700,15 +723,15 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="image_1920" class="form-label">Add Company Logo</label>
-                        <input type="file" class="form-control" id="image_1920" name="image_1920"/>
-                        <small class="form-text text-danger d-none">Please upload an image with a maximum resolution of 1920x1920 pixels.</small>
+                        <input type="file" class="form-control" id="image_1920" name="image_1920" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
+                        <small class="form-text text-danger" id="image_1920_error_msg">Please upload an image with a maximum resolution of 1920x1920 pixels.</small>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="company_stamp_and_date" class="form-label">Company Stamp Date (Image Upload)</label>
-                        <input type="file" class="form-control" id="company_stamp_and_date" name="company_stamp_and_date" accept="image/*"/>
-                        <small class="form-text text-danger d-none">Please upload an image of the company stamp with the date.</small>
+                        <input type="file" class="form-control" id="company_stamp_and_date" name="company_stamp_and_date" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"/>
+                        <small class="form-text text-danger" id="company_stamp_and_date_error_msg">Please upload an image of the company stamp with the date.</small>
                     </div>
                 </div>
             </div>

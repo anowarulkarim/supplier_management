@@ -46,7 +46,7 @@ class SupplierManagement(http.Controller):
         template = request.env.ref('supplier_management.otp_verification_template')
         if template:
             try:
-                print("Attempting to send mail...")
+                
 
                 # Add context with force_send to ensure immediate email sending
                 email_values = {
@@ -64,23 +64,10 @@ class SupplierManagement(http.Controller):
                 }
 
                 s = template.with_context(**ctx).sudo().send_mail(x,email_values=email_values,force_send=True)
-                print("Email Sent, ID:", s)
+                
             except Exception as e:
-                print("Error in send_mail:", str(e))
-        # Send OTP via email
+                pass
 
-        # mail_values = {
-        #     'email_to': email,
-        #     'email_from': 'anowarul.karim@bjitacademy.com',
-        #     'subject': "Your OTP Code",
-        #     'body_html': f"""
-        #         <p>Hello,</p>
-        #         <p>Your OTP for verification is: <b>{otp_code}</b></p>
-        #         <p>This OTP is valid for 5 minutes.</p>
-        #         <p>Thank you!</p>
-        #     """
-        # }
-        # request.env['mail.mail'].sudo().create(mail_values).send()
         
 
 
@@ -101,7 +88,7 @@ class SupplierManagement(http.Controller):
         if request.httprequest.method == 'POST':
             vals = {}
             keys = [
-                'company_name', 'email', 'phone', 'company_registered_address', 'company_alternate_address',
+                'company_name', 'phone', 'company_registered_address', 'company_alternate_address',
                 'company_type_category', 'company_type', 'trade_license_number',
                 'tax_identification_number', 'commencement_date', 'expiry_date',
                 'contact_person_title', 'contact_email', 'contact_phone', 'contact_address',
@@ -119,61 +106,98 @@ class SupplierManagement(http.Controller):
                 'client_5_address', 'client_5_contact_email',
                 'client_5_contact_phone', 
                 'certification', 'certificate_number',
-                'certifying_body', 'award_date', 'certificate_expiry_date'
-            ]
+                'certifying_body', 'award_date', 'certificate_expiry_date',
+                'authorized_signatory','signatory_name',
+            ]  
             for key in keys:
                 if kw.get(key):
                     vals[key] = kw.get(key)
+            vals['email']=request.session['varified_email']
+            if not kw.get('signatory_name'):
+                error_list.append("Signatory Name is mandatory")
+            if not kw.get('authorized_signatory'):
+                error_list.append("Authorized Signatory is mandatory")
+            
+            if not kw.get('contact_person_title'):
+                error_list.append("Contact Person Title is mandatory")
+            if not kw.get('contact_email'):
+                error_list.append("Contact Email is mandatory")
+            if not kw.get('contact_phone'):
+                error_list.append("Contact Phone is mandatory")
+            if not kw.get('contact_address'):
+                error_list.append("Contact Address is mandatory")
+            if not kw.get('finance_contact_title'):
+                error_list.append("Finance Contact Title is mandatory")
+            if not kw.get('finance_contact_email'):
+                error_list.append("Finance Contact Email is mandatory")
+            if not kw.get('finance_contact_phone'):
+                error_list.append("Finance Contact Phone is mandatory")
+            if not kw.get('finance_contact_address'):
+                error_list.append("Finance Contact Address is mandatory")
+            if not kw.get('authorized_person_name'):
+                error_list.append("Authorized Person Name is mandatory")
+
+            if not kw.get('authorized_person_email'):
+                error_list.append("Authorized Person Email is mandatory")
+            if not kw.get('authorized_person_phone'):
+                error_list.append("Authorized Person Phone is mandatory")
+            if not kw.get('authorized_person_address'):
+                error_list.append("Authorized Person Address is mandatory")
+            
+            
             if kw.get('tax_identification_number') and (len(kw.get('tax_identification_number')) != 16 or not kw.get(
                     'tax_identification_number').isdigit()):
                 error_list.append("Tax Identification Number Should Be Of 16 Digits And All Digits")
-            # if kw.get('trade_license_number') and (len(kw.get('trade_license_number')) <= 16 or not kw.get(
-            #         'trade_license_number').isdigit()):
-            #     error_list.append("Trade License Number Should Be Of 16 Digits And All Digits")
-            # if kw.get('expiry_date') and fields.Date.to_date(kw.get('expiry_date')) <= fields.date.today():
-            #     error_list.append("Expiry Date Should Be Greater Than Today")
-            # if not kw.get('company_name'):
-            #     error_list.append("Company Name is mandatory")
+            
+            if kw.get('trade_license_number') and (len(kw.get('trade_license_number')) <= 16 or not kw.get(
+                    'trade_license_number').isdigit()):
+                error_list.append("Trade License Number Should Be Of 16 Digits And All Digits")
+
+            if kw.get('expiry_date') and fields.Date.to_date(kw.get('expiry_date')) <= fields.date.today():
+                error_list.append("Expiry Date Should Be Greater Than Today")
+            if not kw.get('company_name'):
+                error_list.append("Company Name is mandatory")
             # if not kw.get('email'):
             #     error_list.append("Company Email is mandatory")
-            # if kw.get('email'):
-            #     already_exists = request.env['res.partner'].sudo().search([('email', '=', kw.get('email'))])
-            #     if already_exists:
-            #         error_list.append("Company Email Already Exists In the system. Try with another email")
-            # if not kw.get('bank_name'):
-            #     error_list.append("Bank Name is mandatory")
-            # if not kw.get('bank_address'):
-            #     error_list.append("Bank Address is mandatory")
-            # if not kw.get('account_number'):
-            #     error_list.append("Account Number is mandatory")
-            # if kw.get('client_1_contact_email') or kw.get('client_1_address') or kw.get('client_1_contact_phone'):
-            #     if not kw.get('client_1_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 1 Name is mandatory")
+            if kw.get('email'):
+                already_exists = request.env['res.partner'].sudo().search([('email', '=', kw.get('email'))])
+                if already_exists:
+                    error_list.append("Company Email Already Exists In the system. Try with another email")
+            if not kw.get('bank_name'):
+                error_list.append("Bank Name is mandatory")
+            if not kw.get('bank_address'):
+                error_list.append("Bank Address is mandatory")
+            if not kw.get('account_number'):
+                error_list.append("Account Number is mandatory")
+            if kw.get('client_1_contact_email') or kw.get('client_1_address') or kw.get('client_1_contact_phone'):
+                if not kw.get('client_1_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 1 Name is mandatory")
             
-            # if kw.get('client_2_contact_email') or kw.get('client_2_address') or kw.get('client_2_contact_phone'):
-            #     if not kw.get('client_2_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 2 Name is mandatory")
+            if kw.get('client_2_contact_email') or kw.get('client_2_address') or kw.get('client_2_contact_phone'):
+                if not kw.get('client_2_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 2 Name is mandatory")
             
-            # if kw.get('client_3_contact_email') or kw.get('client_3_address') or kw.get('client_3_contact_phone'):
-            #     if not kw.get('client_3_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 3 Name is mandatory")
+            if kw.get('client_3_contact_email') or kw.get('client_3_address') or kw.get('client_3_contact_phone'):
+                if not kw.get('client_3_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 3 Name is mandatory")
             
-            # if kw.get('client_4_contact_email') or kw.get('client_4_address') or kw.get('client_4_contact_phone'):
-            #     if not kw.get('client_4_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 4 Name is mandatory")
+            if kw.get('client_4_contact_email') or kw.get('client_4_address') or kw.get('client_4_contact_phone'):
+                if not kw.get('client_4_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 4 Name is mandatory")
             
-            # if kw.get('client_5_contact_email') or kw.get('client_5_address') or kw.get('client_5_contact_phone'):
-            #     if not kw.get('client_5_name'):
-            #         error_list.append("If you input any of the field of phone or address or email then Client 5 Name is mandatory")
+            if kw.get('client_5_contact_email') or kw.get('client_5_address') or kw.get('client_5_contact_phone'):
+                if not kw.get('client_5_name'):
+                    error_list.append("If you input any of the field of phone or address or email then Client 5 Name is mandatory")
 
-
+            
             file_fields = [
                 'trade_license_business_registration', 'certificate_of_incorporation', 'certificate_of_good_standing',
                 'establishment_card', 'vat_tax_certificate', 'memorandum_of_association',
                 'identification_document_for_authorized_person', 'bank_letter_indicating_bank_account',
-                'past_2_years_audited_financial_statements', 'other_certifications','image_1920'
+                'past_2_years_audited_financial_statements', 'other_certifications','image_1920',
             ]
             max_file_size = 1 * 1024 * 1024  # 1 MB in bytes
+            file_vals = {}
             for field in file_fields:
                 file_data = kw.get(field)
 
@@ -181,11 +205,15 @@ class SupplierManagement(http.Controller):
                     if file_data.content_length > max_file_size:
                         error_list.append(f"{field.replace('_', ' ').title()} file size should not exceed 1 MB")
                     else:
-                        file_vals[field] = base64.b64encode(file_data.read()).decode("utf-8")  # Convert to base64
-            file_vals = {}
-            for field in file_fields:
-                if kw.get(field):
-                    file_vals[field] = kw.get(field).read()
+                        # Read the file data and convert it to base64
+                        file_bytes = file_data.read()
+                        file_base64 = base64.b64encode(file_bytes).decode("utf-8")
+                        file_vals[field] = file_base64
+                        
+
+            # for field in file_fields:
+            #     if kw.get(field):
+            #         file_vals[field] = kw.get(field).read()
             vals['state'] = 'submitted'
             if not error_list:
                 new_supplier = request.env['supplier.registration'].sudo().create(vals)
@@ -198,18 +226,18 @@ class SupplierManagement(http.Controller):
 
                 if not template:
                     return {"error": "Email template not found!"}
-                reviewer = request.env['res.groups'].search([('name', '=', 'Reviewer')])
+                reviewer = request.env['res.groups'].sudo().search([('name', '=', 'Reviewer')])
                 reviewer_user = reviewer.users
                 for user in reviewer_user:
                     # template.with_context(user=user).send_mail(user.id, force_send=True)
-                    print(user.email)
+                    
 
                     try:
                         email_values = {
                             'email_to': user.email,
                             'email_from': 'anowarul.karim@bjitacademy.com'
                         }
-                        print("Attempting to send mail...")
+                        
 
                         # Add context with force_send to ensure immediate email sending
                         ctx = {
@@ -217,39 +245,23 @@ class SupplierManagement(http.Controller):
                             'default_res_id': new_supplier.id,
                             'default_email_to': user.email,  # Ensure the email field exists
                             'default_template_id': template.id,
+                            'supplier_name': new_supplier.company_name,
+                            'supplier_email': new_supplier.email,
+                            'supplier_phone': new_supplier.phone,
                             'force_send': True,
                         }
-                        s = template.with_context(**ctx).send_mail(new_supplier.id,email_values=email_values)
-                        print("Email Sent, ID:", s)
+                        s = template.with_context(**ctx).sudo().send_mail(new_supplier.id,email_values=email_values)
+                        
                     except Exception as e:
-                        print("Error in send_mail:", str(e))
+                        pass
+                        
 
-                    template.with_context(email_to=user.email).send_mail(user.id, force_send=True)
+                    template.with_context(email_to=user.email).sudo().send_mail(user.id, force_send=True)
                     # raise RuntimeError("Intentional error raised!")
                     # Clear the session
                     request.session.pop('otp_email', None)
+                    request.session.pop('varified_email', None)
                         
-
-                    # user.partner_id.notify_info(message="New Supplier Registration Request has been submitted")
-                # template = request.env.ref('supplier_management.vendor_submission_confirmation')
-                # print("template", template)
-                # if template:
-                #     try:
-                #         print("Attempting to send mail...")
-
-                #         # Add context with force_send to ensure immediate email sending
-                #         ctx = {
-                #             'default_model': 'supplier.registration',
-                #             'default_res_id': new_supplier.id,
-                #             'default_email_to': new_supplier.email,  # Ensure the email field exists
-                #             'default_template_id': template.id,
-                #             'force_send': True,
-                #         }
-
-                #         s = template.with_context(**ctx).send_mail(new_supplier.id, force_send=True)
-                #         print("Email Sent, ID:", s)
-                #     except Exception as e:
-                #         print("Error in send_mail:", str(e))
 
         return request.render("supplier_management.new_supplier_registration_form_view_portal",
                               {'page_name': 'supplier_registration',
@@ -273,27 +285,21 @@ class SupplierManagement(http.Controller):
         # Mark OTP as verified
         otp_record.sudo().write({'verified': True})
         request.session['otp_email'] = email
+        request.session['varified_email'] = email
         # return request.render('supplier_management.user_registration_form',{})
 
         return http.Response('{"status": "success", "message": "OTP verified successfully"}', content_type='application/json')
 
-    @http.route(['/supplier_management/rfp', '/supplier_management/rfp/page/<int:page>'], auth='public', website=True)
-    def portal_rfp_list(self, page=1, sortby=None, search=None, search_in=None, groupby='required_date', **kw):
+    @http.route(['/supplier_management/rfp', '/supplier_management/rfp/page/<int:page>'], auth='user', website=True)
+    def portal_rfp_list(self, page=1, sortby=None, search=None, search_in=None, **kw):
         limit = 4
 
-        # Define sorting options
+        # Define sorting options    
         searchbar_sortings = {
             'rfp_number': {'label': _('RFP Number'), 'order': 'rfp_number'},
-            'required_date': {'label': _('Required Date'), 'order': 'required_date'},
+            
         }
 
-        # Define grouping options (status grouping removed since all RFPs are approved)
-        groupby_list = {
-            'required_date': {'input': 'required_date', 'label': _('Required Date')},
-        }
-        group_by_rfp = groupby_list.get(groupby, {})
-
-        # Default search field is 'name'
         if not search_in:
             search_in = 'rfp_number'
 
@@ -306,8 +312,8 @@ class SupplierManagement(http.Controller):
         search_list = {
             'all': {'label': _('All'), 'input': 'all', 'domain': []},
             'rfp_number': {'label': _('RFP Number'), 'input': 'rfp_number', 'domain': [('rfp_number', 'ilike', search)]},
-            'required_date': {'label': _('Required Date'), 'input': 'required_date',
-                              'domain': [('required_date', '=', search)]},
+            # 'required_date': {'label': _('Required Date'), 'input': 'required_date',
+            #                   'domain': [('required_date', '=', search)]},
         }
 
         # Build the search domain based on the provided search term
@@ -336,18 +342,7 @@ class SupplierManagement(http.Controller):
             search_domain, limit=limit, offset=pager['offset'], order=order
         )
 
-        # Group the RFPs according to the selected grouping option (only required_date remains)
-        if groupby_list.get(groupby) and groupby_list[groupby]['input']:
-            rfp_group_list = [
-                {
-                    'group_name': key.rfp_number if hasattr(key, 'rfp_number') else key,
-                    'rfps': list(group)
-                }
-                for key, group in groupbyelem(rfps, key=lambda r: getattr(r, group_by_rfp['input']))
-            ]
-        else:
-            rfp_group_list = [{'group_name': _('All RFPs'), 'rfps': rfps}]
-        # print(rfp_group_list[0]['rfps'])
+       
 
         # Render the portal view template with the prepared values
         return request.render('supplier_management.rfp_list_template', {
@@ -358,15 +353,14 @@ class SupplierManagement(http.Controller):
             'searchbar_inputs': search_list,
             'search_in': search_in,
             'search': search,
-            'rfp_groups': rfp_group_list,
+            # 'rfp_groups': rfp_group_list,
             'default_url': 'supplier_management/rfp',
-            'groupby': groupby,
-            'searchbar_groupby': groupby_list,
+            # 'groupby': groupby,
+            # 'searchbar_groupby': groupby_list,
             'rfps' : rfps,
         })
 
-
-    @http.route('/supplier_management/rfp/<int:rfp_id>', auth='public', website=True, methods=['GET'])
+    @http.route('/supplier_management/rfp/<int:rfp_id>', auth='user', website=True, methods=['GET'])
     def view_rfp_details(self, rfp_id, **kwargs):
         """Show details of a specific RFP and allow RFQ creation"""
 
@@ -375,35 +369,9 @@ class SupplierManagement(http.Controller):
         if not rfp.exists() or rfp.status in ['colsed','accepted','recommendation']:
             return request.not_found()
 
-        return request.render('supplier_management.rfp_detail_template', {'rfp': rfp})
+        return request.render('supplier_management.rfp_detail_template', {'rfp': rfp,'page_name': 'rfp_detail'})
 
-    # @http.route('/supplier_management/rfp/<int:rfp_id>/create_rfq', auth='public', website=True, methods=['POST','GET'])
-    # def create_rfq(self, rfp_id, **kwargs):
-    #     """Create an RFQ for a given RFP"""
-    #     rfp = request.env['rfp.request'].sudo().browse(rfp_id)
-    #     if not rfp.exists():
-    #         return request.not_found()
 
-    #     # Get supplier info from the request
-    #     supplier_id = int(kwargs.get('supplier_id', 0))
-    #     warranty_period = int(kwargs.get('warranty_period', 0))
-
-    #     if not supplier_id:
-    #         return request.render('supplier_management.rfp_detail_template', {
-    #             'rfp': rfp,
-    #             'error': 'Supplier is required to create an RFQ.'
-    #         })
-
-    #     rfq_vals = {
-    #         'partner_id': supplier_id,
-    #         'rfp_id': rfp.id,
-    #         'date_order': fields.Date.today(),
-    #         'currency_id': rfp.currency_id.id,
-    #         'warranty_period': warranty_period,
-    #     }
-    #     rfq = request.env['purchase.order'].sudo().create(rfq_vals)
-
-    #     return request.redirect('/supplier_management/rfp/{}'.format(rfp_id))
     @http.route('/supplier_management/rfp/<int:rfp_id>/create_rfq', auth='user', website=True, methods=['GET', 'POST'])
     def create_rfq(self, rfp_id, **kwargs):
         """Handles both GET (display form) and POST (submit RFQ)."""
@@ -437,7 +405,7 @@ class SupplierManagement(http.Controller):
                 product_qty = int(kwargs.get(f'quantity_{line.id}', 0))
                 unit_price = float(kwargs.get(f'unit_price_{line.id}', 0))
                 delivery_charges = float(kwargs.get(f'delivery_charges_{line.id}', 0))
-                print("asdfjkljasdlfjl     ",delivery_charges,"asdf")
+                
                 if kwargs[f'delivery_charges_{line.id}'] == '':
                     delivery_charges = 0
 
@@ -456,7 +424,7 @@ class SupplierManagement(http.Controller):
                 if template:
                     
                     try:
-                        print("Attempting to send mail...")
+                        
 
                         # Add context with force_send to ensure immediate email sending
                         email_values = {
@@ -468,21 +436,22 @@ class SupplierManagement(http.Controller):
                             'default_res_id': purchase_order.id,
                             'default_template_id': template.id,
                             'default_composition_mode': 'comment',
+                            'name_user': rfp.create_uid.name,
                             'force_send': True,
                             'rfp_number': rfp.rfp_number
                         }
                         template.with_context(**ctx).sudo().send_mail(purchase_order.id,email_values=email_values)
 
                     except Exception as e:
-                        print("Error in send_mail:", str(e))
+                        pass
 
             # Redirect to success page after RFQ creation
             return request.redirect('/supplier_management/rfq/success')
 
         # If GET request, render form
-        return request.render('supplier_management.rfq_form', {'rfp': rfp})
+        return request.render('supplier_management.rfq_form', {'rfp': rfp, 'page_name': 'rfq_form'})
 
-    @http.route('/supplier_management/rfq/success', type='http', auth="public", website=True)
+    @http.route('/supplier_management/rfq/success', type='http', auth="user", website=True)
     def rfq_success(self):
         
         return request.render('supplier_management.rfq_success_template', {})

@@ -62,17 +62,21 @@
 
                     <button name="action_accept_rfp" type="object" string="Accept" class="oe_highlight" 
                         invisible="status != 'recommanded'" groups="supplier_management.group_supplier_management_approver"/>
-                        
+
+                    
                     <field name='status' widget='statusbar'/> 
+                    
                 </header>
                 <sheet>
+                    <widget name="web_ribbon" title="Rejected" bg_color="text-bg-danger" invisible="status != 'rejected'"/>
+                    <widget name="web_ribbon" title="Accepted" bg_color="text-bg-success" invisible="status != 'accepted'"/>
+
                     <group>
                         <group name="rfp_details">
                             <field name="create_uid" string="Created By" readonly="1"/>
                             <field name="rfp_number"/>
-                            <field name="status"/>
+                            <!-- <field name="status"/> -->
                             <field name="required_date"/>
-                        
                         </group>
                     </group>
                     <notebook>
@@ -80,7 +84,7 @@
                             <field name="product_line_ids" readonly="status not in ('draft',)">
                                 <tree editable="bottom">
                                     
-                                    <field name="product_id"/>
+                                    <field name="product_id" options="{'no_quick_create': True, 'no_create_edit' : True}"/>
                                     <field name="description"/>
                                     <field name="quantity"/>
                                     
@@ -90,11 +94,11 @@
                         <page string="RFQ Lines">
                             <field name="rfq_lines">
                                 <tree >
-                                    <field name="company_id" invisible="1"/>
-                                    <field name="partner_id"/>
-                                    <field name="amount_total"/>
-                                    <field name= "notes"/>
-                                    <field name="date_order"/>
+                                    <!-- <field name="company_id" readonly="1"/> -->
+                                    <field name="partner_id" readonly="1"/>
+                                    <field name="amount_total" readonly="1"/>
+                                    <field name= "notes" readonly="1"/>
+                                    <field name="date_order" readonly="1"/>
                                     <field name="score"/>
                                 </tree>
                             <form string="RFQ Line">
@@ -113,7 +117,7 @@
                                         <field name="notes" readonly="1"/>
                                         <field name="date_order" readonly="1"/>
                                         <!-- <field name="score" readonly="status not"/> -->
-                                        <field name="score" readonly="1"/>
+                                        <field name="score" readonly="rfp_state not in ('closed',)"/>
                                         <!-- <field name="rfp_state" invisible="1"/> -->
                                         <field name="recommended" groups="supplier_management.group_supplier_management_reviewer"
                                             readonly="rfp_state not in ('closed',)"
@@ -123,7 +127,8 @@
                                     <page string="Product Line Details">
                                         <field name="order_line" readonly="1">
                                             <tree editable="bottom">
-                                                <field name="product_id"/>
+                                                <field name="currency_id" column_invisible="1"/>
+                                                <field name="product_id" />
                                                 <field name="product_qty"/>
                                                 <field name="price_unit"/>
                                                 <field name="delivery_charge"/> 
@@ -155,7 +160,6 @@
                 <field name="rfp_number"/>
                 <field name="status"/>
                 <field name="required_date"/>
-                <field name="total_amount"/>
                 <field name="approved_supplier_id"/>
             </tree>
         </field>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="nav_bar" inherit_id="website.navbar_nav">
+        <xpath expr="//ul" position="inside">
+            <t t-if="request.env.user.has_group('base.group_public')">
+                <li class="nav-item">
+                    <a href="/supplier_management/create" class="nav-link btn">
+                        Supplier Registration
+                    </a>
+                </li>
+            </t>
+        </xpath>
+    </template>
+</odoo>

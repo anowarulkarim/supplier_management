@@ -86,6 +86,9 @@ class SupplierRegistration(models.TransientModel):
         [('draft', 'Draft'), ('submitted', 'Submitted'),('recommanded','Recommanded'), ('approved', 'Approved'),('rejected', 'Rejected')],
         string='State', default='draft', tracking=True)
 
+    signatory_name = fields.Char(string='Signatory Name')
+    authorized_signatory = fields.Char(string='Authorized Signatory')
+
     reject_reason = fields.Text(string="Rejection Reason")
 
     def action_approve(self):
@@ -193,7 +196,7 @@ class SupplierRegistration(models.TransientModel):
                 'email_to': self.email,
                 'email_from': 'anowarul.karim@bjitacademy.com'
             }
-            print("Attempting to send mail...")
+            
             # Add context with force_send to ensure immediate email sending
             ctx = {
                     'default_model': 'supplier.registration',
@@ -204,12 +207,11 @@ class SupplierRegistration(models.TransientModel):
                     'force_send': True,
                 }
             s = template.with_context(**ctx).send_mail(self.id,email_values=email_values)
-            print("Email Sent, ID:", s)
+            
 
         except Exception as e:
-            print("Error in send_mail:", str(e))
+            pass
 
-        # print(new_supplier.email)
         self.env.ref('supplier_management.vendor_registration_confirmation').send_mail(new_supplier.id)
         self.state = 'approved'
 
@@ -239,7 +241,7 @@ class SupplierRegistration(models.TransientModel):
                     'email_to': user.email,
                     'email_from': 'anowarul.karim@bjitacademy.com'
                 }
-                print("Attempting to send mail...")
+                
 
                 # Add context with force_send to ensure immediate email sending
                 ctx = {
@@ -251,9 +253,9 @@ class SupplierRegistration(models.TransientModel):
                         'force_send': True,
                     }
                 s = template.with_context(**ctx).send_mail(self.id,email_values=email_values)
-                print("Email Sent, ID:", s)
+                
             except Exception as e:
-                print("Error in send_mail:", str(e))
+                pass
 
         self.state = 'recommanded'
 

@@ -26,7 +26,7 @@ export class ChartComponent extends Component {
         await loadJS("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js");
 
         if (!window.Chart) {
-            console.error("Chart.js failed to load");
+            
             return;
         }
 

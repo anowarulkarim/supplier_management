@@ -17,24 +17,31 @@ class RFQ(models.Model):
     recommended = fields.Boolean(string='Recommended', default=False)
     rfp_state = fields.Selection(related='rfp_id.status', string='RFP status')
 
-    # @api.constrains('recommended')
-    # def _check_unique_recommended(self):
-    #     for record in self:
-    #         if record.recommended:
-    #             existing_recommended = self.search([
-    #                 ('partner_id', '=', record.partner_id.id),
-    #                 ('recommended', '=', True),
-    #                 ('id', '!=', record.id)
-    #             ])
-    #             if existing_recommended:
-    #                 raise UserError(_('A supplier cannot have more than one recommended RFQ line.'))
+    @api.constrains('recommended')
+    def _check_unique_recommended(self):
+        for record in self:
+            if record.recommended:
+                existing_recommended = self.search([
+                    ('rfp_id','=', record.rfp_id.id),
+                    ('partner_id', '=', record.partner_id.id),
+                    ('recommended', '=', True),
+                    ('id', '!=', record.id)
+                ])
+                if existing_recommended:
+                    raise UserError(_('A supplier cannot have more than one recommended RFQ line.'))
+
+    @api.onchange('score')
+    def _onchange_score(self):
+        for record in self:
+            if record.score < 0 or record.score > 10:
+                raise UserError(_('Score must be in 0-10'))
     
     def confirm_rfq(self):
         # self.rfp_state = 'accepted'
         self.rfp_id.write({'status': 'accepted'})
         self.state='purchase'
         self.rfp_id.approved_supplier_id = self.partner_id
-
+        self.rfp_id.write({'total_amount': self.amount_total})
         template = self.env.ref('supplier_management.rfq_accepted_supplier')
         if template:
             email_values = {

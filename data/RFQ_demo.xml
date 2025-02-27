@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+    <data noupdate="0">
+        <record id="purchase_order_1" model="purchase.order">
+            <field name="rfp_id" ref="rfp_request_1"/>
+            <field name="partner_id" ref="base.res_partner_1"/>
+            <field name="date_order">2025-01-01</field>
+            <field name="recommended">True</field>
+            <field name="create_uid">6</field>
+        </record>
+        <record id="purchase_order_line_1_1" model="purchase.order.line">
+            <field name="order_id" ref="purchase_order_1"/>
+            <field name="product_id" ref="product.product_product_5"/>
+            <field name="product_qty">5</field>
+            <field name="price_unit">50.0</field>
+            <field name="delivery_charge">10.0</field>
+        </record>
+        <record id="purchase_order_line_1_2" model="purchase.order.line">
+            <field name="order_id" ref="purchase_order_1"/>
+            <field name="product_id" ref="product.product_product_6"/>
+            <field name="product_qty">3</field>
+            <field name="price_unit">100.0</field>
+            <field name="delivery_charge">20.0</field>
+        </record>
+
+
+
+        <!-- Purchase Order for RFP Request 2 -->
+        <record id="purchase_order_2" model="purchase.order">
+            <field name="rfp_id" ref="rfp_request_2"/>
+            <field name="partner_id" ref="base.res_partner_1"/>
+            <field name="date_order">2025-01-02</field>
+            <field name="recommended">True</field>
+            <field name="create_uid">6</field>
+        </record>
+
+        <!-- Purchase Order Lines for Purchase Order 2 -->
+        <record id="purchase_order_line_2_1" model="purchase.order.line">
+            <field name="order_id" ref="purchase_order_2"/>
+            <field name="product_id" ref="product.product_product_7"/>
+            <field name="product_qty">4</field>
+            <field name="price_unit">60.0</field>
+            <field name="delivery_charge">15.0</field>
+        </record>
+        <record id="purchase_order_line_2_2" model="purchase.order.line">
+            <field name="order_id" ref="purchase_order_2"/>
+            <field name="product_id" ref="product.product_product_8"/>
+            <field name="product_qty">2</field>
+            <field name="price_unit">80.0</field>
+            <field name="delivery_charge">10.0</field>
+        </record>
+
+
+
+        <!-- Purchase Order for RFP Request 3 -->
+        <record id="purchase_order_3" model="purchase.order">
+            <field name="rfp_id" ref="rfp_request_3"/>
+            <field name="partner_id" ref="base.res_partner_1"/>
+            <field name="date_order">2025-01-03</field>
+            <field name="recommended">True</field>
+            <field name="create_uid">6</field>
+        </record>
+
+        <!-- Purchase Order Lines for Purchase Order 3 -->
+        <record id="purchase_order_line_3_1" model="purchase.order.line">
+            <field name="order_id" ref="purchase_order_3"/>
+            <field name="product_id" ref="product.product_product_9"/>
+            <field name="product_qty">3</field>
+            <field name="price_unit">70.0</field>
+            <field name="delivery_charge">12.0</field>
+        </record>
+        <record id="purchase_order_line_3_2" model="purchase.order.line">
+            <field name="order_id" ref="purchase_order_3"/>
+            <field name="product_id" ref="product.product_product_10"/>
+            <field name="product_qty">5</field>
+            <field name="price_unit">90.0</field>
+            <field name="delivery_charge">18.0</field>
+        </record>
+
+
+
+        <!-- Purchase Order for RFP Request 4 -->
+        <record id="purchase_order_4" model="purchase.order">
+            <field name="rfp_id" ref="rfp_request_4"/>
+            <field name="partner_id" ref="base.res_partner_1"/>
+            <field name="date_order">2025-01-04</field>
+            <field name="recommended">True</field>
+            <field name="create_uid">6</field>
+        </record>
+
+        <!-- Purchase Order Lines for Purchase Order 4 -->
+        <record id="purchase_order_line_4_1" model="purchase.order.line">
+            <field name="order_id" ref="purchase_order_4"/>
+            <field name="product_id" ref="product.product_product_12"/>
+            <field name="product_qty">6</field>
+            <field name="price_unit">55.0</field>
+            <field name="delivery_charge">20.0</field>
+        </record>
+        <record id="purchase_order_line_4_2" model="purchase.order.line">
+            <field name="order_id" ref="purchase_order_4"/>
+            <field name="product_id" ref="product.product_product_13"/>
+            <field name="product_qty">1</field>
+            <field name="price_unit">120.0</field>
+            <field name="delivery_charge">5.0</field>
+        </record>
+
+
+    </data>
+</odoo>

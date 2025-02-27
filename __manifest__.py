@@ -18,13 +18,17 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','mail','purchase','web'],
+    'depends': ['purchase','website'],
 
     # always loaded
     'data': [
         'security/supplier_management_security.xml',
         'security/ir.model.access.csv',
-        'security/record_rule.xml',
+        'data/supplier_registration_demo.xml',
+        'data/RFP_demo.xml',
+        'data/product_line_demo.xml',
+        'data/RFQ_demo.xml',
+        'views/supplier_res_web.xml',
         'views/portal_rfp_templates.xml',
         'views/portal_rfq.xml',
         'views/email_template.xml',
@@ -32,7 +36,7 @@ Long description of module's purpose
         'views/bank_views_extended.xml',
         'views/res_partner_extended.xml',
         'views/res_partner_inherit_views.xml',
-        'views/rfp_report.xml',
+        'wizard/rfp_report.xml',
         'views/supplier_rfp_report.xml',
         'views/ir_sequence.xml',
         'views/views.xml',

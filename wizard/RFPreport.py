@@ -11,7 +11,7 @@ class RFPReport(models.TransientModel):
     _name = 'rfp.report'
     _description = 'RFP Report'
 
-    supplier_id = fields.Many2one('res.partner', string='Supplier', required=True, domain=[('supplier_rank', '>', -1)])
+    supplier_id = fields.Many2one('res.partner', string='Supplier', required=True, domain=[('supplier_rank', '>', 0)])
     start_date = fields.Date(string='Start Date', required=True)
     end_date = fields.Date(string='End Date', required=True)
     html_preview = fields.Html(string='HTML Preview', readonly=True)

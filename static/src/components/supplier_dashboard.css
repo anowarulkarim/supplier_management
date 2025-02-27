@@ -20,3 +20,10 @@ html .o_web_client > .o_action_manager {
 .product-scroll-container::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+
+.col-md-5col {
+    flex: 0 0 20%; /* Each column takes up 20% of the width */
+    max-width: 20%; /* Ensure it doesn't exceed 20% */
+}
+
